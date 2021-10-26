@@ -1,3 +1,4 @@
+import Card from "components/common/Card"
 import Layout from "components/common/Layout"
 import fetchData from "components/index/utils/fetchData"
 import { GetStaticProps } from "next"
@@ -13,7 +14,13 @@ const Page = ({ data: dataInitial }: Props): JSX.Element => {
     fallbackData: dataInitial,
   })
 
-  return <Layout title="Home"></Layout>
+  return (
+    <Layout title="Airdrop">
+      <Card mx="auto" maxW="container.sm" p={8}>
+        WIP
+      </Card>
+    </Layout>
+  )
 }
 
 export const getStaticProps: GetStaticProps = async () => {

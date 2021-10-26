@@ -16,6 +16,11 @@ const gray = {
 const colors = {
   gray,
   primary: gray,
+  seedclub: {
+    white: "#F2F2F2",
+    lightgreen: "#C9FAA6",
+    darkgreen: "#122D23",
+  },
   red: {
     50: "#fef2f2",
     100: "#fee2e2",
