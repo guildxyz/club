@@ -16,9 +16,13 @@ const Page = ({ data: dataInitial }: Props): JSX.Element => {
 
   return (
     <Layout title="Airdrop">
-      <Card mx="auto" maxW="container.sm" p={8} fontFamily="display">
+      <Card p={8} fontFamily="display">
         <VStack spacing={8} fontWeight="semibold" textAlign="center">
-          <Heading as="h1" fontFamily="display" fontSize="5xl">
+          <Heading
+            as="h1"
+            fontFamily="display"
+            fontSize={{ base: "4xl", md: "5xl" }}
+          >
             Seed Club Airdrop
           </Heading>
 

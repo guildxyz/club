@@ -1,18 +1,11 @@
-import {
-  Box,
-  Container,
-  Flex,
-  HStack,
-  Icon,
-  IconButton,
-  useColorMode,
-} from "@chakra-ui/react"
+import { Box, Container, Flex, HStack, Icon, IconButton } from "@chakra-ui/react"
 import { useRouter } from "next/dist/client/router"
 import Head from "next/head"
 import NextLink from "next/link"
 import { House } from "phosphor-react"
 import { PropsWithChildren, ReactNode } from "react"
 import Account from "./components/Account"
+import AppMenu from "./components/AppMenu"
 import InfoMenu from "./components/InfoMenu"
 
 type Props = {
@@ -27,7 +20,6 @@ const Layout = ({
   description,
   children,
 }: PropsWithChildren<Props>): JSX.Element => {
-  const { colorMode } = useColorMode()
   const router = useRouter()
 
   return (
@@ -64,11 +56,12 @@ const Layout = ({
           </HStack>
         </Flex>
         <Container
-          maxW="container.lg"
+          maxW="container.sm"
           pt={{ base: 4, md: 9 }}
           pb={{ base: 20, md: 14 }}
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}
         >
+          <AppMenu />
           {children}
         </Container>
       </Box>
