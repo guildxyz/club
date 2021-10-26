@@ -60,6 +60,7 @@ const Layout = ({
           pt={{ base: 4, md: 9 }}
           pb={{ base: 20, md: 14 }}
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}
+          fontFamily="display"
         >
           <AppMenu />
           {children}

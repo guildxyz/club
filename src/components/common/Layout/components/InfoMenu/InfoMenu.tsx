@@ -11,7 +11,13 @@ import { Code, Info } from "phosphor-react"
 
 const InfoMenu = () => (
   <Menu>
-    <MenuButton as={IconButton} aria-label="Agora logo" rounded="full" h="10">
+    <MenuButton
+      as={IconButton}
+      aria-label="Agora logo"
+      rounded="full"
+      h="10"
+      colorScheme="whiteAlpha"
+    >
       <Icon width="1.2em" height="1.2em" as={Info} />
     </MenuButton>
     {/* have to set zIndex, otherwise the search bar's icon lays over it */}
