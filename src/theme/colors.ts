@@ -20,6 +20,8 @@ const colors = {
     white: "#F2F2F2",
     lightgreen: "#C9FAA6",
     darkgreen: "#122D23",
+    mediumgreen: "#0D5E41",
+    green: "#2D7159",
   },
   red: {
     50: "#fef2f2",

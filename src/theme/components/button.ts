@@ -22,6 +22,16 @@ function variantSolid(props: Dict) {
     }
   }
 
+  if (c === "seedclub") {
+    return {
+      bg: "seedclub.darkgreen",
+      _hover: {
+        bg: "seedclub.mediumgreen",
+      },
+      _active: { bg: "seedclub.green" },
+    }
+  }
+
   const bg = `${c}.500`
 
   return {
