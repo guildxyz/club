@@ -30,3 +30,12 @@
   font-weight: 700;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'ITC Garamond';
+  src: url('ITCGaramondStd-Lt.woff2') format('woff2'),
+    url('ITCGaramondStd-Lt.woff') format('woff'),
+    url('ITCGaramondStd-Lt.ttf') format('truetype');
+  font-weight: normal;
+  font-display: swap;
+}
