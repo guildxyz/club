@@ -23,16 +23,16 @@ const AppMenu = (): JSX.Element => {
         Airdrop
       </Link>
       <Link
-        href="/liquidity-mining"
+        href="/liquidity-farming"
         _hover={{ textDecoration: "none", color: "seedclub.lightlime" }}
         borderBottomWidth={2}
         borderBottomColor={
-          router.asPath === "/liquidity-mining"
+          router.asPath === "/liquidity-farming"
             ? "seedclub.lightlime"
             : "transparent"
         }
       >
-        Liquidity Mining
+        Liquidity Farming
       </Link>
     </HStack>
   )

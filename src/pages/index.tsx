@@ -3,7 +3,7 @@ import Card from "components/common/Card"
 import JoinCommunity from "components/common/JoinCommunity"
 import Layout from "components/common/Layout"
 
-const Page = (): JSX.Element => (
+const AirdropPage = (): JSX.Element => (
   <Layout title="Airdrop">
     <Card p={8} fontFamily="display">
       <VStack spacing={8} fontWeight="semibold" textAlign="center">
@@ -28,4 +28,4 @@ const Page = (): JSX.Element => (
   </Layout>
 )
 
-export default Page
+export default AirdropPage
