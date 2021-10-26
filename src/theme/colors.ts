@@ -18,10 +18,19 @@ const colors = {
   primary: gray,
   seedclub: {
     white: "#F2F2F2",
-    lightgreen: "#C9FAA6",
-    darkgreen: "#122D23",
-    mediumgreen: "#0D5E41",
-    green: "#2D7159",
+    lightlime: "#C9FAA6",
+    green: {
+      50: "#EFFDF8",
+      100: "#D4F7EA",
+      200: "#B6EDD9",
+      300: "#9EE0C8",
+      400: "#7CCBAD",
+      500: "#62C09E",
+      600: "#53A285",
+      700: "#2D7159",
+      800: "#0D5E41",
+      900: "#122D23",
+    },
   },
   red: {
     50: "#fef2f2",

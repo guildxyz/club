@@ -42,7 +42,7 @@ const Layout = ({
           </>
         )}
       </Head>
-      <Box bgColor="seedclub.darkgreen" minHeight="100vh">
+      <Box bgColor="seedclub.green.900" minHeight="100vh">
         <Flex w="full" justifyContent="space-between" alignItems="center" p="2">
           {router?.asPath !== "/" ? (
             <NextLink passHref href="/">
