@@ -248,7 +248,7 @@ const chakraComponents = {
     isDisabled,
     selectProps: { size },
   }) => {
-    const { item }: any = useStyles()
+    const { item } = useStyles()
     return (
       <Box
         role="button"
@@ -329,8 +329,7 @@ const ChakraReactSelect = ({
       ...styles,
     },
     theme: (baseTheme) => {
-      // @ts-ignore
-      const propTheme: any = theme(baseTheme)
+      const propTheme = theme(baseTheme)
 
       return {
         ...baseTheme,
@@ -360,7 +359,7 @@ const ChakraReactSelect = ({
   return select
 }
 
-const Select = forwardRef((props: any, ref) => {
+const Select = forwardRef((props, ref) => {
   const { colorMode } = useColorMode()
 
   return (
