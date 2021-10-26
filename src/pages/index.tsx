@@ -2,9 +2,7 @@ import { Button, Heading, Text, VStack } from "@chakra-ui/react"
 import Card from "components/common/Card"
 import JoinCommunity from "components/common/JoinCommunity"
 import Layout from "components/common/Layout"
-import fetchData from "components/index/utils/fetchData"
 import { GetStaticProps } from "next"
-import useSWR from "swr"
 import { Data } from "temporaryData/types"
 
 type Props = {
@@ -12,9 +10,9 @@ type Props = {
 }
 
 const Page = ({ data: dataInitial }: Props): JSX.Element => {
-  const { data } = useSWR("data", fetchData, {
-    fallbackData: dataInitial,
-  })
+  // const { data } = useSWR("data", fetchData, {
+  //   fallbackData: dataInitial,
+  // })
 
   return (
     <Layout title="Airdrop">
@@ -43,10 +41,10 @@ const Page = ({ data: dataInitial }: Props): JSX.Element => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await fetchData()
+  // const data = await fetchData()
 
   return {
-    props: { data },
+    props: { data: {} },
     revalidate: 10,
   }
 }
