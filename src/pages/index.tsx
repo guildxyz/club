@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Heading,
   Modal,
@@ -30,13 +31,23 @@ const AirdropPage = (): JSX.Element => {
     <Layout title="Airdrop">
       <Card p={8} fontFamily="display">
         <VStack spacing={8} fontWeight="semibold" textAlign="center">
-          <Heading
-            as="h1"
-            fontFamily="display"
-            fontSize={{ base: "4xl", md: "5xl" }}
-          >
-            Seed Club Airdrop
-          </Heading>
+          <VStack spacing={2}>
+            <Box
+              boxSize={16}
+              bgColor="gray.300"
+              rounded="full"
+              borderWidth={3}
+              borderColor="seedclub.white"
+            />
+
+            <Heading
+              as="h1"
+              fontFamily="display"
+              fontSize={{ base: "4xl", md: "5xl" }}
+            >
+              Seed Club Airdrop
+            </Heading>
+          </VStack>
 
           <Text fontSize="4xl">22:40:58</Text>
 

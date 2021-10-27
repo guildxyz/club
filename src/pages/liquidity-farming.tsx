@@ -1,4 +1,4 @@
-import { Button, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react"
+import { Box, Button, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react"
 import Card from "components/common/Card"
 import JoinCommunity from "components/common/JoinCommunity"
 import Layout from "components/common/Layout"
@@ -8,6 +8,23 @@ const LiquidityFarmingPage = (): JSX.Element => (
     <Card p={8} fontFamily="display">
       <VStack spacing={8} fontWeight="semibold" textAlign="center">
         <VStack spacing={2}>
+          <SimpleGrid gridTemplateColumns="3rem 3rem">
+            <Box
+              boxSize={16}
+              bgColor="gray.300"
+              rounded="full"
+              borderWidth={3}
+              borderColor="seedclub.white"
+            />
+            <Box
+              boxSize={16}
+              bgColor="gray.300"
+              rounded="full"
+              borderWidth={3}
+              borderColor="seedclub.white"
+            />
+          </SimpleGrid>
+
           <Heading
             as="h1"
             fontFamily="display"
