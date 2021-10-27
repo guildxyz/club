@@ -80,7 +80,7 @@ const AirdropPage = (): JSX.Element => {
           <ModalHeader>Whitelist</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Table variant="simple" fontWeight="semibold">
+            <Table variant="simple" size="sm">
               <TableCaption>Whitelisted addresses</TableCaption>
               <Thead>
                 <Tr>
@@ -94,6 +94,8 @@ const AirdropPage = (): JSX.Element => {
                     <CopyableAddress
                       address="0xA861C07fEc05525F2DB7408E8C3319B8D8929B78"
                       decimals={4}
+                      fontSize="sm"
+                      fontWeight="normal"
                     />
                   </Td>
                   <Td isNumeric>2.0</Td>
@@ -103,6 +105,8 @@ const AirdropPage = (): JSX.Element => {
                     <CopyableAddress
                       address="0xA861C07fEc05525F2DB7408E8C3319B8D8929B78"
                       decimals={4}
+                      fontSize="sm"
+                      fontWeight="normal"
                     />
                   </Td>
                   <Td isNumeric>1.2</Td>
