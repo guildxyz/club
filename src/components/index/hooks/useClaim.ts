@@ -21,32 +21,31 @@ const useClaim = () => {
 
   const toast = useToast()
 
-  return useSubmit<null, any>(
-    () =>
-      contract.claim(
-        merkleDistributorData?.index,
-        account,
-        merkleDistributorData?.amount,
-        merkleDistributorData?.proof
-      ),
-    {
-      onError: (error) => {
-        toast({
-          title: "Error claiming tokens",
-          status: "error",
-        })
-      },
-      onSuccess: (res) => {
-        toast({
-          title: "Successfully submitted transaction!",
-          description:
-            "It might take some time to finalize the transaction. Please check your wallet for more details.",
-          duration: 4000,
-          status: "success",
-        })
-      },
-    }
-  )
+  const claim = () =>
+    contract?.claim(
+      merkleDistributorData?.index,
+      account,
+      merkleDistributorData?.amount,
+      merkleDistributorData?.proof
+    )
+
+  return useSubmit<null, any>(claim, {
+    onError: () => {
+      toast({
+        title: "Error claiming tokens",
+        status: "error",
+      })
+    },
+    onSuccess: () => {
+      toast({
+        title: "Successfully submitted transaction!",
+        description:
+          "It might take some time to finalize the transaction. Please check your wallet for more details.",
+        duration: 4000,
+        status: "success",
+      })
+    },
+  })
 }
 
 export default useClaim
