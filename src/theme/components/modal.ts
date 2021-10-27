@@ -27,7 +27,8 @@ const styles = {
       pl: { base: 6, sm: 10 },
       pr: { base: 16, sm: 10 },
       py: 8,
-      // fontFamily: "display",
+      fontFamily: "display",
+      fontSize: "3xl",
       fontWeight: "bold",
     },
     body: {
