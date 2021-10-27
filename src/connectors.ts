@@ -49,7 +49,7 @@ const RPC = {
   },
 }
 
-const supportedChains = [, /* "POLYGON", "BSC", "GOERLI" */ "ETHEREUM"]
+const supportedChains = [, /* "POLYGON", "BSC", */ "GOERLI", "ETHEREUM"]
 const supportedChainIds = supportedChains.map((_) => Chains[_])
 
 const injected = new InjectedConnector({ supportedChainIds })
