@@ -31,14 +31,12 @@ const useClaim = () => {
       ),
     {
       onError: (error) => {
-        console.log("ERROR", error)
         toast({
           title: "Error claiming tokens",
           status: "error",
         })
       },
       onSuccess: (res) => {
-        console.log("RESPONSE", res)
         toast({
           title: "Successfully submitted transaction!",
           description:
