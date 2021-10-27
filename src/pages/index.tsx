@@ -20,6 +20,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react"
+import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
 import Card from "components/common/Card"
 import CopyableAddress from "components/common/CopyableAddress"
@@ -49,12 +50,24 @@ const AirdropPage = (): JSX.Element => {
 
   const { onSubmit, isLoading } = useClaim()
 
-  if (isMerkleDistributorLoading)
+  if (account && !tokenSymbol)
     return (
       <Layout title="Airdrop">
         <Card p={8} fontFamily="display">
           <VStack spacing={8} fontWeight="semibold" textAlign="center">
-            <Spinner />
+            <Heading
+              as="h1"
+              fontFamily="display"
+              fontSize={{ base: "4xl", md: "5xl" }}
+            >
+              Seed Club Airdrop
+            </Heading>
+            {isMerkleDistributorLoading ? (
+              <Spinner mx="auto" />
+            ) : (
+              <Text fontSize="lg">Please switch to the correct network!</Text>
+            )}
+            <JoinCommunity />
           </VStack>
         </Card>
       </Layout>
@@ -126,9 +139,9 @@ const AirdropPage = (): JSX.Element => {
                       </Text>
                     </Text>
                     {eligible && (
-                      <Text>{`${parseInt(
+                      <Text>{`${formatUnits(
                         MerkleDistributor.claims[account].amount,
-                        16
+                        18
                       )} ${tokenSymbol} waiting to be claimed`}</Text>
                     )}
                   </>
