@@ -1,7 +1,5 @@
 import {
   Button,
-  Flex,
-  Img,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -24,6 +22,7 @@ import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
 import CopyableAddress from "components/common/CopyableAddress"
 import PageContent from "components/common/PageContent"
+import TokenImage from "components/common/TokenImage"
 import useClaim from "components/index/hooks/useClaim"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useMerkleDistributor from "hooks/useMerkleDistributor"
@@ -58,23 +57,11 @@ const AirdropPage = (): JSX.Element => {
         account &&
         !isMerkleDistributorLoading &&
         (tokenImage || tokenSymbol) && (
-          <Flex
-            boxSize={16}
-            bgColor="gray.300"
-            rounded="full"
-            borderWidth={3}
-            borderColor="seedclub.white"
-            alignItems="center"
-            justifyContent="center"
-          >
-            {isTokenValidating && !tokenSymbol && <Spinner />}
-            {tokenImage && tokenSymbol && <Img src={tokenImage} alt={tokenSymbol} />}
-            {!tokenImage && tokenSymbol && (
-              <Text as="span" fontWeight="bold" fontFamily="body" fontSize="lg">
-                {tokenSymbol}
-              </Text>
-            )}
-          </Flex>
+          <TokenImage
+            isLoading={isTokenValidating}
+            tokenSymbol={tokenSymbol}
+            tokenImage={tokenImage}
+          />
         )
       }
     >
