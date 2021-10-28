@@ -3,8 +3,9 @@ import { Logger } from "@ethersproject/logger"
 import { useWeb3React } from "@web3-react/core"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useContract from "hooks/useContract"
+import { useEffect } from "react"
 import MERKLE_ABI from "static/abis/MerkleDistributorAbi.json"
-import useSWR from "swr"
+import useSWR, { mutate } from "swr"
 
 const getMerkleData =
   (contract: Contract, index: string) =>
@@ -38,6 +39,22 @@ const useMerkleDistributor = (userAddress: string) => {
       errorRetryInterval: 100,
     }
   )
+
+  // Mutating SWR on "Claimed" event in order to update the disabled state of the "Claim" button on the Airdrop page
+  const handleClaim = () => {
+    console.log('"Claimed" event!"')
+    mutate("merkle")
+  }
+
+  useEffect(() => {
+    if (!contract) return
+
+    contract.on("Claimed", handleClaim)
+
+    return () => {
+      contract.removeListener("Claimed", handleClaim)
+    }
+  }, [contract])
 
   return {
     ...swrResponse,
