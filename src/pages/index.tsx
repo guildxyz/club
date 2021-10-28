@@ -48,6 +48,7 @@ const AirdropPage = (): JSX.Element => {
     isLoading: isTokenValidating,
     tokenSymbol,
     tokenImage,
+    tokenDecimals,
   } = useTokenDataWithImage(token)
 
   const { onSubmit, isLoading } = useClaim()
@@ -145,7 +146,7 @@ const AirdropPage = (): JSX.Element => {
                     {eligible && (
                       <Text>{`${formatUnits(
                         MerkleDistributor.claims[account].amount,
-                        18
+                        tokenDecimals || 18
                       )} ${tokenSymbol} waiting to be claimed`}</Text>
                     )}
                   </>

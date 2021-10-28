@@ -4,7 +4,12 @@ import useTokens from "./useTokens"
 
 const useTokenDataWithImage = (
   address: string
-): { tokenSymbol: string; tokenImage: string; isLoading: boolean } => {
+): {
+  tokenSymbol: string
+  tokenImage: string
+  tokenDecimals: number
+  isLoading: boolean
+} => {
   const { tokens, isLoading } = useTokens()
   const {
     isValidating: isFallbackDataLoading,
@@ -20,6 +25,7 @@ const useTokenDataWithImage = (
   return {
     tokenSymbol: tokenData?.symbol || fallbackTokenSymbol,
     tokenImage: tokenData?.logoURI?.replace("thumb", "small"),
+    tokenDecimals: tokenData?.decimals || 18,
     isLoading: isLoading || isFallbackDataLoading,
   }
 }
