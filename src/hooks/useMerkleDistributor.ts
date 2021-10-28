@@ -10,13 +10,17 @@ import useSWR, { mutate } from "swr"
 const getMerkleData =
   (contract: Contract, index: string) =>
   (_: string): Promise<any> =>
-    Promise.all([contract.isClaimed(index), contract.token()]).catch((error) => {
+    Promise.all([
+      contract.isClaimed(index),
+      contract.token(),
+      contract.distributionEnd(),
+    ]).catch((error) => {
       /**
        * This means, that the error occured because the user is on a wrong chain, if
        * we were revalidating on this error, it would occur again until the the user
        * doesn't switch to the correct chain
        */
-      if (error.code === Logger.errors.CALL_EXCEPTION) return [null, null]
+      if (error.code === Logger.errors.CALL_EXCEPTION) return [null, null, null]
       throw error
     })
 
@@ -59,7 +63,7 @@ const useMerkleDistributor = (userAddress: string) => {
      * Doing this instead of using initialData to make sure it fetches when
      * shouldFetch becomes true
      */
-    data: swrResponse.data ?? [undefined, undefined],
+    data: swrResponse.data ?? [undefined, undefined, undefined],
   }
 }
 
