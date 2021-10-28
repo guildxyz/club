@@ -1,7 +1,6 @@
 import {
   Button,
   Flex,
-  Heading,
   Img,
   Modal,
   ModalBody,
@@ -23,10 +22,8 @@ import {
 } from "@chakra-ui/react"
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
-import Card from "components/common/Card"
 import CopyableAddress from "components/common/CopyableAddress"
-import JoinCommunity from "components/common/JoinCommunity"
-import Layout from "components/common/Layout"
+import PageContent from "components/common/PageContent"
 import useClaim from "components/index/hooks/useClaim"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useMerkleDistributor from "hooks/useMerkleDistributor"
@@ -53,126 +50,100 @@ const AirdropPage = (): JSX.Element => {
 
   const { onSubmit, isLoading } = useClaim()
 
-  if (account && !tokenSymbol)
-    return (
-      <Layout title="Airdrop">
-        <Card p={8} fontFamily="display">
-          <VStack spacing={8} fontWeight="semibold" textAlign="center">
-            <Heading
-              as="h1"
-              fontFamily="display"
-              fontSize={{ base: "4xl", md: "5xl" }}
-            >
-              Seed Club Airdrop
-            </Heading>
-            {isMerkleDistributorLoading ? (
-              <Spinner mx="auto" />
-            ) : (
-              <Text fontSize="lg">Please switch to the correct network!</Text>
-            )}
-            <JoinCommunity />
-          </VStack>
-        </Card>
-      </Layout>
-    )
-
   return (
-    <Layout title="Airdrop">
-      <Card p={8} fontFamily="display">
-        <VStack spacing={8} fontWeight="semibold" textAlign="center">
-          <VStack spacing={2}>
-            {account && !isMerkleDistributorLoading && (
-              <Flex
-                boxSize={16}
-                bgColor="gray.300"
-                rounded="full"
-                borderWidth={3}
-                borderColor="seedclub.white"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {isTokenValidating && !tokenSymbol && <Spinner />}
-                {tokenImage && tokenSymbol && (
-                  <Img src={tokenImage} alt={tokenSymbol} />
-                )}
-                {!tokenImage && tokenSymbol && (
-                  <Text as="span" fontWeight="bold" fontFamily="body" fontSize="lg">
-                    {tokenSymbol}
-                  </Text>
-                )}
-              </Flex>
+    <PageContent
+      layoutTitle="Airdrop"
+      title="Seed Club Airdrop"
+      header={
+        account &&
+        !isMerkleDistributorLoading &&
+        (tokenImage || tokenSymbol) && (
+          <Flex
+            boxSize={16}
+            bgColor="gray.300"
+            rounded="full"
+            borderWidth={3}
+            borderColor="seedclub.white"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {isTokenValidating && !tokenSymbol && <Spinner />}
+            {tokenImage && tokenSymbol && <Img src={tokenImage} alt={tokenSymbol} />}
+            {!tokenImage && tokenSymbol && (
+              <Text as="span" fontWeight="bold" fontFamily="body" fontSize="lg">
+                {tokenSymbol}
+              </Text>
             )}
+          </Flex>
+        )
+      }
+    >
+      {account && !tokenSymbol && (
+        <>
+          {isMerkleDistributorLoading ? (
+            <Spinner mx="auto" />
+          ) : (
+            <Text fontSize="lg">Please switch to the correct network!</Text>
+          )}
+        </>
+      )}
 
-            <Heading
-              as="h1"
-              fontFamily="display"
-              fontSize={{ base: "4xl", md: "5xl" }}
-            >
-              Seed Club Airdrop
-            </Heading>
+      {account && tokenSymbol && (
+        <>
+          <VStack spacing={1} fontSize="xl" pb={4}>
+            {isClaimed ? (
+              <Text fontSize="xl">You've already claimed your tokens!</Text>
+            ) : (
+              <>
+                {/* <Text fontSize="4xl">22:40:58</Text> */}
+                <Text>
+                  {`You are ${!eligible ? "not" : ""} on the `}
+                  <Text
+                    as="span"
+                    tabIndex={0}
+                    px={1}
+                    py={0.5}
+                    bgColor="seedclub.green.800"
+                    color="seedclub.white"
+                    cursor="pointer"
+                    _focus={{ outline: "none" }}
+                    _hover={{
+                      color: "seedclub.lightlime",
+                    }}
+                    _focusVisible={{
+                      color: "seedclub.lightlime",
+                    }}
+                    onClick={onOpen}
+                  >
+                    whitelist
+                  </Text>
+                </Text>
+                {eligible && (
+                  <Text>{`${formatUnits(
+                    MerkleDistributor.claims[account].amount,
+                    tokenDecimals || 18
+                  )} ${tokenSymbol} waiting to be claimed`}</Text>
+                )}
+              </>
+            )}
           </VStack>
 
-          {/* <Text fontSize="4xl">22:40:58</Text> */}
+          <Button
+            px={8}
+            letterSpacing="wide"
+            colorScheme="seedclub"
+            isDisabled={isClaimed}
+            isLoading={isLoading}
+            onClick={onSubmit}
+          >
+            Claim
+          </Button>
+        </>
+      )}
 
-          {account ? (
-            <>
-              <VStack spacing={1} fontSize="xl" pb={4}>
-                {isClaimed ? (
-                  <Text fontSize="xl">You've already claimed your tokens!</Text>
-                ) : (
-                  <>
-                    <Text>
-                      {`You are ${!eligible ? "not" : ""} on the `}
-                      <Text
-                        as="span"
-                        tabIndex={0}
-                        px={1}
-                        py={0.5}
-                        bgColor="seedclub.green.800"
-                        color="seedclub.white"
-                        cursor="pointer"
-                        _focus={{ outline: "none" }}
-                        _hover={{
-                          color: "seedclub.lightlime",
-                        }}
-                        _focusVisible={{
-                          color: "seedclub.lightlime",
-                        }}
-                        onClick={onOpen}
-                      >
-                        whitelist
-                      </Text>
-                    </Text>
-                    {eligible && (
-                      <Text>{`${formatUnits(
-                        MerkleDistributor.claims[account].amount,
-                        tokenDecimals || 18
-                      )} ${tokenSymbol} waiting to be claimed`}</Text>
-                    )}
-                  </>
-                )}
-              </VStack>
-
-              <Button
-                px={8}
-                letterSpacing="wide"
-                colorScheme="seedclub"
-                isDisabled={isClaimed}
-                isLoading={isLoading}
-                onClick={onSubmit}
-              >
-                Claim
-              </Button>
-            </>
-          ) : (
-            <Text fontSize="xl">
-              Please connect your wallet in order to continue!
-            </Text>
-          )}
-
-          <JoinCommunity />
-        </VStack>
-      </Card>
+      {!account && (
+        <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
+      )}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -212,7 +183,7 @@ const AirdropPage = (): JSX.Element => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </Layout>
+    </PageContent>
   )
 }
 
