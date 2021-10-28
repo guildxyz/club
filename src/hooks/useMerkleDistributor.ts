@@ -26,7 +26,7 @@ const useMerkleDistributor = (userAddress: string) => {
   const index = MerkleDistributor.claims[userAddress]?.index
 
   const contract = useContract(
-    active ? process.env.NEXT_PUBLIC_CONTRACT_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_MERKLE_DISTRIBUTOR_CONTRACT_ADDRESS : null,
     MERKLE_ABI
   )
 
