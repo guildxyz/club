@@ -13,17 +13,14 @@ const Countdown = ({ timestamp, endText }: Props): JSX.Element => {
     const now = new Date().getTime()
     const timeleft = new Date(timestamp * 1000).getTime() - now
 
-    const days = Math.floor(timeleft / (1000 * 60 * 60 * 24))
     const hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
     const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60))
     const seconds = Math.floor((timeleft % (1000 * 60)) / 1000)
 
     setRemainingTime(
-      `${days ? `${days < 10 ? `0${days}` : days}:` : ""}${
-        hours ? `${hours < 10 ? `0${hours}` : hours}:` : ""
-      }${minutes ? `${minutes < 10 ? `0${minutes}` : minutes}:` : ""}${
-        seconds ? `${seconds < 10 ? `0${seconds}` : seconds}` : ""
-      }`
+      `${hours < 10 ? `0${hours}` : hours}:${
+        minutes < 10 ? `0${minutes}` : minutes
+      }:${seconds < 10 ? `0${seconds}` : seconds}`
     )
   }
 
