@@ -41,10 +41,7 @@ const useMerkleDistributor = (userAddress: string) => {
   )
 
   // Mutating SWR on "Claimed" event in order to update the disabled state of the "Claim" button on the Airdrop page
-  const handleClaim = () => {
-    console.log('"Claimed" event!"')
-    mutate("merkle")
-  }
+  const handleClaim = () => mutate(["merkle", chainId, account])
 
   useEffect(() => {
     if (!contract) return
