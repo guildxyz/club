@@ -200,7 +200,10 @@ const AirdropPage = (): JSX.Element => {
                       />
                     </Td>
                     <Td isNumeric>
-                      {parseInt(MerkleDistributor.claims[address].amount, 16)}
+                      {formatUnits(
+                        MerkleDistributor.claims[address].amount,
+                        tokenDecimals || 18
+                      )}
                     </Td>
                   </Tr>
                 ))}
