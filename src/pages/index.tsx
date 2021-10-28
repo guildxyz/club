@@ -25,6 +25,7 @@ import PageContent from "components/common/PageContent"
 import TokenImage from "components/common/TokenImage"
 import Countdown from "components/index/Countdown"
 import useClaim from "components/index/hooks/useClaim"
+import useWithdraw from "components/index/hooks/useWithdraw"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useMerkleDistributor from "hooks/useMerkleDistributor"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
@@ -56,7 +57,8 @@ const AirdropPage = (): JSX.Element => {
     [distributionEnd]
   )
 
-  const { onSubmit, isLoading } = useClaim()
+  const { onSubmit: onClaimSubmit, isLoading: isClaimLoading } = useClaim()
+  const { onSubmit: onWithdrawSubmit, isLoading: isWithdrawLoading } = useWithdraw()
 
   return (
     <PageContent
@@ -131,16 +133,29 @@ const AirdropPage = (): JSX.Element => {
             )}
           </VStack>
 
-          <Button
-            px={8}
-            letterSpacing="wide"
-            colorScheme="seedclub"
-            isDisabled={isClaimed}
-            isLoading={isLoading}
-            onClick={onSubmit}
-          >
-            Claim
-          </Button>
+          {ended ? (
+            <Button
+              px={8}
+              letterSpacing="wide"
+              colorScheme="seedclub"
+              isDisabled={isClaimed}
+              isLoading={isWithdrawLoading}
+              onClick={onWithdrawSubmit}
+            >
+              Withdraw unclaimed tokens
+            </Button>
+          ) : (
+            <Button
+              px={8}
+              letterSpacing="wide"
+              colorScheme="seedclub"
+              isDisabled={isClaimed}
+              isLoading={isClaimLoading}
+              onClick={onClaimSubmit}
+            >
+              Claim
+            </Button>
+          )}
         </>
       )}
 
