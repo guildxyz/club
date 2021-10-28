@@ -6,4 +6,13 @@ type Data = {
   id: number
 }
 
-export type { User, Data }
+type CoingeckoToken = {
+  chainId: number
+  address: string
+  name: string
+  symbol: string
+  decimals: number
+  logoURI: string
+}
+
+export type { User, Data, CoingeckoToken }

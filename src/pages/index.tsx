@@ -2,6 +2,7 @@ import {
   Button,
   Flex,
   Heading,
+  Img,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,7 +30,7 @@ import Layout from "components/common/Layout"
 import useClaim from "components/index/hooks/useClaim"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useMerkleDistributor from "hooks/useMerkleDistributor"
-import useTokenData from "hooks/useTokenData"
+import useTokenDataWithImage from "hooks/useTokenDataWithImage"
 import { useMemo } from "react"
 
 const AirdropPage = (): JSX.Element => {
@@ -44,9 +45,10 @@ const AirdropPage = (): JSX.Element => {
     data: [isClaimed, token],
   } = useMerkleDistributor(account)
   const {
-    isValidating: isTokenValidating,
-    data: [, tokenSymbol],
-  } = useTokenData(token)
+    isLoading: isTokenValidating,
+    tokenSymbol,
+    tokenImage,
+  } = useTokenDataWithImage(token)
 
   const { onSubmit, isLoading } = useClaim()
 
@@ -88,9 +90,11 @@ const AirdropPage = (): JSX.Element => {
                 alignItems="center"
                 justifyContent="center"
               >
-                {isTokenValidating && !tokenSymbol ? (
-                  <Spinner />
-                ) : (
+                {isTokenValidating && !tokenSymbol && <Spinner />}
+                {tokenImage && tokenSymbol && (
+                  <Img src={tokenImage} alt={tokenSymbol} />
+                )}
+                {!tokenImage && tokenSymbol && (
                   <Text as="span" fontWeight="bold" fontFamily="body" fontSize="lg">
                     {tokenSymbol}
                   </Text>
