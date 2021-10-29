@@ -41,7 +41,7 @@ const useClaimAndUnstake = (tokenId: number) => {
       account,
       0
     )
-    return claimRewardRes?.wait()
+    return claimRewardRes.wait()
   }
 
   return useSubmit<null, any>(stakeNft, {
