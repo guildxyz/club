@@ -17,7 +17,7 @@ const useWithdraw = () => {
 
   const withdraw = async () => {
     const withdrawRes = await contract?.withdraw(account)
-    return withdrawRes.wait()
+    return withdrawRes?.wait()
   }
 
   return useSubmit<null, any>(withdraw, {

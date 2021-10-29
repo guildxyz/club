@@ -28,7 +28,7 @@ const useClaim = () => {
       merkleDistributorData?.amount,
       merkleDistributorData?.proof
     )
-    return claimRes.wait()
+    return claimRes?.wait()
   }
 
   return useSubmit<null, any>(claim, {
