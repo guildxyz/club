@@ -15,7 +15,10 @@ const useWithdraw = () => {
 
   const toast = useToast()
 
-  const withdraw = () => contract?.withdraw(account)
+  const withdraw = async () => {
+    const withdrawRes = await contract?.withdraw(account)
+    return withdrawRes.wait()
+  }
 
   return useSubmit<null, any>(withdraw, {
     onError: () => {

@@ -21,13 +21,15 @@ const useClaim = () => {
 
   const toast = useToast()
 
-  const claim = () =>
-    contract?.claim(
+  const claim = async () => {
+    const claimRes = await contract?.claim(
       merkleDistributorData?.index,
       account,
       merkleDistributorData?.amount,
       merkleDistributorData?.proof
     )
+    return claimRes.wait()
+  }
 
   return useSubmit<null, any>(claim, {
     onError: () => {
