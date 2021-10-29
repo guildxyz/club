@@ -9,7 +9,7 @@ import useSWR, { mutate } from "swr"
 
 const getMerkleData =
   (contract: Contract, index: string) =>
-  (_: string): Promise<any> =>
+  (_: string): Promise<[boolean, string, any, string]> =>
     Promise.all([
       contract.isClaimed(index),
       contract.token(),
@@ -36,7 +36,7 @@ const useMerkleDistributor = (userAddress: string) => {
     MERKLE_ABI
   )
 
-  const swrResponse = useSWR<[string]>(
+  const swrResponse = useSWR<[boolean, string, any, string]>(
     active ? ["merkle", chainId, account] : null,
     getMerkleData(contract, index),
     {
