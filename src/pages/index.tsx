@@ -40,7 +40,7 @@ const AirdropPage = (): JSX.Element => {
   )
   const {
     isValidating: isMerkleDistributorLoading,
-    data: [isClaimed, token, distributionEnd],
+    data: [isClaimed, token, distributionEnd, owner],
   } = useMerkleDistributor(account)
   const {
     isLoading: isTokenValidating,
@@ -133,7 +133,7 @@ const AirdropPage = (): JSX.Element => {
             )}
           </VStack>
 
-          {ended ? (
+          {ended && owner && owner?.toLowerCase() === account?.toLowerCase() && (
             <Button
               px={8}
               letterSpacing="wide"
@@ -144,7 +144,9 @@ const AirdropPage = (): JSX.Element => {
             >
               Withdraw unclaimed tokens
             </Button>
-          ) : (
+          )}
+
+          {!ended && owner?.toLowerCase() !== account?.toLowerCase() && (
             <Button
               px={8}
               letterSpacing="wide"
