@@ -33,7 +33,7 @@ import { useMemo } from "react"
 
 const AirdropPage = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const eligible = useMemo(
     () => Object.keys(MerkleDistributor.claims).includes(account),
     [account]
@@ -81,7 +81,7 @@ const AirdropPage = (): JSX.Element => {
           {isMerkleDistributorLoading ? (
             <Spinner mx="auto" />
           ) : (
-            <Text fontSize="lg">Please switch to the correct network!</Text>
+            <Text fontSize="lg">Could not fetch reward token.</Text>
           )}
         </>
       )}
