@@ -5,9 +5,9 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
+  ScaleFade,
   SimpleGrid,
   Spinner,
   Text,
@@ -43,22 +43,12 @@ const LiquidityFarmingPage = (): JSX.Element => {
     isOpen: isNftListModalOpen,
   } = useDisclosure()
   const {
-    onOpen: onDepositModalOpen,
-    onClose: onDepositModalClose,
-    isOpen: isDepositModalOpen,
-  } = useDisclosure()
-  const {
     onOpen: onDepositNftsModalOpen,
     onClose: onDepositNftsModalClose,
     isOpen: isDepositNftsModalOpen,
   } = useDisclosure()
-  const {
-    onOpen: onUnstakeModalOpen,
-    onClose: onUnstakeModalClose,
-    isOpen: isUnstakeModalOpen,
-  } = useDisclosure()
 
-  const { chainId, account } = useWeb3React()
+  const { active, chainId, account } = useWeb3React()
   const {
     data: [, rewardTokenSymbol],
   } = useTokenData(TEMP_REWARD_TOKEN_ADDRESS)
@@ -108,24 +98,6 @@ const LiquidityFarmingPage = (): JSX.Element => {
   const [pickedStakeNft, setPickedStakeNft] = useState(null)
   const [pickedUnstakeNft, setPickedUnstakeNft] = useState(null)
 
-  useEffect(() => {
-    if (pickedStakeNft) onDepositModalOpen()
-  }, [pickedStakeNft])
-
-  const onDepositModalCancel = () => {
-    onDepositModalClose()
-    setPickedStakeNft(null)
-  }
-
-  useEffect(() => {
-    if (pickedUnstakeNft) onUnstakeModalOpen()
-  }, [pickedUnstakeNft])
-
-  const onUnstakeModalCancel = () => {
-    onUnstakeModalClose()
-    setPickedUnstakeNft(null)
-  }
-
   const {
     isLoading: isStakeNftLoading,
     onSubmit: onDepositAndStake,
@@ -134,8 +106,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   useEffect(() => {
     if (depositAndStakeResponse) {
-      mutate(["nfts", chainId, account])
-      onDepositModalCancel()
+      mutate(active ? ["nfts", chainId, account] : null)
+      setPickedStakeNft(null)
       onNftListModalClose()
     }
   }, [depositAndStakeResponse])
@@ -148,9 +120,10 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   useEffect(() => {
     if (claimAndUnstakeResponse) {
-      mutate(["stakingRewards", chainId, account])
-      mutate(["nfts", chainId, account])
-      onUnstakeModalCancel()
+      console.log("claimAndUnstakeResponse", claimAndUnstakeResponse)
+      mutate(active ? ["stakingRewards", chainId, account] : null)
+      mutate(active ? ["nfts", chainId, account] : null)
+      setPickedUnstakeNft(null)
       onDepositNftsModalClose()
     }
   }, [claimAndUnstakeResponse])
@@ -215,8 +188,9 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
             <VStack>
               <Text as="span" fontSize="3xl">
-                {rewardsOwed && rewardsInfo?.reward
-                  ? parseFloat(formatUnits(rewardsInfo.reward))?.toFixed(2)
+                {console.log(rewardsOwed, rewardsInfo)}
+                {rewardsOwed && rewardsInfo?.reward > 0
+                  ? parseFloat(formatUnits(rewardsInfo.reward))?.toFixed(4)
                   : "-"}
               </Text>
               <Text as="span">Unclaimed {rewardTokenSymbol}</Text>
@@ -254,10 +228,16 @@ const LiquidityFarmingPage = (): JSX.Element => {
         <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
       )}
 
-      <Modal isOpen={isNftListModalOpen} onClose={onNftListModalClose}>
+      <Modal
+        isOpen={isNftListModalOpen}
+        onClose={() => {
+          onNftListModalClose()
+          setPickedStakeNft(null)
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Pick</ModalHeader>
+          <ModalHeader>Deposit & Stake</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {isUserNftsLoading ? (
@@ -283,45 +263,49 @@ const LiquidityFarmingPage = (): JSX.Element => {
                 )}
               </VStack>
             )}
+
+            {pickedStakeNft && (
+              <ScaleFade in={pickedStakeNft}>
+                <Text mt={8} mb={4}>
+                  In order to earn {rewardTokenSymbol} rewards, you must deposit this
+                  NFT to the Uniswap Staking contract, and stake it in Seed Club's
+                  farm.
+                </Text>
+                <Text mb={8}>Picked NFT: {pickedStakeNft}</Text>
+                <Button
+                  fontFamily="display"
+                  w="max-content"
+                  colorScheme="gray"
+                  mr={3}
+                  onClick={() => {
+                    onNftListModalClose()
+                    setPickedStakeNft(null)
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  fontFamily="display"
+                  w="max-content"
+                  isLoading={isStakeNftLoading}
+                  colorScheme="seedclub"
+                  onClick={onDepositAndStake}
+                >
+                  Deposit & Stake
+                </Button>
+              </ScaleFade>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
 
-      <Modal isOpen={isDepositModalOpen} onClose={onDepositModalCancel}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Deposit & Stake</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text mb={4}>
-              In order to earn {rewardTokenSymbol} rewards, you must deposit this NFT
-              to the Uniswap Staking contract, and stake it in Seed Club's farm.
-            </Text>
-            <Text>Picked NFT: {pickedStakeNft}</Text>
-          </ModalBody>
-
-          <ModalFooter fontFamily="display">
-            <Button
-              w="max-content"
-              colorScheme="gray"
-              mr={3}
-              onClick={onDepositModalCancel}
-            >
-              Close
-            </Button>
-            <Button
-              w="max-content"
-              isLoading={isStakeNftLoading}
-              colorScheme="seedclub"
-              onClick={onDepositAndStake}
-            >
-              Deposit & Stake
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-      <Modal isOpen={isDepositNftsModalOpen} onClose={onDepositNftsModalClose}>
+      <Modal
+        isOpen={isDepositNftsModalOpen}
+        onClose={() => {
+          onDepositNftsModalClose()
+          setPickedUnstakeNft(null)
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Claim & Unstake</ModalHeader>
@@ -350,37 +334,34 @@ const LiquidityFarmingPage = (): JSX.Element => {
                 )}
               </VStack>
             )}
-          </ModalBody>
-        </ModalContent>
-      </Modal>
 
-      <Modal isOpen={isUnstakeModalOpen} onClose={onUnstakeModalCancel}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Claim & Unstake</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>Picked NFT: {pickedUnstakeNft}</Text>
+            {pickedUnstakeNft && (
+              <ScaleFade in={pickedUnstakeNft}>
+                <Text my={8}>Picked NFT: {pickedUnstakeNft}</Text>
+                <Button
+                  fontFamily="display"
+                  w="max-content"
+                  colorScheme="gray"
+                  mr={3}
+                  onClick={() => {
+                    onDepositNftsModalClose()
+                    setPickedUnstakeNft(null)
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  fontFamily="display"
+                  w="max-content"
+                  isLoading={isClaimAndUnstakeLoading}
+                  colorScheme="seedclub"
+                  onClick={onClaimAndUnstakeSubmit}
+                >
+                  Claim & unstake
+                </Button>
+              </ScaleFade>
+            )}
           </ModalBody>
-
-          <ModalFooter fontFamily="display">
-            <Button
-              w="max-content"
-              colorScheme="gray"
-              mr={3}
-              onClick={onUnstakeModalCancel}
-            >
-              Close
-            </Button>
-            <Button
-              w="max-content"
-              isLoading={isClaimAndUnstakeLoading}
-              colorScheme="seedclub"
-              onClick={onClaimAndUnstakeSubmit}
-            >
-              Claim & unstake
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
 

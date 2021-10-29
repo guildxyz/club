@@ -41,7 +41,7 @@ const getStakingRewardsData =
       stakerContract.rewards(addresses.REWARD_TOKEN_ADDRESS, walletAddress),
       stakerContract.getRewardInfo(incentiveKey, TEMP_TOKENID).catch((_) => null),
     ]).catch((error) => {
-      console.log('Erro in "useStakingRewards" hook:', error)
+      console.log('Error in "useStakingRewards" hook:', error)
       /**
        * This means, that the error occured because the user is on a wrong chain, if
        * we were revalidating on this error, it would occur again until the the user
