@@ -17,7 +17,9 @@ const TokenImage = ({ isLoading, tokenSymbol, tokenImage }: Props): JSX.Element 
     justifyContent="center"
   >
     {isLoading && !tokenSymbol && <Spinner />}
-    {tokenImage && tokenSymbol && <Img src={tokenImage} alt={tokenSymbol} />}
+    {tokenImage && tokenSymbol && (
+      <Img boxSize={10} maxW={10} maxH={10} src={tokenImage} alt={tokenSymbol} />
+    )}
     {!tokenImage && tokenSymbol && (
       <Text as="span" fontWeight="bold" fontFamily="body" fontSize="md">
         {tokenSymbol}

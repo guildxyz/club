@@ -16,6 +16,7 @@ const getMerkleData =
       contract.distributionEnd(),
       contract.owner(),
     ]).catch((error) => {
+      console.log('Erro in "useMerkleDistributor" hook:', error)
       /**
        * This means, that the error occured because the user is on a wrong chain, if
        * we were revalidating on this error, it would occur again until the the user
