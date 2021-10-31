@@ -1,10 +1,10 @@
+import { defaultAbiCoder } from "@ethersproject/abi"
 import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import { useMemo } from "react"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
-import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import addresses from "temporaryData/addresses"
 import dev from "temporaryData/dev"
 
@@ -17,12 +17,6 @@ const useStakeNft = (tokenId: number) => {
     true
   )
 
-  const stakerContract = useContract(
-    active ? addresses.STAKER_ADDRESS : null,
-    STAKING_REWARDS_ABI,
-    true
-  )
-
   const incentiveKey = useMemo(
     () => ({ ...dev.TEMP_INCENTIVEKEY, refundee: account }),
     [account]
@@ -32,15 +26,25 @@ const useStakeNft = (tokenId: number) => {
 
   // Temp. solution, should use 2 useSubmit hooks for this
   const stakeNft = async () => {
-    // Deposit
-    const depositRes = await nftContract[
-      "safeTransferFrom(address,address,uint256)"
-    ](account, addresses.STAKER_ADDRESS, tokenId)
-    // Wait for transaction to complete
-    await depositRes?.wait()
-    // Stake
-    const stakeRes = await stakerContract?.stakeToken(incentiveKey, tokenId)
-    return stakeRes?.wait()
+    // Deposit & stake in one call
+    const depositAndStakeRes = await nftContract[
+      "safeTransferFrom(address,address,uint256,bytes)"
+    ](
+      account,
+      addresses.STAKER_ADDRESS,
+      tokenId,
+      defaultAbiCoder.encode(
+        ["address", "address", "uint", "uint", "address"],
+        [
+          incentiveKey.rewardToken,
+          incentiveKey.pool,
+          incentiveKey.startTime,
+          incentiveKey.endTime,
+          incentiveKey.refundee,
+        ]
+      )
+    )
+    return depositAndStakeRes?.wait()
   }
 
   return useSubmit<null, any>(stakeNft, {

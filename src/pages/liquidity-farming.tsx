@@ -120,7 +120,6 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   useEffect(() => {
     if (claimAndUnstakeResponse) {
-      console.log("claimAndUnstakeResponse", claimAndUnstakeResponse)
       mutate(active ? ["stakingRewards", chainId, account] : null)
       mutate(active ? ["nfts", chainId, account] : null)
       setPickedUnstakeNft(null)
@@ -169,7 +168,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             {/* <Text fontWeight="bold">? days ? hours ? minutes left</Text> */}
             <Countdown
               timestamp={dev.TEMP_INCENTIVEKEY.endTime}
-              endText="Oof"
+              endText="Liquidity Farming ended"
               long
             />
             <Text>
@@ -188,7 +187,6 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
             <VStack>
               <Text as="span" fontSize="3xl">
-                {console.log(rewardsOwed, rewardsInfo)}
                 {rewardsOwed && rewardsInfo?.reward > 0
                   ? parseFloat(formatUnits(rewardsInfo.reward))?.toFixed(4)
                   : "-"}
@@ -365,7 +363,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
         </ModalContent>
       </Modal>
 
-      {false && (
+      {true && (
         <>
           <Button isLoading={isCreateIncentiveLoading} onClick={onCreateIncentive}>
             Create Incentive

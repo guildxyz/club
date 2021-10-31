@@ -9,10 +9,13 @@ type Props = {
 
 const Countdown = ({ timestamp, endText, long }: Props): JSX.Element => {
   const [remainingTime, setRemainingTime] = useState("00:00:00:00")
+  const [shouldCount, setShouldCount] = useState(true)
 
   const counting = () => {
     const now = new Date().getTime()
     const timeleft = new Date(timestamp * 1000).getTime() - now
+
+    if (timeleft < 0) setShouldCount(false)
 
     const hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
     const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60))
@@ -28,12 +31,16 @@ const Countdown = ({ timestamp, endText, long }: Props): JSX.Element => {
   }
 
   useEffect(() => {
-    const interval = setInterval(counting, 1000)
+    const interval = shouldCount ? setInterval(counting, 1000) : null
+    if (!shouldCount) {
+      if (interval) clearInterval(interval)
+      setRemainingTime("")
+    }
 
     return () => {
       if (interval) clearInterval(interval)
     }
-  }, [])
+  }, [shouldCount])
 
   if (remainingTime === "")
     return (
