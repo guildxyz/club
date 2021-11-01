@@ -7,7 +7,7 @@ import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import addresses from "temporaryData/addresses"
 import dev from "temporaryData/dev"
 
-const useClaimAndUnstake = (tokenId: number) => {
+const useUnstakeWithdrawClaim = (tokenId: number) => {
   const { active, account, chainId } = useWeb3React()
 
   const stakerContract = useContract(
@@ -23,28 +23,29 @@ const useClaimAndUnstake = (tokenId: number) => {
 
   const toast = useToast()
 
-  // Temp. solution, should use 2 useSubmit hooks for this
-  const stakeNft = async () => {
-    // Unstake NFT
-    const unstakeRes = await stakerContract.unstakeToken(incentiveKey, tokenId)
-    await unstakeRes.wait()
-    // Withdraw NFT
-    const withdrawNftRes = await stakerContract.withdrawToken(
-      tokenId,
-      account,
-      "0x00"
-    )
-    await withdrawNftRes.wait()
-    // Claim rewards
-    const claimRewardRes = await stakerContract.claimReward(
-      addresses.REWARD_TOKEN_ADDRESS,
-      account,
-      0
-    )
-    return claimRewardRes.wait()
+  // Unstake, withdraw, and claim in one call
+  const unstakeWithdrawClaim = async () => {
+    const multicall = await stakerContract.multicall([
+      stakerContract.interface.encodeFunctionData("unstakeToken", [
+        incentiveKey,
+        tokenId,
+      ]),
+      stakerContract.interface.encodeFunctionData("withdrawToken", [
+        tokenId,
+        account,
+        "0x00",
+      ]),
+      stakerContract.interface.encodeFunctionData("claimReward", [
+        addresses.REWARD_TOKEN_ADDRESS,
+        account,
+        0,
+      ]),
+    ])
+
+    return multicall?.wait()
   }
 
-  return useSubmit<null, any>(stakeNft, {
+  return useSubmit<null, any>(unstakeWithdrawClaim, {
     onError: (e) => {
       console.log(e)
       toast({
@@ -65,4 +66,4 @@ const useClaimAndUnstake = (tokenId: number) => {
   })
 }
 
-export default useClaimAndUnstake
+export default useUnstakeWithdrawClaim

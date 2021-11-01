@@ -19,12 +19,12 @@ import { useWeb3React } from "@web3-react/core"
 import PageContent from "components/common/PageContent"
 import TokenImage from "components/common/TokenImage"
 import Countdown from "components/index/Countdown"
-import useClaimAndUnstake from "components/liquidity-farming/hooks/useClaimAndUnstake"
 import useCreateIncentive from "components/liquidity-farming/hooks/useCreateIncentive"
 import useEndIncentive from "components/liquidity-farming/hooks/useEndIncentive"
 import useStakeNft from "components/liquidity-farming/hooks/useStakeNft"
 import useStakingRewards from "components/liquidity-farming/hooks/useStakingRewards"
 import useSumLiquidity from "components/liquidity-farming/hooks/useSumLiquidity"
+import useUnstakeWithdrawClaim from "components/liquidity-farming/hooks/useUnstakeWithdrawClaim"
 import useUserNfts from "components/liquidity-farming/hooks/useUserNfts"
 import useTokenData from "hooks/useTokenData"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
@@ -113,19 +113,19 @@ const LiquidityFarmingPage = (): JSX.Element => {
   }, [depositAndStakeResponse])
 
   const {
-    isLoading: isClaimAndUnstakeLoading,
-    onSubmit: onClaimAndUnstakeSubmit,
-    response: claimAndUnstakeResponse,
-  } = useClaimAndUnstake(pickedUnstakeNft)
+    isLoading: isClaimLoading,
+    onSubmit: onClaimSubmit,
+    response: claimResponse,
+  } = useUnstakeWithdrawClaim(pickedUnstakeNft)
 
   useEffect(() => {
-    if (claimAndUnstakeResponse) {
+    if (claimResponse) {
       mutate(active ? ["stakingRewards", chainId, account] : null)
       mutate(active ? ["nfts", chainId, account] : null)
       setPickedUnstakeNft(null)
       onDepositNftsModalClose()
     }
-  }, [claimAndUnstakeResponse])
+  }, [claimResponse])
 
   // For development testing only!
   const { isLoading: isCreateIncentiveLoading, onSubmit: onCreateIncentive } =
@@ -213,7 +213,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
               letterSpacing="wide"
               colorScheme="gray"
               variant="outline"
-              isLoading={isClaimAndUnstakeLoading}
+              isLoading={isClaimLoading}
               onClick={onDepositNftsModalOpen}
             >
               Claim & Unstake
@@ -351,9 +351,9 @@ const LiquidityFarmingPage = (): JSX.Element => {
                 <Button
                   fontFamily="display"
                   w="max-content"
-                  isLoading={isClaimAndUnstakeLoading}
+                  isLoading={isClaimLoading}
                   colorScheme="seedclub"
-                  onClick={onClaimAndUnstakeSubmit}
+                  onClick={onClaimSubmit}
                 >
                   Claim & unstake
                 </Button>
