@@ -31,9 +31,9 @@ import useTokenDataWithImage from "hooks/useTokenDataWithImage"
 import { useEffect, useMemo, useState } from "react"
 import { mutate } from "swr"
 import dev from "temporaryData/dev"
+import unique from "utils/uniqueFilter"
 
 const TEMP_REWARD_TOKEN_ADDRESS = "0x3c65d35a8190294d39013287b246117ebf6615bd"
-const unique = (value, index, self): boolean => self.indexOf(value) === index
 
 const LiquidityFarmingPage = (): JSX.Element => {
   // Modals

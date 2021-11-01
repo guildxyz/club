@@ -9,6 +9,7 @@ import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import useSWR from "swr"
 import addresses from "temporaryData/addresses"
 import dev from "temporaryData/dev"
+import unique from "utils/uniqueFilter"
 
 // const TEMP_TOKENID = 1185;
 const TEMP_TOKENID = 1171 // TODO: ???
@@ -28,18 +29,25 @@ const getStakingRewardsData =
         nftContract.filters.Transfer(walletAddress)
       )
 
+      const uniqueNftTransfers = nftTransfers
+        ?.map((transfer) => parseInt(transfer?.args?.tokenId))
+        ?.filter(unique)
+
       const depoArray = []
 
-      for (let i = 0; i < nftTransfers?.length; i++) {
+      for (let i = 0; i < uniqueNftTransfers?.length; i++) {
         const depo = await stakerContract.queryFilter(
           stakerContract.filters.DepositTransferred([
-            nftTransfers[i].args?.tokenId,
+            uniqueNftTransfers[i],
             hexZeroPad("0x00", 32),
             hexZeroPad(walletAddress, 32),
           ])
         )
-        const tokenId = parseInt(depo?.[0]?.args?.tokenId)
-        if (depo?.length) depoArray.push(+tokenId)
+
+        if (depo?.length) {
+          const tokenId = parseInt(depo?.[0]?.args?.tokenId)
+          depoArray.push(+tokenId)
+        }
       }
 
       resolve(depoArray)
