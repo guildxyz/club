@@ -3,23 +3,17 @@ import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
-import { useMemo } from "react"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import addresses from "temporaryData/addresses"
 import dev from "temporaryData/dev"
 
 const useStakeNft = (tokenId: number) => {
-  const { active, account, chainId } = useWeb3React()
+  const { active, account } = useWeb3React()
 
   const nftContract = useContract(
     active ? addresses.NFPOSITIOMANAGER_ADDRESS : null,
     NFPOSITIONMANAGER_ABI,
     true
-  )
-
-  const incentiveKey = useMemo(
-    () => ({ ...dev.TEMP_INCENTIVEKEY, refundee: account }),
-    [account]
   )
 
   const toast = useToast()
@@ -36,11 +30,11 @@ const useStakeNft = (tokenId: number) => {
       defaultAbiCoder.encode(
         ["address", "address", "uint", "uint", "address"],
         [
-          incentiveKey.rewardToken,
-          incentiveKey.pool,
-          incentiveKey.startTime,
-          incentiveKey.endTime,
-          incentiveKey.refundee,
+          dev.INCENTIVEKEY.rewardToken,
+          dev.INCENTIVEKEY.pool,
+          dev.INCENTIVEKEY.startTime,
+          dev.INCENTIVEKEY.endTime,
+          dev.INCENTIVEKEY.refundee,
         ]
       )
     )

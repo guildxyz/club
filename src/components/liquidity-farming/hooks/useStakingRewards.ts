@@ -3,16 +3,12 @@ import { Contract } from "@ethersproject/contracts"
 import { Logger } from "@ethersproject/logger"
 import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
-import { useMemo } from "react"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import useSWR from "swr"
 import addresses from "temporaryData/addresses"
 import dev from "temporaryData/dev"
 import unique from "utils/uniqueFilter"
-
-// const TEMP_TOKENID = 1185;
-const TEMP_TOKENID = 1171 // TODO: ???
 
 // TODO: better typing!
 const getStakingRewardsData =
@@ -63,7 +59,6 @@ const getStakingRewardsData =
       depositTransferredEvents,
       nftContract.name(),
       stakerContract.rewards(addresses.REWARD_TOKEN_ADDRESS, walletAddress),
-      stakerContract.getRewardInfo(incentiveKey, TEMP_TOKENID).catch((_) => null),
     ]).catch((error) => {
       console.log('Error in "useStakingRewards" hook:', error)
       /**
@@ -72,18 +67,13 @@ const getStakingRewardsData =
        * doesn't switch to the correct chain
        */
       if (error.code === Logger.errors.CALL_EXCEPTION)
-        return [null, null, null, null, null]
+        return [null, null, null, null]
       throw error
     })
   }
 
 const useStakingRewards = () => {
   const { active, account, chainId } = useWeb3React()
-
-  const incentiveKey = useMemo(
-    () => ({ ...dev.TEMP_INCENTIVEKEY, refundee: account }),
-    [account]
-  )
 
   const nftContract = useContract(
     active ? addresses.NFPOSITIOMANAGER_ADDRESS : null,
@@ -99,7 +89,7 @@ const useStakingRewards = () => {
 
   const swrResponse = useSWR<[any, any, string, string, string, any]>(
     active ? ["stakingRewards", chainId, account] : null,
-    getStakingRewardsData(account, incentiveKey, stakerContract, nftContract),
+    getStakingRewardsData(account, dev.INCENTIVEKEY, stakerContract, nftContract),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -114,13 +104,7 @@ const useStakingRewards = () => {
      * Doing this instead of using initialData to make sure it fetches when
      * shouldFetch becomes true
      */
-    data: swrResponse.data ?? [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
+    data: swrResponse.data ?? [undefined, undefined, undefined, undefined],
   }
 }
 

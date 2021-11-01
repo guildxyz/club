@@ -24,6 +24,7 @@ import useEndIncentive from "components/liquidity-farming/hooks/useEndIncentive"
 import useStakeNft from "components/liquidity-farming/hooks/useStakeNft"
 import useStakingRewards from "components/liquidity-farming/hooks/useStakingRewards"
 import useSumLiquidity from "components/liquidity-farming/hooks/useSumLiquidity"
+import useSumUnclaimedRewards from "components/liquidity-farming/hooks/useSumUnclaimedRewards"
 import useUnstakeWithdrawClaim from "components/liquidity-farming/hooks/useUnstakeWithdrawClaim"
 import useUserNfts from "components/liquidity-farming/hooks/useUserNfts"
 import useTokenData from "hooks/useTokenData"
@@ -32,8 +33,6 @@ import { useEffect, useMemo, useState } from "react"
 import { mutate } from "swr"
 import dev from "temporaryData/dev"
 import unique from "utils/uniqueFilter"
-
-const TEMP_REWARD_TOKEN_ADDRESS = "0x3c65d35a8190294d39013287b246117ebf6615bd"
 
 const LiquidityFarmingPage = (): JSX.Element => {
   // Modals
@@ -51,7 +50,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
   const { active, chainId, account } = useWeb3React()
   const {
     data: [, rewardTokenSymbol],
-  } = useTokenData(TEMP_REWARD_TOKEN_ADDRESS)
+  } = useTokenData(dev.REWARD_TOKEN_ADDRESS)
   const {
     isLoading: isToken0Loading,
     tokenSymbol: liquidityToken0Symbol,
@@ -67,13 +66,13 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   const {
     isValidating,
-    data: [incentiveInfo, depositTransferred, nftName, rewardsOwed, rewardsInfo],
+    data: [incentiveInfo, depositTransferred, nftName, rewardsOwed],
   } = useStakingRewards()
 
   const incentiveData = useMemo(
     () =>
       incentiveInfo?.find(
-        (i) => parseFloat(i.args.endTime) === dev.TEMP_INCENTIVEKEY.endTime
+        (i) => parseFloat(i.args.endTime) === dev.INCENTIVEKEY.endTime
       ),
     [incentiveInfo]
   )
@@ -89,6 +88,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
   }, [depositTransferred, userNfts])
 
   const sumLiquidity = useSumLiquidity(depositData)
+  const sumUnclaimedRewards = useSumUnclaimedRewards(depositData)
 
   // DEBUG
   // useEffect(() => {
@@ -167,7 +167,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
           <VStack spacing={1} fontSize="xl">
             {/* <Text fontWeight="bold">? days ? hours ? minutes left</Text> */}
             <Countdown
-              timestamp={dev.TEMP_INCENTIVEKEY.endTime}
+              timestamp={dev.INCENTIVEKEY.endTime}
               endText="Liquidity Farming ended"
               long
             />
@@ -187,8 +187,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
             <VStack>
               <Text as="span" fontSize="3xl">
-                {rewardsOwed && rewardsInfo?.reward > 0
-                  ? parseFloat(formatUnits(rewardsInfo.reward))?.toFixed(4)
+                {rewardsOwed && parseFloat(sumUnclaimedRewards) > 0
+                  ? sumUnclaimedRewards
                   : "-"}
               </Text>
               <Text as="span">Unclaimed {rewardTokenSymbol}</Text>
@@ -209,7 +209,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             </Button>
 
             <Button
-              isDisabled={!rewardsOwed || !rewardsInfo?.reward}
+              isDisabled={!rewardsOwed || !sumUnclaimedRewards}
               letterSpacing="wide"
               colorScheme="gray"
               variant="outline"

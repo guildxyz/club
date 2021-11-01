@@ -3,7 +3,6 @@ import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
-import { useMemo } from "react"
 import ERC20_ABI from "static/abis/erc20abi.json"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import addresses from "temporaryData/addresses"
@@ -24,11 +23,6 @@ const useCreateIncentive = () => {
     true
   )
 
-  const incentiveKey = useMemo(
-    () => ({ ...dev.TEMP_INCENTIVEKEY, refundee: account }),
-    [account]
-  )
-
   const toast = useToast()
 
   const createIncentive = async () => {
@@ -41,7 +35,7 @@ const useCreateIncentive = () => {
     console.log(START_TIME, END_TIME) // Don't forget to copy it from the console LOL
     return stakerContract.createIncentive(
       {
-        ...incentiveKey,
+        ...dev.INCENTIVEKEY,
         startTime: START_TIME,
         endTime: END_TIME,
       },
