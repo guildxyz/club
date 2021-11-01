@@ -21,22 +21,38 @@ const getStakingRewardsData =
     stakerContract: Contract,
     nftContract: Contract
   ) =>
-  async (_: string): Promise<any> =>
-    Promise.all([
+  (_: string): Promise<any> => {
+    // TODO... do it more professionally, LOL
+    const depositTransferredEvents = new Promise(async (resolve, _) => {
+      const nftTransfers = await nftContract.queryFilter(
+        nftContract.filters.Transfer(walletAddress)
+      )
+
+      const depoArray = []
+
+      for (let i = 0; i < nftTransfers?.length; i++) {
+        const depo = await stakerContract.queryFilter(
+          stakerContract.filters.DepositTransferred([
+            nftTransfers[i].args?.tokenId,
+            hexZeroPad("0x00", 32),
+            hexZeroPad(walletAddress, 32),
+          ])
+        )
+        const tokenId = parseInt(depo?.[0]?.args?.tokenId)
+        if (depo?.length) depoArray.push(+tokenId)
+      }
+
+      resolve(depoArray)
+    })
+
+    return Promise.all([
       stakerContract.queryFilter(
         stakerContract.filters.IncentiveCreated([
           incentiveKey.rewardToken,
           incentiveKey.pool,
         ])
       ),
-      stakerContract.queryFilter(
-        stakerContract.filters.DepositTransferred([
-          1171, // TODO: this should be null...
-          hexZeroPad("0x00", 32),
-          hexZeroPad(walletAddress, 32),
-        ])
-      ),
-      // nftContract.symbol(),
+      depositTransferredEvents,
       nftContract.name(),
       stakerContract.rewards(addresses.REWARD_TOKEN_ADDRESS, walletAddress),
       stakerContract.getRewardInfo(incentiveKey, TEMP_TOKENID).catch((_) => null),
@@ -51,6 +67,7 @@ const getStakingRewardsData =
         return [null, null, null, null, null]
       throw error
     })
+  }
 
 const useStakingRewards = () => {
   const { active, account, chainId } = useWeb3React()

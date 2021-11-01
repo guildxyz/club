@@ -80,19 +80,19 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   const depositData = useMemo(() => {
     const userNftIds = userNfts?.map((nftData) => nftData.nft) || []
+
     return (
       depositTransferred
-        ?.map((depo) => (depo?.args?.tokenId ? parseInt(depo.args.tokenId) : null))
         ?.filter(unique)
         ?.filter((tokenId) => !userNftIds.includes(tokenId)) || []
     )
-  }, [depositTransferred])
+  }, [depositTransferred, userNfts])
 
   const sumLiquidity = useSumLiquidity(depositData)
 
   // DEBUG
   // useEffect(() => {
-  //   console.log(incentiveInfo, depositTransferred, nftName, rewardsOwed, rewardsInfo)
+  //   console.log(depositTransferred)
   // }, [incentiveInfo, depositTransferred, nftName, rewardsOwed, rewardsInfo])
 
   const [pickedStakeNft, setPickedStakeNft] = useState(null)

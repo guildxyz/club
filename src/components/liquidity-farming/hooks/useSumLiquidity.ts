@@ -24,9 +24,11 @@ const useSumLiquidity = (tokenIdArray: Array<number>) => {
     let newLiquiditySum = 0
 
     for (let i = 0; i < tokenIdArray.length; i++) {
-      const tokenData = await nftContract?.positions(tokenIdArray[i])
-      const { liquidity } = tokenData
-      newLiquiditySum += +formatUnits(liquidity)
+      if (tokenIdArray[i] !== null) {
+        const tokenData = await nftContract?.positions(+tokenIdArray[i])
+        const { liquidity } = tokenData
+        newLiquiditySum += +formatUnits(liquidity)
+      }
     }
 
     setLiquiditySum(newLiquiditySum.toFixed(2))
