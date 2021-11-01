@@ -26,10 +26,9 @@ const useSumUnclaimedRewards = (tokenIdArray: Array<number>): string => {
 
     for (let i = 0; i < tokenIdArray.length; i++) {
       if (tokenIdArray[i] !== null) {
-        const rewardsInfo = await stakerContract.getRewardInfo(
-          dev.INCENTIVEKEY,
-          +tokenIdArray?.[i]
-        )
+        const rewardsInfo = await stakerContract
+          .getRewardInfo(dev.INCENTIVEKEY, +tokenIdArray?.[i])
+          .catch((_) => 0)
         const reward = parseFloat(formatUnits(rewardsInfo?.reward || 0))
         newUnclaimedRewardsSum += reward
       }

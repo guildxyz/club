@@ -363,7 +363,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
         </ModalContent>
       </Modal>
 
-      {true && (
+      {false && (
         <>
           <Button isLoading={isCreateIncentiveLoading} onClick={onCreateIncentive}>
             Create Incentive
