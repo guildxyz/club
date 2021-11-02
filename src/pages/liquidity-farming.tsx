@@ -83,7 +83,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
     () =>
       depositTransferred
         ?.filter(unique)
-        ?.filter((tokenId) => !userNfts.includes(tokenId)) || [],
+        ?.filter((tokenId) => !userNfts?.includes(tokenId)) || [],
     [depositTransferred, userNfts]
   )
 
