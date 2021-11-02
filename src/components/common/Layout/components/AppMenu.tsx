@@ -20,7 +20,7 @@ const AppMenu = (): JSX.Element => {
           router.asPath === "/" ? "seedclub.lightlime" : "transparent"
         }
       >
-        Airdrop
+        CLUBdrop
       </Link>
       <Link
         href="/liquidity-farming"

@@ -1,5 +1,6 @@
 import {
   Button,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -23,7 +24,6 @@ import { useWeb3React } from "@web3-react/core"
 import CopyableAddress from "components/common/CopyableAddress"
 import PageContent from "components/common/PageContent"
 import TokenImage from "components/common/TokenImage"
-import Countdown from "components/index/Countdown"
 import useClaim from "components/index/hooks/useClaim"
 import useMerkleDistributor from "components/index/hooks/useMerkleDistributor"
 import useWithdraw from "components/index/hooks/useWithdraw"
@@ -33,7 +33,7 @@ import { useMemo } from "react"
 
 const AirdropPage = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { account, chainId } = useWeb3React()
+  const { account } = useWeb3React()
   const eligible = useMemo(
     () => Object.keys(MerkleDistributor.claims).includes(account),
     [account]
@@ -62,8 +62,8 @@ const AirdropPage = (): JSX.Element => {
 
   return (
     <PageContent
-      layoutTitle="Airdrop"
-      title="Seed Club Airdrop"
+      layoutTitle="CLUBdrop"
+      title="CLUBdrop"
       header={
         account &&
         !isMerkleDistributorLoading &&
@@ -93,14 +93,10 @@ const AirdropPage = (): JSX.Element => {
               <Text fontSize="xl">You've already claimed your tokens!</Text>
             ) : (
               <>
-                <Countdown
-                  timestamp={distributionEnd}
-                  endText="This airdrop has ended!"
-                />
-                {!ended && (
+                {!ended && eligible && (
                   <>
                     <Text>
-                      {`You are ${!eligible ? "not" : ""} on the `}
+                      {`Congrats! You've `}
                       <Text
                         as="span"
                         tabIndex={0}
@@ -118,15 +114,30 @@ const AirdropPage = (): JSX.Element => {
                         }}
                         onClick={onOpen}
                       >
-                        whitelist
+                        qualified
                       </Text>
+                      {` to receive ${tokenSymbol}.`}
                     </Text>
-                    {eligible && (
-                      <Text>{`${formatUnits(
-                        MerkleDistributor.claims[account].amount,
-                        tokenDecimals || 18
-                      )} ${tokenSymbol} waiting to be claimed`}</Text>
-                    )}
+                    <Text>
+                      Read{" "}
+                      <Link href="" target="_blank" color="seedclub.green.700">
+                        this post
+                      </Link>{" "}
+                      to learn more about what's next.
+                    </Text>
+                  </>
+                )}
+
+                {!ended && !eligible && (
+                  <>
+                    <Text>Sorry! You didn't qualify for the CLUBDrop.</Text>
+                    <Text>
+                      Read{" "}
+                      <Link href="" target="_blank" color="seedclub.green.700">
+                        this post
+                      </Link>{" "}
+                      to learn why and how to get involved moving forward.
+                    </Text>
                   </>
                 )}
               </>
@@ -168,11 +179,11 @@ const AirdropPage = (): JSX.Element => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Whitelist</ModalHeader>
+          <ModalHeader>Qualified addresses</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Table variant="simple" size="sm">
-              <TableCaption>Whitelisted addresses</TableCaption>
+              <TableCaption>Qualified addresses</TableCaption>
               <Thead>
                 <Tr>
                   <Th>Address</Th>
