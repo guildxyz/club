@@ -157,7 +157,7 @@ const AirdropPage = (): JSX.Element => {
             </Button>
           )}
 
-          {!ended && owner?.toLowerCase() !== account?.toLowerCase() && (
+          {!ended && eligible && owner?.toLowerCase() !== account?.toLowerCase() && (
             <Button
               px={8}
               letterSpacing="wide"
