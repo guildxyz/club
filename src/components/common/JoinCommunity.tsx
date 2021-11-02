@@ -4,6 +4,7 @@ import {
   HStack,
   Icon,
   IconButton,
+  Link,
   Text,
   VStack,
 } from "@chakra-ui/react"
@@ -29,7 +30,7 @@ const JoinCommunity = () => (
     </Flex>
 
     <HStack spacing={2}>
-      <a href="#" target="_blank" rel="noopener">
+      <Link href="https://twitter.com/seedclubhq" target="_blank" rel="noreferrer">
         <IconButton
           colorScheme="twitter"
           icon={<Icon as={TwitterLogo} />}
@@ -39,9 +40,9 @@ const JoinCommunity = () => (
           minW={8}
           minH={8}
         />
-      </a>
+      </Link>
 
-      <a href="#" target="_blank" rel="noopener">
+      <Link href="https://discord.gg/42UjJskuEF" target="_blank" rel="noreferrer">
         <IconButton
           colorScheme="DISCORD"
           icon={<Icon as={DiscordLogo} />}
@@ -51,7 +52,7 @@ const JoinCommunity = () => (
           minW={8}
           minH={8}
         />
-      </a>
+      </Link>
     </HStack>
   </VStack>
 )
