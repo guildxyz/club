@@ -159,7 +159,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
       }
       subTitle={`Stake ${nftName} to earn ${rewardTokenSymbol}`}
     >
-      {incentiveData && !isValidating && !ended ? (
+      {incentiveData && !isValidating && !ended && (
         <>
           <VStack spacing={1} fontSize="xl">
             <Countdown
@@ -216,13 +216,13 @@ const LiquidityFarmingPage = (): JSX.Element => {
             </Button>
           </SimpleGrid>
         </>
-      ) : (
-        <Text fontSize="xl">This incentive has ended!</Text>
       )}
 
-      {(!account || isValidating) && (
+      {(!account || isValidating) && !ended && (
         <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
       )}
+
+      {ended && <Text fontSize="xl">This incentive has ended!</Text>}
 
       <Modal
         isOpen={isNftListModalOpen}

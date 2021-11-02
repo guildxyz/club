@@ -1,3 +1,4 @@
+import { BigNumber } from "@ethersproject/bignumber"
 import { hexZeroPad } from "@ethersproject/bytes"
 import { Contract } from "@ethersproject/contracts"
 import { Logger } from "@ethersproject/logger"
@@ -18,35 +19,39 @@ const getStakingRewardsData =
     stakerContract: Contract,
     nftContract: Contract
   ) =>
-  (_: string): Promise<any> => {
-    const depositTransferredEvents = new Promise(async (resolve, _) => {
-      const nftTransfers = await nftContract?.queryFilter(
-        nftContract.filters.Transfer(walletAddress)
-      )
-
-      const uniqueNftTransfers = nftTransfers
-        ?.map((transfer) => parseInt(transfer?.args?.tokenId))
-        ?.filter(unique)
-
-      const depoArray = []
-
-      for (let i = 0; i < uniqueNftTransfers?.length; i++) {
-        const depo = await stakerContract.queryFilter(
-          stakerContract.filters.DepositTransferred([
-            uniqueNftTransfers[i],
-            hexZeroPad("0x00", 32),
-            hexZeroPad(walletAddress, 32),
-          ])
+  (
+    _: string
+  ): Promise<[Array<Record<string, any>>, Array<number>, string, BigNumber]> => {
+    const depositTransferredEvents: Promise<Array<number>> = new Promise(
+      async (resolve, _) => {
+        const nftTransfers = await nftContract?.queryFilter(
+          nftContract.filters.Transfer(walletAddress)
         )
 
-        if (depo?.length) {
-          const tokenId = parseInt(depo?.[0]?.args?.tokenId)
-          depoArray.push(+tokenId)
-        }
-      }
+        const uniqueNftTransfers = nftTransfers
+          ?.map((transfer) => parseInt(transfer?.args?.tokenId))
+          ?.filter(unique)
 
-      resolve(depoArray)
-    })
+        const depoArray = []
+
+        for (let i = 0; i < uniqueNftTransfers?.length; i++) {
+          const depo = await stakerContract.queryFilter(
+            stakerContract.filters.DepositTransferred([
+              uniqueNftTransfers[i],
+              hexZeroPad("0x00", 32),
+              hexZeroPad(walletAddress, 32),
+            ])
+          )
+
+          if (depo?.length) {
+            const tokenId = parseInt(depo?.[0]?.args?.tokenId)
+            depoArray.push(+tokenId)
+          }
+        }
+
+        resolve(depoArray)
+      }
+    )
 
     return Promise.all([
       stakerContract.queryFilter(
@@ -86,7 +91,9 @@ const useStakingRewards = () => {
     true
   )
 
-  const swrResponse = useSWR<[any, any, string, string, string, any]>(
+  const swrResponse = useSWR<
+    [Array<Record<string, any>>, Array<number>, string, BigNumber]
+  >(
     active ? ["stakingRewards", chainId, account] : null,
     getStakingRewardsData(account, dev.INCENTIVEKEY, stakerContract, nftContract),
     {

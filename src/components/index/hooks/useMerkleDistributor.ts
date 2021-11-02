@@ -1,3 +1,4 @@
+import { BigNumber } from "@ethersproject/bignumber"
 import { Contract } from "@ethersproject/contracts"
 import { Logger } from "@ethersproject/logger"
 import { useWeb3React } from "@web3-react/core"
@@ -9,7 +10,7 @@ import useSWR, { mutate } from "swr"
 
 const getMerkleData =
   (contract: Contract, index: string) =>
-  (_: string): Promise<[boolean, string, any, string]> =>
+  (_: string): Promise<[boolean, string, BigNumber, string]> =>
     Promise.all([
       index ? contract.isClaimed(index) : false,
       contract.token(),
@@ -37,7 +38,7 @@ const useMerkleDistributor = (userAddress: string) => {
     MERKLE_ABI
   )
 
-  const swrResponse = useSWR<[boolean, string, any, string]>(
+  const swrResponse = useSWR<[boolean, string, BigNumber, string]>(
     active ? ["merkle", chainId, account] : null,
     getMerkleData(contract, index),
     {

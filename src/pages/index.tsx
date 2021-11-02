@@ -53,7 +53,8 @@ const AirdropPage = (): JSX.Element => {
   const ended = useMemo(
     () =>
       distributionEnd
-        ? new Date(parseInt(distributionEnd)).getTime() < new Date().getTime()
+        ? new Date(parseInt(distributionEnd?.toString())).getTime() <
+          new Date().getTime()
         : true,
     [distributionEnd]
   )
