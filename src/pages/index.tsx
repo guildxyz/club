@@ -52,8 +52,8 @@ const AirdropPage = (): JSX.Element => {
   const ended = useMemo(
     () =>
       distributionEnd
-        ? new Date(distributionEnd).getTime() < new Date().getTime()
-        : false,
+        ? new Date(parseInt(distributionEnd)).getTime() < new Date().getTime()
+        : true,
     [distributionEnd]
   )
 
@@ -139,6 +139,10 @@ const AirdropPage = (): JSX.Element => {
                       to learn why and how to get involved moving forward.
                     </Text>
                   </>
+                )}
+
+                {ended && (
+                  <Text>Sorry! The distribution of this token has ended.</Text>
                 )}
               </>
             )}
