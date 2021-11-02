@@ -19,7 +19,6 @@ const getStakingRewardsData =
     nftContract: Contract
   ) =>
   (_: string): Promise<any> => {
-    // TODO... do it more professionally, LOL
     const depositTransferredEvents = new Promise(async (resolve, _) => {
       const nftTransfers = await nftContract?.queryFilter(
         nftContract.filters.Transfer(walletAddress)
