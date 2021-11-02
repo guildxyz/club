@@ -162,7 +162,6 @@ const AirdropPage = (): JSX.Element => {
               px={8}
               letterSpacing="wide"
               colorScheme="seedclub"
-              isDisabled={isClaimed}
               isLoading={isWithdrawLoading}
               loadingText="Withdraw"
               onClick={onWithdrawSubmit}
