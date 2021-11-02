@@ -11,7 +11,7 @@ const getMerkleData =
   (contract: Contract, index: string) =>
   (_: string): Promise<[boolean, string, any, string]> =>
     Promise.all([
-      contract.isClaimed(index),
+      index ? contract.isClaimed(index) : false,
       contract.token(),
       contract.distributionEnd(),
       contract.owner(),
