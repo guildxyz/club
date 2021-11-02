@@ -177,14 +177,14 @@ const LiquidityFarmingPage = (): JSX.Element => {
           <SimpleGrid gridTemplateColumns="1fr 1fr" gap={8}>
             <VStack>
               <Text as="span" fontSize="3xl">
-                {sumLiquidity}
+                {parseFloat(sumUnclaimedRewards) > 0.0 ? sumLiquidity : "-"}
               </Text>
               <Text as="span">Staked liquidity</Text>
             </VStack>
 
             <VStack>
               <Text as="span" fontSize="3xl">
-                {sumUnclaimedRewards}
+                {parseFloat(sumUnclaimedRewards) > 0.0 ? sumUnclaimedRewards : "-"}
               </Text>
               <Text as="span">Unclaimed {rewardTokenSymbol}</Text>
             </VStack>
