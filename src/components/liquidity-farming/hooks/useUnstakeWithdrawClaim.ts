@@ -3,14 +3,13 @@ import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
-import addresses from "temporaryData/addresses"
-import dev from "temporaryData/dev"
+import incentiveKey from "temporaryData/incentiveKey"
 
 const useUnstakeWithdrawClaim = (tokenId: number) => {
   const { active, account } = useWeb3React()
 
   const stakerContract = useContract(
-    active ? addresses.STAKER_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS : null,
     STAKING_REWARDS_ABI,
     true
   )
@@ -21,7 +20,7 @@ const useUnstakeWithdrawClaim = (tokenId: number) => {
   const unstakeWithdrawClaim = async () => {
     const multicall = await stakerContract.multicall([
       stakerContract.interface.encodeFunctionData("unstakeToken", [
-        dev.INCENTIVEKEY,
+        incentiveKey,
         tokenId,
       ]),
       stakerContract.interface.encodeFunctionData("withdrawToken", [
@@ -30,7 +29,7 @@ const useUnstakeWithdrawClaim = (tokenId: number) => {
         "0x00",
       ]),
       stakerContract.interface.encodeFunctionData("claimReward", [
-        addresses.REWARD_TOKEN_ADDRESS,
+        process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS,
         account,
         0,
       ]),

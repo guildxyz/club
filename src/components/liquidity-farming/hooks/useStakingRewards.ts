@@ -7,8 +7,7 @@ import useContract from "hooks/useContract"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import useSWR from "swr"
-import addresses from "temporaryData/addresses"
-import dev from "temporaryData/dev"
+import staticIncentiveKey from "temporaryData/incentiveKey"
 import unique from "utils/uniqueFilter"
 
 // TODO: better typing!
@@ -62,7 +61,10 @@ const getStakingRewardsData =
       ),
       depositTransferredEvents,
       nftContract.name(),
-      stakerContract.rewards(addresses.REWARD_TOKEN_ADDRESS, walletAddress),
+      stakerContract.rewards(
+        process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS,
+        walletAddress
+      ),
     ]).catch((error) => {
       console.log('Error in "useStakingRewards" hook:', error)
       /**
@@ -80,13 +82,13 @@ const useStakingRewards = () => {
   const { active, account, chainId } = useWeb3React()
 
   const nftContract = useContract(
-    active ? addresses.NFPOSITIOMANAGER_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_NFPOSITIOMANAGER_ADDRESS : null,
     NFPOSITIONMANAGER_ABI,
     true
   )
 
   const stakerContract = useContract(
-    active ? addresses.STAKER_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS : null,
     STAKING_REWARDS_ABI,
     true
   )
@@ -95,7 +97,7 @@ const useStakingRewards = () => {
     [Array<Record<string, any>>, Array<number>, string, BigNumber]
   >(
     active ? ["stakingRewards", chainId, account] : null,
-    getStakingRewardsData(account, dev.INCENTIVEKEY, stakerContract, nftContract),
+    getStakingRewardsData(account, staticIncentiveKey, stakerContract, nftContract),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

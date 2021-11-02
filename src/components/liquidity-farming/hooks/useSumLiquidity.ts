@@ -3,14 +3,13 @@ import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import { useEffect, useState } from "react"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
-import addresses from "temporaryData/addresses"
 
 const useSumLiquidity = (tokenIdArray: Array<number>) => {
   const [liquiditySum, setLiquiditySum] = useState("0.00")
   const { active } = useWeb3React()
 
   const nftContract = useContract(
-    active ? addresses.NFPOSITIOMANAGER_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_NFPOSITIOMANAGER_ADDRESS : null,
     NFPOSITIONMANAGER_ABI,
     true
   )

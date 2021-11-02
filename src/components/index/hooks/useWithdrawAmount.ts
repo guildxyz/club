@@ -4,10 +4,9 @@ import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import REWARD_TOKEN_ABI from "static/abis/RewardTokenAbi.json"
 import useSWR from "swr"
-import dev from "temporaryData/dev"
 
 const getBalanceOf = (contract: Contract, merkleContractAddress: string) =>
-  contract.balanceOf(merkleContractAddress).catch((error) => {
+  contract?.balanceOf(merkleContractAddress).catch((error) => {
     console.log('Error in "useWithdrawAmount" hook:', error)
     /**
      * This means, that the error occured because the user is on a wrong chain, if we
@@ -21,7 +20,7 @@ const getBalanceOf = (contract: Contract, merkleContractAddress: string) =>
 const useWithdrawAmount = () => {
   const { account, active, chainId } = useWeb3React()
   const rewardTokenContract = useContract(
-    dev?.REWARD_TOKEN_ADDRESS,
+    process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS,
     REWARD_TOKEN_ABI
   )
 

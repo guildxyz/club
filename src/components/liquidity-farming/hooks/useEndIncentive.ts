@@ -3,14 +3,13 @@ import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
-import addresses from "temporaryData/addresses"
-import dev from "temporaryData/dev"
+import incentiveKey from "temporaryData/incentiveKey"
 
 const useEndIncentive = () => {
   const { active } = useWeb3React()
 
   const stakerContract = useContract(
-    active ? addresses.STAKER_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS : null,
     STAKING_REWARDS_ABI,
     true
   )
@@ -19,7 +18,7 @@ const useEndIncentive = () => {
 
   const createIncentive = async () => {
     // DEV: ending an incentive
-    return stakerContract.endIncentive(dev.INCENTIVEKEY)
+    return stakerContract.endIncentive(incentiveKey)
   }
 
   return useSubmit<null, any>(createIncentive, {

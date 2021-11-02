@@ -5,20 +5,19 @@ import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import ERC20_ABI from "static/abis/erc20abi.json"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
-import addresses from "temporaryData/addresses"
-import dev from "temporaryData/dev"
+import incentiveKey from "temporaryData/incentiveKey"
 
 const useCreateIncentive = () => {
-  const { active, account } = useWeb3React()
+  const { active } = useWeb3React()
 
   const erc20Contract = useContract(
-    active ? addresses.REWARD_TOKEN_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS : null,
     ERC20_ABI,
     true
   )
 
   const stakerContract = useContract(
-    active ? addresses.STAKER_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS : null,
     STAKING_REWARDS_ABI,
     true
   )
@@ -28,14 +27,17 @@ const useCreateIncentive = () => {
   const createIncentive = async () => {
     // DEV: creating an incentive
     const reward = parseEther("200")
-    const approve = await erc20Contract.approve(addresses?.STAKER_ADDRESS, reward)
+    const approve = await erc20Contract.approve(
+      process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS,
+      reward
+    )
     await approve.wait()
     const START_TIME = Math.ceil(+new Date() / 1000 + 120)
     const END_TIME = Math.ceil(+new Date() / 1000 + 120 + 24 * 60 * 60)
-    console.log(START_TIME, END_TIME) // Don't forget to copy it from the console LOL
+    console.log(START_TIME, END_TIME) // Don't forget to copy it from the console
     return stakerContract.createIncentive(
       {
-        ...dev.INCENTIVEKEY,
+        ...incentiveKey,
         startTime: START_TIME,
         endTime: END_TIME,
       },

@@ -32,7 +32,7 @@ import useTokenData from "hooks/useTokenData"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
 import { useEffect, useMemo, useState } from "react"
 import { mutate } from "swr"
-import dev from "temporaryData/dev"
+import incentiveKey from "temporaryData/incentiveKey"
 import unique from "utils/uniqueFilter"
 
 const LiquidityFarmingPage = (): JSX.Element => {
@@ -51,17 +51,17 @@ const LiquidityFarmingPage = (): JSX.Element => {
   const { active, chainId, account } = useWeb3React()
   const {
     data: [, rewardTokenSymbol],
-  } = useTokenData(dev.REWARD_TOKEN_ADDRESS)
+  } = useTokenData(process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS)
   const {
     isLoading: isToken0Loading,
     tokenSymbol: liquidityToken0Symbol,
     tokenImage: liquidityToken0Image,
-  } = useTokenDataWithImage(dev.TOKEN0_ADDRESS)
+  } = useTokenDataWithImage(process.env.NEXT_PUBLIC_TOKEN0_ADDRESS)
   const {
     isLoading: isToken1Loading,
     tokenSymbol: liquidityToken1Symbol,
     tokenImage: liquidityToken1Image,
-  } = useTokenDataWithImage(dev.TOKEN1_ADDRESS)
+  } = useTokenDataWithImage(process.env.NEXT_PUBLIC_TOKEN1_ADDRESS)
 
   const [ended, setEnded] = useState(false)
 
@@ -75,7 +75,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
   const incentiveData = useMemo(
     () =>
       incentiveInfo?.find(
-        (i) => parseFloat(i.args.endTime) === dev.INCENTIVEKEY.endTime
+        (i) => parseFloat(i.args.endTime) === parseFloat(incentiveKey.endTime)
       ),
     [incentiveInfo]
   )
@@ -163,7 +163,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
         <>
           <VStack spacing={1} fontSize="xl">
             <Countdown
-              timestamp={dev.INCENTIVEKEY.endTime}
+              timestamp={parseFloat(incentiveKey.endTime)}
               endText="Liquidity Farming ended"
               long
               onEnd={() => setEnded(true)}

@@ -4,14 +4,13 @@ import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
-import addresses from "temporaryData/addresses"
-import dev from "temporaryData/dev"
+import incentiveKey from "temporaryData/incentiveKey"
 
 const useStakeNft = (tokenId: number) => {
   const { active, account } = useWeb3React()
 
   const nftContract = useContract(
-    active ? addresses.NFPOSITIOMANAGER_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_NFPOSITIOMANAGER_ADDRESS : null,
     NFPOSITIONMANAGER_ABI,
     true
   )
@@ -25,16 +24,16 @@ const useStakeNft = (tokenId: number) => {
       "safeTransferFrom(address,address,uint256,bytes)"
     ](
       account,
-      addresses.STAKER_ADDRESS,
+      process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS,
       tokenId,
       defaultAbiCoder.encode(
         ["address", "address", "uint", "uint", "address"],
         [
-          dev.INCENTIVEKEY.rewardToken,
-          dev.INCENTIVEKEY.pool,
-          dev.INCENTIVEKEY.startTime,
-          dev.INCENTIVEKEY.endTime,
-          dev.INCENTIVEKEY.refundee,
+          incentiveKey.rewardToken,
+          incentiveKey.pool,
+          incentiveKey.startTime,
+          incentiveKey.endTime,
+          incentiveKey.refundee,
         ]
       )
     )

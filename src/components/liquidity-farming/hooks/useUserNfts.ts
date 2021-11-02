@@ -5,8 +5,6 @@ import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import useSWR from "swr"
-import addresses from "temporaryData/addresses"
-import dev from "temporaryData/dev"
 
 const getNftData =
   (contract: Contract, address: string) =>
@@ -23,7 +21,10 @@ const getNftData =
         const positions = await contract.positions(nft)
         const { token0, token1 } = positions
 
-        if (token0 === dev.TOKEN0_ADDRESS && token1 === dev.TOKEN1_ADDRESS)
+        if (
+          token0 === process.env.NEXT_PUBLIC_TOKEN0_ADDRESS &&
+          token1 === process.env.NEXT_PUBLIC_TOKEN1_ADDRESS
+        )
           nfts.push(nft)
       }
     } catch (error) {
@@ -38,7 +39,7 @@ const useUserNfts = (userAddress: string) => {
   const { active, account, chainId } = useWeb3React()
 
   const contract = useContract(
-    active ? addresses.NFPOSITIOMANAGER_ADDRESS : null,
+    active ? process.env.NEXT_PUBLIC_NFPOSITIOMANAGER_ADDRESS : null,
     NFPOSITIONMANAGER_ABI
   )
 

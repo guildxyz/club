@@ -12,6 +12,34 @@
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
+  { "inputs": [], "name": "AlreadyWithdrawn", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "current", "type": "uint256" },
+      { "internalType": "uint256", "name": "end", "type": "uint256" }
+    ],
+    "name": "DistributionEnded",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "current", "type": "uint256" },
+      { "internalType": "uint256", "name": "end", "type": "uint256" }
+    ],
+    "name": "DistributionOngoing",
+    "type": "error"
+  },
+  { "inputs": [], "name": "DropClaimed", "type": "error" },
+  { "inputs": [], "name": "InvalidProof", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "token", "type": "address" },
+      { "internalType": "address", "name": "from", "type": "address" },
+      { "internalType": "address", "name": "to", "type": "address" }
+    ],
+    "name": "TransferFailed",
+    "type": "error"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -74,13 +102,6 @@
     ],
     "name": "Withdrawn",
     "type": "event"
-  },
-  {
-    "inputs": [{ "internalType": "bytes32", "name": "newRoot", "type": "bytes32" }],
-    "name": "changeMerkleRoot",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
