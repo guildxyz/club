@@ -29,11 +29,12 @@ import useMerkleDistributor from "components/index/hooks/useMerkleDistributor"
 import useWithdraw from "components/index/hooks/useWithdraw"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
+import { mutate } from "swr"
 
 const AirdropPage = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { account } = useWeb3React()
+  const { active, account, chainId } = useWeb3React()
   const eligible = useMemo(
     () => Object.keys(MerkleDistributor.claims).includes(account),
     [account]
@@ -58,7 +59,15 @@ const AirdropPage = (): JSX.Element => {
   )
 
   const { onSubmit: onClaimSubmit, isLoading: isClaimLoading } = useClaim()
-  const { onSubmit: onWithdrawSubmit, isLoading: isWithdrawLoading } = useWithdraw()
+  const {
+    onSubmit: onWithdrawSubmit,
+    isLoading: isWithdrawLoading,
+    response: withdrawResponse,
+  } = useWithdraw()
+
+  useEffect(() => {
+    if (withdrawResponse) mutate(active ? ["merkle", chainId, account] : null)
+  }, [withdrawResponse])
 
   return (
     <PageContent
