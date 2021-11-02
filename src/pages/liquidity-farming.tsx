@@ -101,6 +101,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   useEffect(() => {
     if (depositAndStakeResponse) {
+      mutate(active ? ["stakingRewards", chainId, account] : null)
       mutate(active ? ["nfts", chainId, account] : null)
       setPickedStakeNft(null)
       onNftListModalClose()
@@ -182,9 +183,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
             <VStack>
               <Text as="span" fontSize="3xl">
-                {rewardsOwed && parseFloat(sumUnclaimedRewards) > 0
-                  ? sumUnclaimedRewards
-                  : "-"}
+                {sumUnclaimedRewards}
               </Text>
               <Text as="span">Unclaimed {rewardTokenSymbol}</Text>
             </VStack>
@@ -204,7 +203,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             </Button>
 
             <Button
-              isDisabled={!rewardsOwed || !sumUnclaimedRewards}
+              isDisabled={!rewardsOwed}
               letterSpacing="wide"
               colorScheme="gray"
               variant="outline"
