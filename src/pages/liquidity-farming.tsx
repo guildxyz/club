@@ -209,6 +209,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
               colorScheme="gray"
               variant="outline"
               isLoading={isClaimLoading}
+              loadingText="Claiming"
               onClick={onDepositNftsModalOpen}
             >
               Claim & Unstake
@@ -283,6 +284,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                   fontFamily="display"
                   w="max-content"
                   isLoading={isStakeNftLoading}
+                  loadingText="Staking"
                   colorScheme="seedclub"
                   onClick={onDepositAndStake}
                 >
@@ -349,6 +351,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                   fontFamily="display"
                   w="max-content"
                   isLoading={isClaimLoading}
+                  loadingText="Claiming"
                   colorScheme="seedclub"
                   onClick={onClaimSubmit}
                 >

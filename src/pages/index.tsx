@@ -151,6 +151,7 @@ const AirdropPage = (): JSX.Element => {
               colorScheme="seedclub"
               isDisabled={isClaimed}
               isLoading={isWithdrawLoading}
+              loadingText="Withdraw"
               onClick={onWithdrawSubmit}
             >
               Withdraw unclaimed tokens
@@ -164,6 +165,7 @@ const AirdropPage = (): JSX.Element => {
               colorScheme="seedclub"
               isDisabled={isClaimed}
               isLoading={isClaimLoading}
+              loadingText="Claiming"
               onClick={onClaimSubmit}
             >
               Claim
