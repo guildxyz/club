@@ -150,9 +150,7 @@ const AirdropPage = (): JSX.Element => {
                   </>
                 )}
 
-                {ended && (
-                  <Text>Sorry! The distribution of this token has ended.</Text>
-                )}
+                {ended && <Text>Sorry! Claiming period has ended.</Text>}
               </>
             )}
           </VStack>
