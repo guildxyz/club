@@ -27,6 +27,7 @@ import TokenImage from "components/common/TokenImage"
 import useClaim from "components/index/hooks/useClaim"
 import useMerkleDistributor from "components/index/hooks/useMerkleDistributor"
 import useWithdraw from "components/index/hooks/useWithdraw"
+import useWithdrawAmount from "components/index/hooks/useWithdrawAmount"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
 import { useEffect, useMemo } from "react"
@@ -60,6 +61,7 @@ const AirdropPage = (): JSX.Element => {
   )
 
   const { onSubmit: onClaimSubmit, isLoading: isClaimLoading } = useClaim()
+
   const {
     onSubmit: onWithdrawSubmit,
     isLoading: isWithdrawLoading,
@@ -69,6 +71,12 @@ const AirdropPage = (): JSX.Element => {
   useEffect(() => {
     if (withdrawResponse) mutate(active ? ["merkle", chainId, account] : null)
   }, [withdrawResponse])
+
+  const { data: withdrawAmount } = useWithdrawAmount()
+  const canWithdraw = useMemo(
+    () => parseFloat(withdrawAmount) > 0,
+    [withdrawAmount, withdrawResponse]
+  )
 
   return (
     <PageContent
@@ -161,6 +169,7 @@ const AirdropPage = (): JSX.Element => {
               px={8}
               letterSpacing="wide"
               colorScheme="seedclub"
+              isDisabled={!canWithdraw}
               isLoading={isWithdrawLoading}
               loadingText="Withdraw"
               onClick={onWithdrawSubmit}
