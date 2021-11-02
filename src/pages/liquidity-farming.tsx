@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -248,6 +249,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
                       isFullWidth
                       size="xl"
                       justifyContent="start"
+                      borderColor="seedclub.green.700"
+                      borderWidth={pickedStakeNft === nft ? 3 : 0}
                       onClick={() => setPickedStakeNft(nft)}
                     >
                       {nft}
@@ -261,12 +264,11 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
             {pickedStakeNft && (
               <ScaleFade in={pickedStakeNft}>
-                <Text mt={8} mb={4}>
+                <Text my={4}>
                   In order to earn {rewardTokenSymbol} rewards, you must deposit this
                   NFT to the Uniswap Staking contract, and stake it in Seed Club's
                   farm.
                 </Text>
-                <Text mb={8}>Picked NFT: {pickedStakeNft}</Text>
                 <Button
                   fontFamily="display"
                   w="max-content"
@@ -320,6 +322,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
                       isFullWidth
                       size="xl"
                       justifyContent="start"
+                      borderColor="seedclub.green.700"
+                      borderWidth={pickedUnstakeNft === nft ? 3 : 0}
                       onClick={() => setPickedUnstakeNft(nft)}
                     >
                       {nft}
@@ -333,29 +337,29 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
             {pickedUnstakeNft && (
               <ScaleFade in={pickedUnstakeNft}>
-                <Text my={8}>Picked NFT: {pickedUnstakeNft}</Text>
-                <Button
-                  fontFamily="display"
-                  w="max-content"
-                  colorScheme="gray"
-                  mr={3}
-                  onClick={() => {
-                    onDepositNftsModalClose()
-                    setPickedUnstakeNft(null)
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  fontFamily="display"
-                  w="max-content"
-                  isLoading={isClaimLoading}
-                  loadingText="Claiming"
-                  colorScheme="seedclub"
-                  onClick={onClaimSubmit}
-                >
-                  Claim & unstake
-                </Button>
+                <HStack mt={4} spacing={3}>
+                  <Button
+                    fontFamily="display"
+                    w="max-content"
+                    colorScheme="gray"
+                    onClick={() => {
+                      onDepositNftsModalClose()
+                      setPickedUnstakeNft(null)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    fontFamily="display"
+                    w="max-content"
+                    isLoading={isClaimLoading}
+                    loadingText="Claiming"
+                    colorScheme="seedclub"
+                    onClick={onClaimSubmit}
+                  >
+                    Claim & unstake
+                  </Button>
+                </HStack>
               </ScaleFade>
             )}
           </ModalBody>
