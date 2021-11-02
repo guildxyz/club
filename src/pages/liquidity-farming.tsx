@@ -55,12 +55,14 @@ const LiquidityFarmingPage = (): JSX.Element => {
     isLoading: isToken0Loading,
     tokenSymbol: liquidityToken0Symbol,
     tokenImage: liquidityToken0Image,
-  } = useTokenDataWithImage("ETHER")
+  } = useTokenDataWithImage(dev.TOKEN0_ADDRESS)
   const {
     isLoading: isToken1Loading,
     tokenSymbol: liquidityToken1Symbol,
     tokenImage: liquidityToken1Image,
-  } = useTokenDataWithImage("0x6b175474e89094c44da98b954eedeac495271d0f") // DAI
+  } = useTokenDataWithImage(dev.TOKEN1_ADDRESS)
+
+  const [ended, setEnded] = useState(false)
 
   const { isValidating: isUserNftsLoading, data: userNfts } = useUserNfts(account)
 
@@ -77,23 +79,16 @@ const LiquidityFarmingPage = (): JSX.Element => {
     [incentiveInfo]
   )
 
-  const depositData = useMemo(() => {
-    const userNftIds = userNfts?.map((nftData) => nftData.nft) || []
-
-    return (
+  const depositData = useMemo(
+    () =>
       depositTransferred
         ?.filter(unique)
-        ?.filter((tokenId) => !userNftIds.includes(tokenId)) || []
-    )
-  }, [depositTransferred, userNfts])
+        ?.filter((tokenId) => !userNfts.includes(tokenId)) || [],
+    [depositTransferred, userNfts]
+  )
 
   const sumLiquidity = useSumLiquidity(depositData)
   const sumUnclaimedRewards = useSumUnclaimedRewards(depositData)
-
-  // DEBUG
-  // useEffect(() => {
-  //   console.log(depositTransferred)
-  // }, [incentiveInfo, depositTransferred, nftName, rewardsOwed, rewardsInfo])
 
   const [pickedStakeNft, setPickedStakeNft] = useState(null)
   const [pickedUnstakeNft, setPickedUnstakeNft] = useState(null)
@@ -162,14 +157,14 @@ const LiquidityFarmingPage = (): JSX.Element => {
       }
       subTitle={`Stake ${nftName} to earn ${rewardTokenSymbol}`}
     >
-      {incentiveData && !isValidating && (
+      {incentiveData && !isValidating && !ended ? (
         <>
           <VStack spacing={1} fontSize="xl">
-            {/* <Text fontWeight="bold">? days ? hours ? minutes left</Text> */}
             <Countdown
               timestamp={dev.INCENTIVEKEY.endTime}
               endText="Liquidity Farming ended"
               long
+              onEnd={() => setEnded(true)}
             />
             <Text>
               Pool reward: {formatUnits(incentiveData.args?.reward, 18)}{" "}
@@ -220,6 +215,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
             </Button>
           </SimpleGrid>
         </>
+      ) : (
+        <Text fontSize="xl">This incentive has ended!</Text>
       )}
 
       {(!account || isValidating) && (
@@ -245,15 +242,15 @@ const LiquidityFarmingPage = (): JSX.Element => {
             ) : (
               <VStack alignItems="start">
                 {userNfts?.length > 0 ? (
-                  userNfts.map((nftData) => (
+                  userNfts.map((nft) => (
                     <Button
-                      key={nftData.nft}
+                      key={nft}
                       isFullWidth
                       size="xl"
                       justifyContent="start"
-                      onClick={() => setPickedStakeNft(nftData.nft)}
+                      onClick={() => setPickedStakeNft(nft)}
                     >
-                      {nftData.nft}
+                      {nft}
                     </Button>
                   ))
                 ) : (

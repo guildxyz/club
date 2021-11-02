@@ -5,9 +5,10 @@ type Props = {
   timestamp: number
   endText: string
   long?: boolean
+  onEnd?: () => void
 }
 
-const Countdown = ({ timestamp, endText, long }: Props): JSX.Element => {
+const Countdown = ({ timestamp, endText, long, onEnd }: Props): JSX.Element => {
   const [remainingTime, setRemainingTime] = useState("00:00:00:00")
   const [shouldCount, setShouldCount] = useState(true)
 
@@ -33,6 +34,7 @@ const Countdown = ({ timestamp, endText, long }: Props): JSX.Element => {
   useEffect(() => {
     const interval = shouldCount ? setInterval(counting, 1000) : null
     if (!shouldCount) {
+      if (typeof onEnd === "function") onEnd()
       if (interval) clearInterval(interval)
       setRemainingTime("")
     }

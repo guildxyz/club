@@ -6,6 +6,7 @@ import useContract from "hooks/useContract"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import useSWR from "swr"
 import addresses from "temporaryData/addresses"
+import dev from "temporaryData/dev"
 
 const getNftData =
   (contract: Contract, address: string) =>
@@ -19,13 +20,14 @@ const getNftData =
       for (let i = 0; i < balanceOf; i++) {
         const nftRaw = await contract.tokenOfOwnerByIndex(address, i)
         const nft = +formatUnits(nftRaw, 0)
-        // TODO: check token0 and token1 here, and only push those nfts which have the correct token pairs in them
         const positions = await contract.positions(nft)
-        const { token0, token1, liquidity } = positions
-        nfts.push({ nft, token0, token1, liquidity })
+        const { token0, token1 } = positions
+
+        if (token0 === dev.TOKEN0_ADDRESS && token1 === dev.TOKEN1_ADDRESS)
+          nfts.push(nft)
       }
     } catch (error) {
-      if (error.code === Logger.errors.CALL_EXCEPTION) return null
+      if (error.code === Logger.errors.CALL_EXCEPTION) return []
       throw error
     }
 
