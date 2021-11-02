@@ -52,9 +52,7 @@ const useStakeNft = (tokenId: number) => {
     },
     onSuccess: () => {
       toast({
-        title: "Successfully submitted transaction!",
-        description:
-          "It might take some time to finalize the transaction. Please check your wallet for more details.",
+        title: "Successfully staked NFT!",
         duration: 4000,
         status: "success",
       })

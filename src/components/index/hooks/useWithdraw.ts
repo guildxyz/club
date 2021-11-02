@@ -29,9 +29,7 @@ const useWithdraw = () => {
     },
     onSuccess: () => {
       toast({
-        title: "Successfully submitted transaction!",
-        description:
-          "It might take some time to finalize the transaction. Please check your wallet for more details.",
+        title: "Successfull withdraw!",
         duration: 4000,
         status: "success",
       })
