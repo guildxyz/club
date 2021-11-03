@@ -35,7 +35,7 @@ const getNftData =
     return nfts
   }
 
-const useUserNfts = (userAddress: string) => {
+const useUserNfts = () => {
   const { active, account, chainId } = useWeb3React()
 
   const contract = useContract(
@@ -45,7 +45,7 @@ const useUserNfts = (userAddress: string) => {
 
   const swrResponse = useSWR<Array<any>>(
     active ? ["nfts", chainId, account] : null,
-    getNftData(contract, userAddress),
+    getNftData(contract, account),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
