@@ -1,10 +1,10 @@
-import { Logger } from "@ethersproject/logger"
 import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import incentiveKey from "temporaryData/incentiveKey"
+import parseError from "utils/parseError"
 
 const useUnstakeWithdrawClaim = (tokenId: number) => {
   const { active, account } = useWeb3React()
@@ -44,7 +44,7 @@ const useUnstakeWithdrawClaim = (tokenId: number) => {
       console.error(e)
       toast({
         title: "Error unstaking NFT",
-        description: !Object.values(Logger.errors).includes(e.code) && e?.message,
+        description: parseError(e),
         status: "error",
       })
     },
