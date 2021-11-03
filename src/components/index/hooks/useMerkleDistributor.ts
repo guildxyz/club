@@ -12,7 +12,7 @@ const getMerkleData =
   (contract: Contract, index: string) =>
   (_: string): Promise<[boolean, string, BigNumber, string]> =>
     Promise.all([
-      index ? contract.isClaimed(index) : false,
+      typeof index === "number" ? contract.isClaimed(index) : false,
       contract.token(),
       contract.distributionEnd(),
       contract.owner(),
@@ -28,10 +28,8 @@ const getMerkleData =
       throw error
     })
 
-const useMerkleDistributor = (userAddress: string) => {
+const useMerkleDistributor = () => {
   const { active, account, chainId } = useWeb3React()
-
-  const index = MerkleDistributor.claims[userAddress]?.index
 
   const contract = useContract(
     active ? process.env.NEXT_PUBLIC_MERKLE_DISTRIBUTOR_CONTRACT_ADDRESS : null,
@@ -40,7 +38,7 @@ const useMerkleDistributor = (userAddress: string) => {
 
   const swrResponse = useSWR<[boolean, string, BigNumber, string]>(
     active ? ["merkle", chainId, account] : null,
-    getMerkleData(contract, index),
+    getMerkleData(contract, MerkleDistributor.claims[account]?.index),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

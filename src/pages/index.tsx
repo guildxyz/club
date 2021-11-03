@@ -43,7 +43,7 @@ const AirdropPage = (): JSX.Element => {
   const {
     isValidating: isMerkleDistributorLoading,
     data: [isClaimed, token, distributionEnd, owner],
-  } = useMerkleDistributor(account)
+  } = useMerkleDistributor()
   const {
     isLoading: isTokenValidating,
     tokenSymbol,
