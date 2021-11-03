@@ -33,7 +33,7 @@ const useCreateIncentive = () => {
     )
     await approve.wait()
     const START_TIME = Math.ceil(+new Date() / 1000 + 120)
-    const END_TIME = Math.ceil(+new Date() / 1000 + 120 + 24 * 60 * 60)
+    const END_TIME = Math.ceil(+new Date() / 1000 + 120 + 0.25 * 60 * 60)
     console.log(START_TIME, END_TIME) // Don't forget to copy it from the console
     return stakerContract.createIncentive(
       {

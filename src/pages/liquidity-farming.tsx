@@ -69,7 +69,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   const {
     isValidating,
-    data: [incentiveInfo, depositTransferred, nftName, rewardsOwed],
+    data: [incentiveInfo, depositTransferred, nftName],
   } = useStakingRewards()
 
   const incentiveData = useMemo(
@@ -102,10 +102,12 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   useEffect(() => {
     if (depositAndStakeResponse) {
-      mutate(active ? ["stakingRewards", chainId, account] : null)
-      mutate(active ? ["nfts", chainId, account] : null)
       setPickedStakeNft(null)
       onNftListModalClose()
+      setTimeout(() => {
+        mutate(active ? ["stakingRewards", chainId, account] : null)
+        mutate(active ? ["nfts", chainId, account] : null)
+      }, 10000)
     }
   }, [depositAndStakeResponse])
 
@@ -117,10 +119,12 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   useEffect(() => {
     if (claimResponse) {
-      mutate(active ? ["stakingRewards", chainId, account] : null)
-      mutate(active ? ["nfts", chainId, account] : null)
       setPickedUnstakeNft(null)
       onDepositNftsModalClose()
+      setTimeout(() => {
+        mutate(active ? ["stakingRewards", chainId, account] : null)
+        mutate(active ? ["nfts", chainId, account] : null)
+      }, 10000)
     }
   }, [claimResponse])
 
@@ -204,7 +208,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             </Button>
 
             <Button
-              isDisabled={!rewardsOwed}
+              isDisabled={!depositData || depositData.length === 0}
               letterSpacing="wide"
               colorScheme="gray"
               variant="outline"
@@ -222,7 +226,22 @@ const LiquidityFarmingPage = (): JSX.Element => {
         <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
       )}
 
-      {ended && <Text fontSize="xl">This incentive has ended!</Text>}
+      {ended && (
+        <>
+          <Text fontSize="xl">This incentive has ended!</Text>
+          {depositData?.length > 0 && (
+            <Button
+              colorScheme="seedclub"
+              letterSpacing="wide"
+              isLoading={isClaimLoading}
+              loadingText="Claiming"
+              onClick={onDepositNftsModalOpen}
+            >
+              Claim rewards & Unstake NFTs
+            </Button>
+          )}
+        </>
+      )}
 
       <Modal
         isOpen={isNftListModalOpen}
@@ -249,6 +268,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                       isFullWidth
                       size="xl"
                       justifyContent="start"
+                      boxSizing="border-box"
                       borderColor="seedclub.green.700"
                       borderWidth={pickedStakeNft === nft ? 3 : 0}
                       onClick={() => setPickedStakeNft(nft)}
@@ -322,6 +342,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                       isFullWidth
                       size="xl"
                       justifyContent="start"
+                      boxSizing="border-box"
                       borderColor="seedclub.green.700"
                       borderWidth={pickedUnstakeNft === nft ? 3 : 0}
                       onClick={() => setPickedUnstakeNft(nft)}
