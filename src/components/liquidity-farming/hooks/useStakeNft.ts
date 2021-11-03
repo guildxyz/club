@@ -1,4 +1,5 @@
 import { defaultAbiCoder } from "@ethersproject/abi"
+import { Logger } from "@ethersproject/logger"
 import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
@@ -42,10 +43,10 @@ const useStakeNft = (tokenId: number) => {
 
   return useSubmit<null, any>(stakeNft, {
     onError: (e) => {
-      console.log(e)
+      console.error(e)
       toast({
         title: "Error staking NFT",
-        description: e?.message,
+        description: !Object.values(Logger.errors).includes(e.code) && e?.message,
         status: "error",
       })
     },

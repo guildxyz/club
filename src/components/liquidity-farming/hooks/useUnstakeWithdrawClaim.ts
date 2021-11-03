@@ -1,3 +1,4 @@
+import { Logger } from "@ethersproject/logger"
 import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
@@ -40,10 +41,10 @@ const useUnstakeWithdrawClaim = (tokenId: number) => {
 
   return useSubmit<null, any>(unstakeWithdrawClaim, {
     onError: (e) => {
-      console.log(e)
+      console.error(e)
       toast({
-        title: "Error staking NFT",
-        description: e?.message,
+        title: "Error unstaking NFT",
+        description: !Object.values(Logger.errors).includes(e.code) && e?.message,
         status: "error",
       })
     },
