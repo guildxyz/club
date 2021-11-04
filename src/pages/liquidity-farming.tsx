@@ -114,7 +114,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
           )}
         </SimpleGrid>
       }
-      subTitle={`Stake ${nftName} to earn ${rewardTokenSymbol}`}
+      subTitle={account && `Stake ${nftName} to earn ${rewardTokenSymbol}`}
     >
       {isValidating && <Spinner size="lg" />}
 
