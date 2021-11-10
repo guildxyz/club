@@ -6,7 +6,7 @@ import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import incentiveKey from "temporaryData/incentiveKey"
 
 const useSumUnclaimedRewards = (tokenIdArray: Array<number>): string => {
-  const [unclaimedRewards, setUnclaimedRewards] = useState("0.00000")
+  const [unclaimedRewards, setUnclaimedRewards] = useState("0.0000")
   const { active } = useWeb3React()
 
   const stakerContract = useContract(
@@ -17,7 +17,7 @@ const useSumUnclaimedRewards = (tokenIdArray: Array<number>): string => {
 
   const countNewLiquidity = async () => {
     if (!tokenIdArray || tokenIdArray.length === 0) {
-      setUnclaimedRewards("0.00000")
+      setUnclaimedRewards("0.0000")
       return
     }
 
@@ -33,7 +33,7 @@ const useSumUnclaimedRewards = (tokenIdArray: Array<number>): string => {
       }
     }
 
-    setUnclaimedRewards(newUnclaimedRewardsSum.toFixed(5))
+    setUnclaimedRewards(newUnclaimedRewardsSum.toFixed(4))
   }
 
   useEffect(() => {

@@ -41,10 +41,8 @@ const UnstakeModal = ({ isOpen, onClose, depositData }: Props): JSX.Element => {
     if (claimResponse) {
       setPickedUnstakeNft(null)
       onClose()
-      setTimeout(() => {
-        mutate(active ? ["stakingRewards", chainId, account] : null)
-        mutate(active ? ["nfts", chainId, account] : null)
-      }, 10000)
+      mutate(active ? ["stakingRewards", chainId, account] : null)
+      mutate(active ? ["nfts", chainId, account] : null)
     }
   }, [claimResponse])
 

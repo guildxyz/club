@@ -44,10 +44,8 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
     if (depositAndStakeResponse) {
       onClose()
       setPickedStakeNft(null)
-      setTimeout(() => {
-        mutate(active ? ["stakingRewards", chainId, account] : null)
-        mutate(active ? ["nfts", chainId, account] : null)
-      }, 10000)
+      mutate(active ? ["stakingRewards", chainId, account] : null)
+      mutate(active ? ["nfts", chainId, account] : null)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [depositAndStakeResponse])

@@ -1,4 +1,4 @@
-import { Heading, Text, VStack } from "@chakra-ui/react"
+import { Heading, VStack } from "@chakra-ui/react"
 import Card from "components/common/Card"
 import Layout from "components/common/Layout"
 import { PropsWithChildren } from "react"
@@ -8,7 +8,7 @@ type Props = {
   header?: JSX.Element
   layoutTitle: string
   title: string | JSX.Element
-  subTitle?: string
+  subTitle?: JSX.Element
 }
 
 const PageContent = ({
@@ -30,7 +30,7 @@ const PageContent = ({
           >
             {title}
           </Heading>
-          {subTitle && <Text colorScheme="gray">{subTitle}</Text>}
+          {subTitle}
         </VStack>
         {children}
         <JoinCommunity />

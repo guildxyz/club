@@ -1,7 +1,7 @@
 import {
   Button,
   SimpleGrid,
-  Spinner,
+  Skeleton,
   Text,
   useDisclosure,
   VStack,
@@ -81,6 +81,13 @@ const LiquidityFarmingPage = (): JSX.Element => {
   const sumLiquidity = useSumLiquidity(depositData)
   const sumUnclaimedRewards = useSumUnclaimedRewards(depositData)
 
+  // Managing skeleton loaders' state
+  const isIncentiveDataLoaded = useMemo(
+    () =>
+      !!nftName && !!rewardTokenSymbol && incentiveData && !isValidating && !ended,
+    [nftName, rewardTokenSymbol, incentiveData, isValidating, ended]
+  )
+
   // For development testing only!
   const { isLoading: isCreateIncentiveLoading, onSubmit: onCreateIncentive } =
     useCreateIncentive()
@@ -114,67 +121,88 @@ const LiquidityFarmingPage = (): JSX.Element => {
           )}
         </SimpleGrid>
       }
-      subTitle={account && `Stake ${nftName} to earn ${rewardTokenSymbol}`}
-    >
-      {isValidating && <Spinner size="lg" />}
-
-      {incentiveData && !isValidating && !ended && (
-        <>
-          <VStack spacing={1} fontSize="xl">
-            <Countdown
-              timestamp={parseFloat(incentiveKey.endTime)}
-              endText="Liquidity Farming ended"
-              long
-              onEnd={() => setEnded(true)}
-            />
-            <Text>
-              Pool reward: {formatUnits(incentiveData.args?.reward, 18)}{" "}
-              {rewardTokenSymbol}
+      subTitle={
+        account && (
+          <Skeleton isLoaded={isIncentiveDataLoaded}>
+            <Text colorScheme="gray">
+              {`Stake ${nftName} to earn ${rewardTokenSymbol}`}
             </Text>
-          </VStack>
+          </Skeleton>
+        )
+      }
+    >
+      <VStack spacing={1} fontSize="xl">
+        <Skeleton isLoaded={isIncentiveDataLoaded}>
+          <Countdown
+            timestamp={parseFloat(incentiveKey.endTime)}
+            endText="Liquidity Farming ended"
+            long
+            onEnd={() => setEnded(true)}
+          />
+        </Skeleton>
 
-          <SimpleGrid gridTemplateColumns="1fr 1fr" gap={8}>
-            <VStack>
-              <Text as="span" fontSize="3xl">
-                {parseFloat(sumUnclaimedRewards) > 0.0 ? sumLiquidity : "-"}
-              </Text>
-              <Text as="span">Staked liquidity</Text>
-            </VStack>
+        <Skeleton isLoaded={isIncentiveDataLoaded}>
+          <Text>
+            Pool reward: {formatUnits(incentiveData?.args?.reward || 0, 18)}{" "}
+            {rewardTokenSymbol}
+          </Text>
+        </Skeleton>
+      </VStack>
 
-            <VStack>
-              <Text as="span" fontSize="3xl">
-                {parseFloat(sumUnclaimedRewards) > 0.0 ? sumUnclaimedRewards : "-"}
-              </Text>
-              <Text as="span">Unclaimed {rewardTokenSymbol}</Text>
-            </VStack>
-          </SimpleGrid>
+      <SimpleGrid gridTemplateColumns="1fr 1fr" gap={8}>
+        <VStack>
+          <Skeleton isLoaded={isIncentiveDataLoaded}>
+            <Text as="span" fontSize="3xl">
+              {sumLiquidity}
+            </Text>
+          </Skeleton>
+          <Skeleton isLoaded={isIncentiveDataLoaded}>
+            <Text as="span">Staked liquidity</Text>
+          </Skeleton>
+        </VStack>
 
-          <SimpleGrid
-            gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
-            gap={2}
-            pt={4}
+        <VStack>
+          <Skeleton isLoaded={isIncentiveDataLoaded} minWidth={16}>
+            <Text as="span" fontSize="3xl">
+              {sumUnclaimedRewards}
+            </Text>
+          </Skeleton>
+
+          <Skeleton isLoaded={isIncentiveDataLoaded} minWidth={16}>
+            <Text as="span">Unclaimed {rewardTokenSymbol}</Text>
+          </Skeleton>
+        </VStack>
+      </SimpleGrid>
+
+      <SimpleGrid
+        gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
+        gap={2}
+        pt={4}
+      >
+        <Skeleton isLoaded={isIncentiveDataLoaded}>
+          <Button
+            letterSpacing="wide"
+            colorScheme="seedclub"
+            onClick={onNftListModalOpen}
           >
-            <Button
-              letterSpacing="wide"
-              colorScheme="seedclub"
-              onClick={onNftListModalOpen}
-            >
-              Deposit & Stake
-            </Button>
+            Deposit & Stake
+          </Button>
+        </Skeleton>
 
-            <Button
-              isDisabled={!depositData || depositData.length === 0}
-              letterSpacing="wide"
-              colorScheme="gray"
-              variant="outline"
-              onClick={onDepositNftsModalOpen}
-            >
-              Claim & Unstake
-            </Button>
-          </SimpleGrid>
-        </>
-      )}
-      {(!account || isValidating) && !ended && (
+        <Skeleton isLoaded={isIncentiveDataLoaded}>
+          <Button
+            isDisabled={!depositData || depositData.length === 0}
+            letterSpacing="wide"
+            colorScheme="gray"
+            variant="outline"
+            onClick={onDepositNftsModalOpen}
+          >
+            Claim & Unstake
+          </Button>
+        </Skeleton>
+      </SimpleGrid>
+
+      {!account && !ended && (
         <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
       )}
       {ended && (
