@@ -70,15 +70,16 @@ const LiquidityFarmingPage = (): JSX.Element => {
     [incentiveInfo]
   )
 
-  const depositData = useMemo(
-    () =>
+  const depositData = useMemo(() => {
+    if (!userNfts || !depositTransferred) return []
+    return (
       depositTransferred
         ?.filter(unique)
         .filter(
           (tokenId) => !userNfts?.map((nft) => nft.tokenId)?.includes(tokenId)
-        ) || [],
-    [depositTransferred, userNfts]
-  )
+        ) || []
+    )
+  }, [depositTransferred, userNfts])
 
   const sumLiquidity = useSumLiquidity(depositData)
   const sumUnclaimedRewards = useSumUnclaimedRewards(depositData)
