@@ -69,39 +69,23 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
             </Flex>
           ) : (
             <VStack alignItems="start">
-              {userNfts?.length > 0 ? (
-                <>
-                  {userNfts
-                    .filter((nft) => nft.canStake)
-                    .map((nft) => (
-                      <Button
-                        key={nft.tokenId}
-                        isFullWidth
-                        size="xl"
-                        justifyContent="start"
-                        boxSizing="border-box"
-                        borderColor="seedclub.green.700"
-                        borderWidth={pickedStakeNft === nft.tokenId ? 3 : 0}
-                        onClick={() => setPickedStakeNft(nft.tokenId)}
-                      >
-                        {nft.tokenId}
-                      </Button>
-                    ))}
-                  {userNfts
-                    .filter((nft) => !nft.canStake)
-                    .map((nft) => (
-                      <Button
-                        key={nft.tokenId}
-                        disabled
-                        isFullWidth
-                        size="xl"
-                        justifyContent="start"
-                        boxSizing="border-box"
-                      >
-                        {nft.tokenId}
-                      </Button>
-                    ))}
-                </>
+              {userNfts?.filter((nft) => nft.canStake)?.length > 0 ? (
+                userNfts
+                  .filter((nft) => nft.canStake)
+                  .map((nft) => (
+                    <Button
+                      key={nft.tokenId}
+                      isFullWidth
+                      size="xl"
+                      justifyContent="start"
+                      boxSizing="border-box"
+                      borderColor="seedclub.green.700"
+                      borderWidth={pickedStakeNft === nft.tokenId ? 3 : 0}
+                      onClick={() => setPickedStakeNft(nft.tokenId)}
+                    >
+                      {nft.tokenId}
+                    </Button>
+                  ))
               ) : (
                 <Text>Seems like you don't have any NFTs.</Text>
               )}
