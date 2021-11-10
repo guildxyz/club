@@ -70,20 +70,38 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
           ) : (
             <VStack alignItems="start">
               {userNfts?.length > 0 ? (
-                userNfts.map((nft) => (
-                  <Button
-                    key={nft}
-                    isFullWidth
-                    size="xl"
-                    justifyContent="start"
-                    boxSizing="border-box"
-                    borderColor="seedclub.green.700"
-                    borderWidth={pickedStakeNft === nft ? 3 : 0}
-                    onClick={() => setPickedStakeNft(nft)}
-                  >
-                    {nft}
-                  </Button>
-                ))
+                <>
+                  {userNfts
+                    .filter((nft) => nft.canStake)
+                    .map((nft) => (
+                      <Button
+                        key={nft.tokenId}
+                        isFullWidth
+                        size="xl"
+                        justifyContent="start"
+                        boxSizing="border-box"
+                        borderColor="seedclub.green.700"
+                        borderWidth={pickedStakeNft === nft.tokenId ? 3 : 0}
+                        onClick={() => setPickedStakeNft(nft.tokenId)}
+                      >
+                        {nft.tokenId}
+                      </Button>
+                    ))}
+                  {userNfts
+                    .filter((nft) => !nft.canStake)
+                    .map((nft) => (
+                      <Button
+                        key={nft.tokenId}
+                        disabled
+                        isFullWidth
+                        size="xl"
+                        justifyContent="start"
+                        boxSizing="border-box"
+                      >
+                        {nft.tokenId}
+                      </Button>
+                    ))}
+                </>
               ) : (
                 <Text>Seems like you don't have any NFTs.</Text>
               )}

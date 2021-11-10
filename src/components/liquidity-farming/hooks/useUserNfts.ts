@@ -21,11 +21,14 @@ const getNftData =
         const positions = await contract.positions(nft)
         const { token0, token1 } = positions
 
-        if (
-          token0 === process.env.NEXT_PUBLIC_TOKEN0_ADDRESS &&
-          token1 === process.env.NEXT_PUBLIC_TOKEN1_ADDRESS
-        )
-          nfts.push(nft)
+        nfts.push({
+          tokenId: nft,
+          canStake:
+            token0.toLowerCase() ===
+              process.env.NEXT_PUBLIC_TOKEN0_ADDRESS.toLowerCase() &&
+            token1.toLowerCase() ===
+              process.env.NEXT_PUBLIC_TOKEN1_ADDRESS.toLowerCase(),
+        })
       }
     } catch (error) {
       if (error.code === Logger.errors.CALL_EXCEPTION) return []
