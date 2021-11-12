@@ -38,7 +38,11 @@ const useStakeNft = (tokenId: number) => {
         ]
       )
     )
-    return depositAndStakeRes?.wait()
+
+    return depositAndStakeRes?.wait().then((res) => {
+      if (res.status === 0) throw new Error("An unknown error occurred.")
+      return res
+    })
   }
 
   return useSubmit<null, any>(stakeNft, {

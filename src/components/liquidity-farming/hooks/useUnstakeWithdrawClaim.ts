@@ -36,7 +36,10 @@ const useUnstakeWithdrawClaim = (tokenId: number) => {
       ]),
     ])
 
-    return multicall?.wait()
+    return multicall?.wait().then((res) => {
+      if (res.status === 0) throw new Error("An unknown error occurred.")
+      return res
+    })
   }
 
   return useSubmit<null, any>(unstakeWithdrawClaim, {
