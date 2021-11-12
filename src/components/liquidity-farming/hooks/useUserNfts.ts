@@ -5,10 +5,11 @@ import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import useSWR from "swr"
+import { NFT } from "temporaryData/types"
 
 const getNftData =
   (contract: Contract, address: string) =>
-  async (_: string): Promise<Array<any>> => {
+  async (_: string): Promise<Array<NFT>> => {
     const nfts = []
 
     try {
@@ -19,10 +20,14 @@ const getNftData =
         const nftRaw = await contract.tokenOfOwnerByIndex(address, i)
         const nft = +formatUnits(nftRaw, 0)
         const positions = await contract.positions(nft)
-        const { token0, token1 } = positions
+        const { token0, token1, fee, liquidity } = positions
 
         nfts.push({
           tokenId: nft,
+          fee,
+          token0,
+          token1,
+          liquidity: parseFloat(formatUnits(liquidity)).toFixed(2),
           canStake:
             token0.toLowerCase() ===
               process.env.NEXT_PUBLIC_TOKEN0_ADDRESS.toLowerCase() &&
@@ -46,7 +51,7 @@ const useUserNfts = () => {
     NFPOSITIONMANAGER_ABI
   )
 
-  const swrResponse = useSWR<Array<any>>(
+  const swrResponse = useSWR<Array<NFT>>(
     active ? ["nfts", chainId, account] : null,
     getNftData(contract, account),
     {

@@ -14,15 +14,17 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { useWeb3React } from "@web3-react/core"
+import NftButton from "components/common/NftButton"
 import { useEffect, useState } from "react"
 import { mutate } from "swr"
+import { NFT } from "temporaryData/types"
 import useUnstakeWithdrawClaim from "./hooks/useUnstakeWithdrawClaim"
 import useUserNfts from "./hooks/useUserNfts"
 
 type Props = {
   isOpen: boolean
   onClose: () => void
-  depositData: Array<number>
+  depositData: Array<NFT>
 }
 
 const UnstakeModal = ({ isOpen, onClose, depositData }: Props): JSX.Element => {
@@ -67,18 +69,12 @@ const UnstakeModal = ({ isOpen, onClose, depositData }: Props): JSX.Element => {
             <VStack alignItems="start">
               {depositData?.length > 0 ? (
                 depositData.map((nft) => (
-                  <Button
-                    key={nft}
-                    isFullWidth
-                    size="xl"
-                    justifyContent="start"
-                    boxSizing="border-box"
-                    borderColor="seedclub.green.700"
-                    borderWidth={pickedUnstakeNft === nft ? 3 : 0}
-                    onClick={() => setPickedUnstakeNft(nft)}
-                  >
-                    {nft}
-                  </Button>
+                  <NftButton
+                    key={nft.tokenId}
+                    nft={nft}
+                    active={pickedUnstakeNft === nft.tokenId}
+                    onClick={() => setPickedUnstakeNft(nft.tokenId)}
+                  />
                 ))
               ) : (
                 <Text>Seems like you don't have any staked NFTs.</Text>

@@ -2,15 +2,16 @@ import { BigNumber } from "@ethersproject/bignumber"
 import { hexZeroPad } from "@ethersproject/bytes"
 import { Contract } from "@ethersproject/contracts"
 import { Logger } from "@ethersproject/logger"
+import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
 import useContract from "hooks/useContract"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import useSWR from "swr"
 import staticIncentiveKey from "temporaryData/incentiveKey"
+import { NFT } from "temporaryData/types"
 import unique from "utils/uniqueFilter"
 
-// TODO: better typing!
 const getStakingRewardsData =
   (
     walletAddress: string,
@@ -20,8 +21,8 @@ const getStakingRewardsData =
   ) =>
   (
     _: string
-  ): Promise<[Array<Record<string, any>>, Array<number>, string, BigNumber]> => {
-    const depositTransferredEvents: Promise<Array<number>> = new Promise(
+  ): Promise<[Array<Record<string, any>>, Array<NFT>, string, BigNumber]> => {
+    const depositTransferredEvents: Promise<Array<NFT>> = new Promise(
       async (resolve, _) => {
         const nftTransfers = await nftContract?.queryFilter(
           nftContract.filters.Transfer(walletAddress)
@@ -44,7 +45,24 @@ const getStakingRewardsData =
 
           if (depo?.length) {
             const tokenId = parseInt(depo?.[0]?.args?.tokenId)
-            depoArray.push(+tokenId)
+
+            if (tokenId) {
+              const positions = await nftContract.positions(tokenId)
+              const { token0, token1, fee, liquidity } = positions
+
+              depoArray.push({
+                tokenId,
+                fee,
+                token0,
+                token1,
+                liquidity: parseFloat(formatUnits(liquidity)).toFixed(2),
+                canStake:
+                  token0.toLowerCase() ===
+                    process.env.NEXT_PUBLIC_TOKEN0_ADDRESS.toLowerCase() &&
+                  token1.toLowerCase() ===
+                    process.env.NEXT_PUBLIC_TOKEN1_ADDRESS.toLowerCase(),
+              })
+            }
           }
         }
 
@@ -94,7 +112,7 @@ const useStakingRewards = () => {
   )
 
   const swrResponse = useSWR<
-    [Array<Record<string, any>>, Array<number>, string, BigNumber]
+    [Array<Record<string, any>>, Array<NFT>, string, BigNumber]
   >(
     active ? ["stakingRewards", chainId, account] : null,
     getStakingRewardsData(account, staticIncentiveKey, stakerContract, nftContract),

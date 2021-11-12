@@ -13,6 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { useWeb3React } from "@web3-react/core"
+import NftButton from "components/common/NftButton"
 import useTokenData from "hooks/useTokenData"
 import { useEffect, useState } from "react"
 import { mutate } from "swr"
@@ -73,18 +74,12 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
                 userNfts
                   .filter((nft) => nft.canStake)
                   .map((nft) => (
-                    <Button
+                    <NftButton
                       key={nft.tokenId}
-                      isFullWidth
-                      size="xl"
-                      justifyContent="start"
-                      boxSizing="border-box"
-                      borderColor="seedclub.green.700"
-                      borderWidth={pickedStakeNft === nft.tokenId ? 3 : 0}
+                      nft={nft}
+                      active={pickedStakeNft === nft.tokenId}
                       onClick={() => setPickedStakeNft(nft.tokenId)}
-                    >
-                      {nft.tokenId}
-                    </Button>
+                    />
                   ))
               ) : (
                 <Text>Seems like you don't have any NFTs.</Text>

@@ -72,17 +72,24 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   const depositData = useMemo(() => {
     if (!userNfts || !depositTransferred) return []
+
     return (
       depositTransferred
         ?.filter(unique)
+        .filter((nft) => nft.canStake)
         .filter(
-          (tokenId) => !userNfts?.map((nft) => nft.tokenId)?.includes(tokenId)
+          (deposit) =>
+            !userNfts?.map((nft) => nft.tokenId)?.includes(deposit.tokenId)
         ) || []
     )
   }, [depositTransferred, userNfts])
 
-  const sumLiquidity = useSumLiquidity(depositData)
-  const sumUnclaimedRewards = useSumUnclaimedRewards(depositData)
+  const sumLiquidity = useSumLiquidity(
+    depositData?.map((deposit) => deposit.tokenId)
+  )
+  const sumUnclaimedRewards = useSumUnclaimedRewards(
+    depositData?.map((deposit) => deposit.tokenId)
+  )
 
   // Managing skeleton loaders' state
   const isIncentiveDataLoaded = useMemo(
@@ -125,7 +132,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
         </SimpleGrid>
       }
       subTitle={
-        account && (
+        account &&
+        !ended && (
           <Skeleton isLoaded={isIncentiveDataLoaded}>
             <Text colorScheme="gray">
               {`Stake ${nftName} to earn ${rewardTokenSymbol}`}
@@ -134,7 +142,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
         )
       }
     >
-      {account && (
+      {account && !ended && (
         <>
           <VStack spacing={1} fontSize="xl">
             <Skeleton isLoaded={isIncentiveDataLoaded}>

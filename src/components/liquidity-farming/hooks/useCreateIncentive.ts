@@ -26,7 +26,7 @@ const useCreateIncentive = () => {
 
   const createIncentive = async () => {
     // DEV: creating an incentive
-    const reward = parseEther("200")
+    const reward = parseEther("50")
     const approve = await erc20Contract.approve(
       process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS,
       reward
