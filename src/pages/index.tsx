@@ -1,27 +1,6 @@
-import {
-  Button,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Spinner,
-  Table,
-  TableCaption,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react"
+import { Button, Link, Spinner, Text, VStack } from "@chakra-ui/react"
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
-import CopyableAddress from "components/common/CopyableAddress"
 import PageContent from "components/common/PageContent"
 import TokenImage from "components/common/TokenImage"
 import useClaim from "components/index/hooks/useClaim"
@@ -34,7 +13,6 @@ import { useEffect, useMemo } from "react"
 import { mutate } from "swr"
 
 const AirdropPage = (): JSX.Element => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const { active, account, chainId } = useWeb3React()
   const eligible = useMemo(
     () => Object.keys(MerkleDistributor.claims).includes(account),
@@ -48,7 +26,6 @@ const AirdropPage = (): JSX.Element => {
     isLoading: isTokenValidating,
     tokenSymbol,
     tokenImage,
-    tokenDecimals,
   } = useTokenDataWithImage(token)
 
   const ended = useMemo(
@@ -113,27 +90,7 @@ const AirdropPage = (): JSX.Element => {
                 {!ended && eligible && (
                   <>
                     <Text>
-                      {`Congrats! You've `}
-                      <Text
-                        as="span"
-                        tabIndex={0}
-                        px={1}
-                        py={0.5}
-                        bgColor="seedclub.green.800"
-                        color="seedclub.white"
-                        cursor="pointer"
-                        _focus={{ outline: "none" }}
-                        _hover={{
-                          color: "seedclub.lightlime",
-                        }}
-                        _focusVisible={{
-                          color: "seedclub.lightlime",
-                        }}
-                        onClick={onOpen}
-                      >
-                        qualified
-                      </Text>
-                      {` to receive ${tokenSymbol}.`}
+                      {`Congrats! You've qualified to receive ${tokenSymbol}.`}
                     </Text>
                     <Text>
                       Read{" "}
@@ -196,45 +153,6 @@ const AirdropPage = (): JSX.Element => {
       {!account && (
         <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
       )}
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Qualified addresses</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Table variant="simple" size="sm">
-              <TableCaption>Qualified addresses</TableCaption>
-              <Thead>
-                <Tr>
-                  <Th>Address</Th>
-                  <Th isNumeric>Amount</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {Object.keys(MerkleDistributor.claims).map((address) => (
-                  <Tr key={address}>
-                    <Td>
-                      <CopyableAddress
-                        address={address}
-                        decimals={4}
-                        fontSize="sm"
-                        fontWeight="normal"
-                      />
-                    </Td>
-                    <Td isNumeric>
-                      {formatUnits(
-                        MerkleDistributor.claims[address].amount,
-                        tokenDecimals || 18
-                      )}
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </PageContent>
   )
 }
