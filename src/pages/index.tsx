@@ -1,4 +1,16 @@
-import { Button, Link, Spinner, Text, VStack } from "@chakra-ui/react"
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Button,
+  Link,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react"
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
 import PageContent from "components/common/PageContent"
@@ -9,7 +21,7 @@ import useWithdraw from "components/index/hooks/useWithdraw"
 import useWithdrawAmount from "components/index/hooks/useWithdrawAmount"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { mutate } from "swr"
 
 const AirdropPage = (): JSX.Element => {
@@ -36,7 +48,19 @@ const AirdropPage = (): JSX.Element => {
     [distributionEnd]
   )
 
-  const { onSubmit: onClaimSubmit, isLoading: isClaimLoading } = useClaim()
+  const [showClaimSuccess, setShowClaimSuccess] = useState(false)
+  const onClose = () => setShowClaimSuccess(false)
+  const cancelRef = useRef()
+
+  const {
+    onSubmit: onClaimSubmit,
+    isLoading: isClaimLoading,
+    response: claimResponse,
+  } = useClaim()
+
+  useEffect(() => {
+    if (claimResponse) setShowClaimSuccess(true)
+  }, [claimResponse])
 
   const {
     onSubmit: onWithdrawSubmit,
@@ -153,6 +177,35 @@ const AirdropPage = (): JSX.Element => {
       {!account && (
         <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
       )}
+
+      <AlertDialog
+        isOpen={showClaimSuccess}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="3xl" fontWeight="bold">
+              Congrats!
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              You've successfully claimed your tokens!
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button
+                colorScheme="seedclub"
+                ref={cancelRef}
+                onClick={onClose}
+                fontFamily="display"
+              >
+                Ok
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </PageContent>
   )
 }
