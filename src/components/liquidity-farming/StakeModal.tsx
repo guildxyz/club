@@ -51,6 +51,19 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [depositAndStakeResponse])
 
+  // If the user has only 1 stakable NFT, stake it by default
+  useEffect(() => {
+    if (!isOpen || !userNfts || userNfts.filter((nft) => nft.canStake).length !== 1)
+      return
+    setPickedStakeNft(userNfts.filter((nft) => nft.canStake)[0].tokenId)
+  }, [isOpen, userNfts])
+
+  useEffect(() => {
+    if (!pickedStakeNft || userNfts.filter((nft) => nft.canStake).length !== 1)
+      return
+    onDepositAndStake()
+  }, [pickedStakeNft])
+
   return (
     <Modal
       isOpen={isOpen}
