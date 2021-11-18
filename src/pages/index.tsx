@@ -21,10 +21,15 @@ import useWithdraw from "components/index/hooks/useWithdraw"
 import useWithdrawAmount from "components/index/hooks/useWithdrawAmount"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
+import useWindowSize from "hooks/useWindowSize"
 import { useEffect, useMemo, useRef, useState } from "react"
+import Confetti from "react-confetti"
 import { mutate } from "swr"
 
 const AirdropPage = (): JSX.Element => {
+  const { width, height } = useWindowSize()
+  const [runConfetti, setRunConfetti] = useState(false)
+
   const { active, account, chainId } = useWeb3React()
   const eligible = useMemo(
     () => Object.keys(MerkleDistributor.claims).includes(account),
@@ -51,6 +56,19 @@ const AirdropPage = (): JSX.Element => {
   const [showClaimSuccess, setShowClaimSuccess] = useState(false)
   const onClose = () => setShowClaimSuccess(false)
   const cancelRef = useRef()
+
+  // Show confetti on successful claim
+  useEffect(() => {
+    if (showClaimSuccess) {
+      setRunConfetti(true)
+      setTimeout(() => {
+        setRunConfetti(false)
+      }, 5000)
+      return
+    }
+
+    setRunConfetti(false)
+  }, [showClaimSuccess])
 
   const {
     onSubmit: onClaimSubmit,
@@ -204,6 +222,12 @@ const AirdropPage = (): JSX.Element => {
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
+          <Confetti
+            width={width}
+            height={height}
+            gravity={0.25}
+            numberOfPieces={runConfetti ? 200 : 0}
+          />
         </AlertDialogOverlay>
       </AlertDialog>
     </PageContent>
