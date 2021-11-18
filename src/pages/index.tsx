@@ -5,6 +5,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
+  Box,
   Button,
   Link,
   Spinner,
@@ -22,8 +23,10 @@ import useWithdrawAmount from "components/index/hooks/useWithdrawAmount"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
 import useWindowSize from "hooks/useWindowSize"
+import lottie from "lottie-web"
 import { useEffect, useMemo, useRef, useState } from "react"
 import Confetti from "react-confetti"
+import coins from "static/lotties/coins.json"
 import { mutate } from "swr"
 
 const AirdropPage = (): JSX.Element => {
@@ -61,6 +64,15 @@ const AirdropPage = (): JSX.Element => {
   useEffect(() => {
     if (showClaimSuccess) {
       setRunConfetti(true)
+
+      setTimeout(() => {
+        lottie.loadAnimation({
+          container: document.querySelector("#coins-animation"),
+          animationData: coins,
+          loop: false,
+        })
+      }, 200)
+
       setTimeout(() => {
         setRunConfetti(false)
       }, 5000)
@@ -208,7 +220,8 @@ const AirdropPage = (): JSX.Element => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              You've successfully claimed your tokens!
+              <Text mb={4}>You've successfully claimed your tokens!</Text>
+              <Box id="coins-animation" mx="auto" boxSize={56} />
             </AlertDialogBody>
 
             <AlertDialogFooter>
