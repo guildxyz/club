@@ -242,15 +242,19 @@ const LiquidityFarmingPage = (): JSX.Element => {
         depositData={depositData}
       />
 
-      {false && (
-        <>
+      {process.env.NODE_ENV === "development" && (
+        <SimpleGrid
+          gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
+          gap={2}
+          pt={4}
+        >
           <Button isLoading={isCreateIncentiveLoading} onClick={onCreateIncentive}>
             Create Incentive
           </Button>
           <Button isLoading={isEndIncentiveLoading} onClick={onEndIncentive}>
             End Incentive
           </Button>
-        </>
+        </SimpleGrid>
       )}
     </PageContent>
   )
