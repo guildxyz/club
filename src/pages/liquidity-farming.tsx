@@ -104,6 +104,10 @@ const LiquidityFarmingPage = (): JSX.Element => {
   const { isLoading: isEndIncentiveLoading, onSubmit: onEndIncentive } =
     useEndIncentive()
 
+  const [claimMode, setClaimMode] = useState<"claim" | "unstakeWithdrawClaim">(
+    "unstakeWithdrawClaim"
+  )
+
   return (
     <PageContent
       title={
@@ -188,7 +192,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
           </SimpleGrid>
 
           <SimpleGrid
-            gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
+            gridTemplateColumns={{ base: "1fr", md: "1fr 1fr 1fr" }}
             gap={2}
             pt={4}
           >
@@ -198,7 +202,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                 colorScheme="seedclub"
                 onClick={onNftListModalOpen}
               >
-                Deposit & Stake
+                Deposit &amp; Stake
               </Button>
             </Skeleton>
 
@@ -208,9 +212,28 @@ const LiquidityFarmingPage = (): JSX.Element => {
                 letterSpacing="wide"
                 colorScheme="gray"
                 variant="outline"
-                onClick={onDepositNftsModalOpen}
+                onClick={() => {
+                  setClaimMode("unstakeWithdrawClaim")
+                  onDepositNftsModalOpen()
+                }}
               >
-                Claim & Unstake
+                Claim &amp; Unstake
+              </Button>
+            </Skeleton>
+
+            <Skeleton isLoaded={isIncentiveDataLoaded}>
+              <Button
+                width="full"
+                isDisabled={!depositData || depositData.length === 0}
+                letterSpacing="wide"
+                colorScheme="gray"
+                variant="outline"
+                onClick={() => {
+                  setClaimMode("claim")
+                  onDepositNftsModalOpen()
+                }}
+              >
+                Claim
               </Button>
             </Skeleton>
           </SimpleGrid>
@@ -229,7 +252,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
               letterSpacing="wide"
               onClick={onDepositNftsModalOpen}
             >
-              Claim rewards & Unstake NFTs
+              Claim rewards &amp; Unstake NFTs
             </Button>
           )}
         </>
@@ -240,6 +263,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
         isOpen={isDepositNftsModalOpen}
         onClose={onDepositNftsModalClose}
         depositData={depositData}
+        claimMode={claimMode}
       />
 
       {process.env.NODE_ENV === "development" && (

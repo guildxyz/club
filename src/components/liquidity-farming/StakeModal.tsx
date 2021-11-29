@@ -127,7 +127,7 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
                 colorScheme="seedclub"
                 onClick={onDepositAndStake}
               >
-                Deposit & Stake
+                Deposit &amp; Stake
               </Button>
             </ScaleFade>
           )}

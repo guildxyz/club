@@ -25,9 +25,15 @@ type Props = {
   isOpen: boolean
   onClose: () => void
   depositData: Array<NFT>
+  claimMode: "claim" | "unstakeWithdrawClaim"
 }
 
-const UnstakeModal = ({ isOpen, onClose, depositData }: Props): JSX.Element => {
+const UnstakeModal = ({
+  isOpen,
+  onClose,
+  depositData,
+  claimMode,
+}: Props): JSX.Element => {
   const { account, chainId, active } = useWeb3React()
 
   const { isValidating: isUserNftsLoading } = useUserNfts()
@@ -37,7 +43,7 @@ const UnstakeModal = ({ isOpen, onClose, depositData }: Props): JSX.Element => {
     isLoading: isClaimLoading,
     onSubmit: onClaimSubmit,
     response: claimResponse,
-  } = useUnstakeWithdrawClaim(pickedUnstakeNft)
+  } = useUnstakeWithdrawClaim(pickedUnstakeNft, claimMode)
 
   useEffect(() => {
     if (claimResponse) {
@@ -58,7 +64,9 @@ const UnstakeModal = ({ isOpen, onClose, depositData }: Props): JSX.Element => {
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Claim & Unstake</ModalHeader>
+        <ModalHeader>
+          {claimMode === "claim" ? "Claim" : "Claim & unstake"}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {isUserNftsLoading ? (
@@ -104,7 +112,7 @@ const UnstakeModal = ({ isOpen, onClose, depositData }: Props): JSX.Element => {
                   colorScheme="seedclub"
                   onClick={onClaimSubmit}
                 >
-                  Claim & unstake
+                  {claimMode === "claim" ? "Claim" : "Claim & unstake"}
                 </Button>
               </HStack>
             </ScaleFade>

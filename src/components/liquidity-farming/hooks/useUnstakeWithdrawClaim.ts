@@ -6,7 +6,10 @@ import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import incentiveKey from "temporaryData/incentiveKey"
 import parseError from "utils/parseError"
 
-const useUnstakeWithdrawClaim = (tokenId: number) => {
+const useUnstakeWithdrawClaim = (
+  tokenId: number,
+  mode: "claim" | "unstakeWithdrawClaim" = "unstakeWithdrawClaim"
+) => {
   const { active, account } = useWeb3React()
 
   const stakerContract = useContract(
@@ -19,6 +22,15 @@ const useUnstakeWithdrawClaim = (tokenId: number) => {
 
   // Unstake, withdraw, and claim in one call
   const unstakeWithdrawClaim = async () => {
+    if (mode === "claim") {
+      const claimRes = await stakerContract.claimReward(
+        process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS,
+        account,
+        0
+      )
+      return claimRes?.wait()
+    }
+
     const multicall = await stakerContract.multicall([
       stakerContract.interface.encodeFunctionData("unstakeToken", [
         incentiveKey,
@@ -46,7 +58,7 @@ const useUnstakeWithdrawClaim = (tokenId: number) => {
     onError: (e) => {
       console.error(e)
       toast({
-        title: "Error unstaking NFT",
+        title: `Error ${mode === "claim" ? "claiming" : "unstaking"} NFT`,
         description: parseError(e),
         status: "error",
       })
