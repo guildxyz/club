@@ -54,6 +54,17 @@ const UnstakeModal = ({
     }
   }, [claimResponse])
 
+  // If the user has only 1 unstakable NFT, stake it by default
+  useEffect(() => {
+    if (!isOpen || !depositData || depositData.length !== 1) return
+    setPickedUnstakeNft(depositData[0].tokenId)
+  }, [isOpen, depositData])
+
+  useEffect(() => {
+    if (!pickedUnstakeNft || depositData.length !== 1) return
+    onClaimSubmit()
+  }, [pickedUnstakeNft])
+
   return (
     <Modal
       isOpen={isOpen}
