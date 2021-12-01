@@ -76,7 +76,8 @@ const variantOutline = (props: Dict) => {
 
 const styles = {
   baseStyle: {
-    borderRadius: "xl",
+    borderRadius: "lg",
+    fontFamily: "display",
   },
   sizes: {
     md: {

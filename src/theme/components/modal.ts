@@ -6,11 +6,15 @@ const styles = {
   parts: ["dialog", "closeButton", "header", "footer", "body"],
   baseStyle: (props: Dict) => ({
     dialog: {
-      borderTopRadius: "xl",
-      borderBottomRadius: { base: 0, sm: "xl" },
+      borderRadius: "none",
       overflow: "hidden",
       marginTop: "auto",
       marginBottom: { base: 0, sm: "auto" },
+      borderWidth: 8,
+      borderColor: "seedclub.white",
+      bgColor: "seedclub.green.900",
+      bgImage: "url('/img/noisy.png')",
+      color: "white",
       // we can't add data attributes to the Modal component so we have
       // to prevent the focus-visible polyfill from removing shadow on
       // focus by overriding it's style with the default box-shadow

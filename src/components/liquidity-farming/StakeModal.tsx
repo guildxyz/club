@@ -108,9 +108,11 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
                 farm.
               </Text>
               <Button
-                fontFamily="display"
+                variant="outline"
+                colorScheme="whiteAlpha"
+                borderColor="seedclub.white"
+                color="seedclub.white"
                 w="max-content"
-                colorScheme="gray"
                 mr={3}
                 onClick={() => {
                   onClose()
@@ -120,7 +122,6 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
                 Cancel
               </Button>
               <Button
-                fontFamily="display"
                 w="max-content"
                 isLoading={isStakeNftLoading}
                 loadingText="Staking"

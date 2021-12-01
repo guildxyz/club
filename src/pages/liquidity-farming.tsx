@@ -1,20 +1,9 @@
-import {
-  Button,
-  SimpleGrid,
-  Skeleton,
-  Text,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react"
-import { formatUnits } from "@ethersproject/units"
-import { useWeb3React } from "@web3-react/core"
+import { Button, SimpleGrid, Skeleton, Text, useDisclosure } from "@chakra-ui/react"
+import Link from "components/common/Link"
 import PageContent from "components/common/PageContent"
-import TokenImage from "components/common/TokenImage"
-import Countdown from "components/index/Countdown"
 import useCreateIncentive from "components/liquidity-farming/hooks/useCreateIncentive"
 import useEndIncentive from "components/liquidity-farming/hooks/useEndIncentive"
 import useStakingRewards from "components/liquidity-farming/hooks/useStakingRewards"
-import useSumLiquidity from "components/liquidity-farming/hooks/useSumLiquidity"
 import useSumUnclaimedRewards from "components/liquidity-farming/hooks/useSumUnclaimedRewards"
 import useUserNfts from "components/liquidity-farming/hooks/useUserNfts"
 import StakeModal from "components/liquidity-farming/StakeModal"
@@ -38,22 +27,15 @@ const LiquidityFarmingPage = (): JSX.Element => {
     isOpen: isDepositNftsModalOpen,
   } = useDisclosure()
 
-  const { account } = useWeb3React()
   const {
     data: [, rewardTokenSymbol],
   } = useTokenData(process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS)
-  const {
-    isLoading: isToken0Loading,
-    tokenSymbol: liquidityToken0Symbol,
-    tokenImage: liquidityToken0Image,
-  } = useTokenDataWithImage(process.env.NEXT_PUBLIC_TOKEN0_ADDRESS)
-  const {
-    isLoading: isToken1Loading,
-    tokenSymbol: liquidityToken1Symbol,
-    tokenImage: liquidityToken1Image,
-  } = useTokenDataWithImage(process.env.NEXT_PUBLIC_TOKEN1_ADDRESS)
-
-  const [ended, setEnded] = useState(false)
+  const { tokenSymbol: liquidityToken0Symbol } = useTokenDataWithImage(
+    process.env.NEXT_PUBLIC_TOKEN0_ADDRESS
+  )
+  const { tokenSymbol: liquidityToken1Symbol } = useTokenDataWithImage(
+    process.env.NEXT_PUBLIC_TOKEN1_ADDRESS
+  )
 
   const { data: userNfts } = useUserNfts()
 
@@ -84,18 +66,14 @@ const LiquidityFarmingPage = (): JSX.Element => {
     )
   }, [depositTransferred, userNfts])
 
-  const sumLiquidity = useSumLiquidity(
-    depositData?.map((deposit) => deposit.tokenId)
-  )
   const sumUnclaimedRewards = useSumUnclaimedRewards(
     depositData?.map((deposit) => deposit.tokenId)
   )
 
   // Managing skeleton loaders' state
   const isIncentiveDataLoaded = useMemo(
-    () =>
-      !!nftName && !!rewardTokenSymbol && incentiveData && !isValidating && !ended,
-    [nftName, rewardTokenSymbol, incentiveData, isValidating, ended]
+    () => !!nftName && !!rewardTokenSymbol && incentiveData && !isValidating,
+    [nftName, rewardTokenSymbol, incentiveData, isValidating]
   )
 
   // For development testing only!
@@ -108,95 +86,71 @@ const LiquidityFarmingPage = (): JSX.Element => {
     "unstakeWithdrawClaim"
   )
 
+  const formatDate = (unixTimestamp: number) => {
+    const date = new Date(unixTimestamp * 1000)
+    return date.toLocaleDateString()
+  }
+
+  const ended = useMemo(
+    () => false,
+    // incentiveKey?.endTime
+    //   ? parseInt(incentiveKey.endTime) * 1000 >= Date.now()
+    //   : true,
+    []
+  )
+
   return (
     <PageContent
       title={
         <>
           Seed Club <br />
-          Liquidity Farming
+          Liquidity Mining
         </>
       }
-      layoutTitle="Liquidity Farming"
-      header={
-        <SimpleGrid gridTemplateColumns="3rem 3rem">
-          {account && (
-            <>
-              <TokenImage
-                isLoading={isToken0Loading}
-                tokenSymbol={liquidityToken0Symbol}
-                tokenImage={liquidityToken0Image}
-              />
-              <TokenImage
-                isLoading={isToken1Loading}
-                tokenSymbol={liquidityToken1Symbol}
-                tokenImage={liquidityToken1Image}
-              />
-            </>
-          )}
-        </SimpleGrid>
-      }
-      subTitle={
-        account &&
-        !ended && (
-          <Skeleton isLoaded={isIncentiveDataLoaded}>
-            <Text colorScheme="gray">
-              {`Stake ${nftName} to earn ${rewardTokenSymbol}`}
-            </Text>
-          </Skeleton>
-        )
-      }
+      layoutTitle="Liquidity Mining"
     >
-      {account && !ended && (
+      {!ended && (
         <>
-          <VStack spacing={1} fontSize="xl">
-            <Skeleton isLoaded={isIncentiveDataLoaded}>
-              <Countdown
-                timestamp={parseFloat(incentiveKey.endTime)}
-                endText="Liquidity Farming ended"
-                long
-                onEnd={() => setEnded(true)}
-              />
-            </Skeleton>
+          <Skeleton isLoaded={isIncentiveDataLoaded}>
+            <Text>{formatDate(parseInt(incentiveKey.endTime))}</Text>
+          </Skeleton>
 
-            <Skeleton isLoaded={isIncentiveDataLoaded}>
-              <Text>
-                Pool reward: {formatUnits(incentiveData?.args?.reward || 0, 18)}{" "}
-                {rewardTokenSymbol}
-              </Text>
-            </Skeleton>
-          </VStack>
+          <Text fontSize="xl">
+            {`Earn rewards for supplying liquidity for $${liquidityToken0Symbol} on Uniswap V3. Learn more
+            here.`}
+          </Text>
 
-          <SimpleGrid gridTemplateColumns="1fr 1fr" gap={8}>
-            <VStack>
-              <Skeleton isLoaded={isIncentiveDataLoaded}>
-                <Text as="span" fontSize="3xl">
-                  {sumLiquidity}
-                </Text>
-              </Skeleton>
-              <Skeleton isLoaded={isIncentiveDataLoaded}>
-                <Text as="span">Staked liquidity</Text>
-              </Skeleton>
-            </VStack>
-
-            <VStack>
-              <Skeleton isLoaded={isIncentiveDataLoaded} minWidth={16}>
-                <Text as="span" fontSize="3xl">
-                  {sumUnclaimedRewards}
-                </Text>
-              </Skeleton>
-
-              <Skeleton isLoaded={isIncentiveDataLoaded} minWidth={16}>
-                <Text as="span">Unclaimed {rewardTokenSymbol}</Text>
-              </Skeleton>
-            </VStack>
-          </SimpleGrid>
+          <Link href="#" fontSize="xl" textDecoration="underline">
+            Learn more here
+          </Link>
 
           <SimpleGrid
-            gridTemplateColumns={{ base: "1fr", md: "1fr 1fr 1fr" }}
-            gap={2}
-            pt={4}
+            width="full"
+            gap={4}
+            gridTemplateColumns={{ base: "1fr", md: "5fr 2fr" }}
           >
-            <Skeleton isLoaded={isIncentiveDataLoaded}>
+            <Text
+              h="var(--chakra-sizes-11)"
+              fontSize="3xl"
+              textAlign="right"
+              fontFamily="display"
+              fontWeight="semibold"
+            >{`${depositData?.length} Staked NFTs`}</Text>
+
+            {depositData?.length > 0 ? (
+              <Button
+                width="full"
+                isDisabled={!depositData || depositData.length === 0}
+                letterSpacing="wide"
+                colorScheme="seedclub"
+                onClick={() => {
+                  setClaimMode("unstakeWithdrawClaim")
+                  onDepositNftsModalOpen()
+                }}
+              >
+                Claim &amp; unstake
+              </Button>
+            ) : (
               <Button
                 letterSpacing="wide"
                 colorScheme="seedclub"
@@ -204,45 +158,37 @@ const LiquidityFarmingPage = (): JSX.Element => {
               >
                 Deposit &amp; Stake
               </Button>
-            </Skeleton>
+            )}
+          </SimpleGrid>
 
-            <Skeleton isLoaded={isIncentiveDataLoaded}>
-              <Button
-                isDisabled={!depositData || depositData.length === 0}
-                letterSpacing="wide"
-                colorScheme="gray"
-                variant="outline"
-                onClick={() => {
-                  setClaimMode("unstakeWithdrawClaim")
-                  onDepositNftsModalOpen()
-                }}
-              >
-                Claim &amp; Unstake
-              </Button>
-            </Skeleton>
-
-            <Skeleton isLoaded={isIncentiveDataLoaded}>
-              <Button
-                width="full"
-                isDisabled={!depositData || depositData.length === 0}
-                letterSpacing="wide"
-                colorScheme="gray"
-                variant="outline"
-                onClick={() => {
-                  setClaimMode("claim")
-                  onDepositNftsModalOpen()
-                }}
-              >
-                Claim
-              </Button>
-            </Skeleton>
+          <SimpleGrid
+            width="full"
+            gap={4}
+            gridTemplateColumns={{ base: "1fr", md: "5fr 2fr" }}
+          >
+            <Text
+              h="var(--chakra-sizes-11)"
+              fontSize="3xl"
+              textAlign="right"
+              fontFamily="display"
+              fontWeight="semibold"
+            >{`${sumUnclaimedRewards} pending rewards`}</Text>
+            <Button
+              width="full"
+              isDisabled={!depositData || depositData.length === 0}
+              letterSpacing="wide"
+              colorScheme="seedclub"
+              onClick={() => {
+                setClaimMode("claim")
+                onDepositNftsModalOpen()
+              }}
+            >
+              Claim
+            </Button>
           </SimpleGrid>
         </>
       )}
 
-      {!account && !ended && (
-        <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
-      )}
       {ended && (
         <>
           <Text fontSize="xl">This incentive has ended!</Text>
@@ -250,7 +196,10 @@ const LiquidityFarmingPage = (): JSX.Element => {
             <Button
               colorScheme="seedclub"
               letterSpacing="wide"
-              onClick={onDepositNftsModalOpen}
+              onClick={() => {
+                setClaimMode("unstakeWithdrawClaim")
+                onDepositNftsModalOpen()
+              }}
             >
               Claim rewards &amp; Unstake NFTs
             </Button>

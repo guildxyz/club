@@ -8,14 +8,13 @@ import {
   Box,
   Button,
   Link,
-  Spinner,
   Text,
   VStack,
 } from "@chakra-ui/react"
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
+import LinkButton from "components/common/LinkButton"
 import PageContent from "components/common/PageContent"
-import TokenImage from "components/common/TokenImage"
 import useClaim from "components/index/hooks/useClaim"
 import useMerkleDistributor from "components/index/hooks/useMerkleDistributor"
 import useWithdraw from "components/index/hooks/useWithdraw"
@@ -39,14 +38,9 @@ const AirdropPage = (): JSX.Element => {
     [account]
   )
   const {
-    isValidating: isMerkleDistributorLoading,
     data: [isClaimed, token, distributionEnd, owner],
   } = useMerkleDistributor()
-  const {
-    isLoading: isTokenValidating,
-    tokenSymbol,
-    tokenImage,
-  } = useTokenDataWithImage(token)
+  const { tokenSymbol } = useTokenDataWithImage(token)
 
   const ended = useMemo(
     () =>
@@ -110,46 +104,41 @@ const AirdropPage = (): JSX.Element => {
 
   return (
     <PageContent
-      layoutTitle="CLUBdrop"
-      title="CLUBdrop"
-      header={
-        account &&
-        !isMerkleDistributorLoading &&
-        (tokenImage || tokenSymbol) && (
-          <TokenImage
-            isLoading={isTokenValidating}
-            tokenSymbol={tokenSymbol}
-            tokenImage={tokenImage}
-          />
-        )
+      layoutTitle={
+        (tokenSymbol &&
+          (isClaimed ? `$${tokenSymbol} Claimed!` : `Claim Your $${tokenSymbol}`)) ||
+        "Loading..."
+      }
+      title={
+        (tokenSymbol &&
+          (isClaimed ? `$${tokenSymbol} Claimed!` : `Claim Your $${tokenSymbol}`)) ||
+        "Loading..."
       }
     >
-      {account && !tokenSymbol && (
+      {tokenSymbol && (
         <>
-          {isMerkleDistributorLoading ? (
-            <Spinner mx="auto" />
-          ) : (
-            <Text fontSize="lg">Could not fetch reward token.</Text>
-          )}
-        </>
-      )}
-
-      {account && tokenSymbol && (
-        <>
-          <VStack spacing={1} fontSize="xl" pb={4}>
+          <VStack spacing={6} fontSize="xl" py={8}>
             {isClaimed ? (
-              <Text fontSize="xl">You've already claimed your tokens!</Text>
+              <>
+                <Text fontSize="xl">
+                  <Link href="" target="_blank" textDecoration="underline">
+                    Read this post
+                  </Link>{" "}
+                  to learn more about what's next.
+                </Text>
+                <Text>It's time to build.</Text>
+              </>
             ) : (
               <>
                 {!ended && eligible && (
                   <>
+                    <Text mb={4}>Congrats!</Text>
                     <Text>
-                      {`Congrats! You've qualified to receive ${tokenSymbol}.`}
+                      {`You'll receive ${tokenSymbol} for being an early participant in our community.`}
                     </Text>
                     <Text>
-                      Read{" "}
-                      <Link href="" target="_blank" color="seedclub.green.700">
-                        this post
+                      <Link href="" target="_blank" textDecoration="underline">
+                        Read this post
                       </Link>{" "}
                       to learn more about what's next.
                     </Text>
@@ -158,11 +147,11 @@ const AirdropPage = (): JSX.Element => {
 
                 {!ended && !eligible && (
                   <>
-                    <Text>Sorry! You didn't qualify for the CLUBDrop.</Text>
+                    <Text>Shoot, this address isn't eligible for the airdrop.</Text>
+
                     <Text>
-                      Read{" "}
-                      <Link href="" target="_blank" color="seedclub.green.700">
-                        this post
+                      <Link href="" target="_blank" textDecoration="underline">
+                        Read this post
                       </Link>{" "}
                       to learn why and how to get involved moving forward.
                     </Text>
@@ -188,24 +177,28 @@ const AirdropPage = (): JSX.Element => {
             </Button>
           )}
 
-          {!ended && eligible && owner?.toLowerCase() !== account?.toLowerCase() && (
-            <Button
-              px={8}
-              letterSpacing="wide"
-              colorScheme="seedclub"
-              isDisabled={isClaimed}
-              isLoading={isClaimLoading}
-              loadingText="Claiming"
-              onClick={onClaimSubmit}
-            >
-              Claim
-            </Button>
+          {eligible &&
+            !isClaimed &&
+            owner?.toLowerCase() !== account?.toLowerCase() && (
+              <Button
+                px={8}
+                letterSpacing="wide"
+                colorScheme="seedclub"
+                isDisabled={ended}
+                isLoading={isClaimLoading}
+                loadingText="Claiming"
+                onClick={onClaimSubmit}
+              >
+                Claim
+              </Button>
+            )}
+
+          {isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (
+            <LinkButton href="https://discord.gg/42UjJskuEF" colorScheme="seedclub">
+              Open SeedClub Discord
+            </LinkButton>
           )}
         </>
-      )}
-
-      {!account && (
-        <Text fontSize="xl">Please connect your wallet in order to continue!</Text>
       )}
 
       <AlertDialog
@@ -225,12 +218,7 @@ const AirdropPage = (): JSX.Element => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button
-                colorScheme="seedclub"
-                ref={cancelRef}
-                onClick={onClose}
-                fontFamily="display"
-              >
+              <Button colorScheme="seedclub" ref={cancelRef} onClick={onClose}>
                 Ok
               </Button>
             </AlertDialogFooter>

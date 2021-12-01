@@ -20,7 +20,6 @@ const Card = ({
       }
     }
     bg="seedclub.white"
-    borderRadius={{ base: isFullWidthOnMobile ? "none" : "2xl", sm: "2xl" }}
     display="flex"
     flexDirection="column"
     overflow="hidden"

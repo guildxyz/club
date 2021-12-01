@@ -19,20 +19,22 @@ const NetworkButton = ({ chain, requestNetworkChange }: Props) => {
     >
       <Box>
         <Button
-          rightIcon={
+          isFullWidth
+          onClick={requestNetworkChange}
+          leftIcon={
             <Img
               src={RPC[chain].iconUrls[0]}
-              boxSize="6"
               alt={`${RPC[chain].chainName} logo`}
+              boxSize={6}
             />
           }
-          border={isCurrentChain && "2px"}
-          borderColor="primary.500"
           disabled={isCurrentChain}
-          onClick={requestNetworkChange}
-          isFullWidth
+          variant="outline"
+          colorScheme="whiteAlpha"
           size="xl"
           justifyContent="space-between"
+          color="seedclub.white"
+          borderColor="seedclub.white"
         >
           {RPC[chain].chainName}
         </Button>

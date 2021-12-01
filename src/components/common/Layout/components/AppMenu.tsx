@@ -11,14 +11,14 @@ const AppMenu = (): JSX.Element => {
       spacing={8}
       fontSize={{ base: "2xl", md: "3xl" }}
       color="seedclub.white"
+      justifyContent="center"
+      fontFamily="display"
     >
       <Link
         href="/"
         _hover={{ textDecoration: "none", color: "seedclub.lightlime" }}
         borderBottomWidth={2}
-        borderBottomColor={
-          router.asPath === "/" ? "seedclub.lightlime" : "transparent"
-        }
+        borderBottomColor={router.asPath === "/" ? "seedclub.white" : "transparent"}
       >
         CLUBdrop
       </Link>

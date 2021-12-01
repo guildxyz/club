@@ -4,7 +4,7 @@ type Props = {
   name: string
   onClick: () => void
   iconUrl: string
-  disabled: boolean
+  disabled?: boolean
   isActive: boolean
   isLoading: boolean
 }
@@ -18,17 +18,21 @@ const ConnectorButton = ({
   isLoading,
 }: Props): JSX.Element => (
   <Button
+    isFullWidth
     onClick={onClick}
-    rightIcon={<Img src={`/walletLogos/${iconUrl}`} h="5" alt={`${name} logo`} />}
+    leftIcon={
+      <Img src={`/walletLogos/${iconUrl}`} alt={`${name} logo`} boxSize={8} />
+    }
     disabled={disabled}
     isLoading={isLoading}
+    variant="outline"
+    colorScheme="whiteAlpha"
     spinnerPlacement="end"
     loadingText={`${name} - connecting...`}
-    isFullWidth
     size="xl"
     justifyContent="space-between"
-    border={isActive && "2px"}
-    borderColor="primary.500"
+    color="seedclub.white"
+    borderColor="seedclub.white"
   >
     {`${name} ${isActive ? " - connected" : ""}`}
   </Button>

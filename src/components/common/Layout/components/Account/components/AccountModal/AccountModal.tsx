@@ -35,15 +35,27 @@ const AccountModal = ({ isOpen, onClose }) => {
         <ModalBody>
           <Stack direction="row" spacing="4" alignItems="center">
             <Identicon address={account} size={40} />
-            <CopyableAddress address={account} decimals={5} fontSize="2xl" />
+            <CopyableAddress
+              address={account}
+              decimals={5}
+              fontSize="2xl"
+              fontFamily="body"
+            />
           </Stack>
         </ModalBody>
         <ModalFooter>
           <Stack direction="row" alignItems="center" justifyContent="space-between">
-            <Text colorScheme="gray" fontSize="sm" fontWeight="medium">
+            <Text fontSize="sm" fontWeight="medium">
               Connected with {connector === injected ? "MetaMask" : "WalletConnect"}
             </Text>
-            <Button size="sm" variant="outline" onClick={handleWalletProviderSwitch}>
+            <Button
+              size="sm"
+              variant="outline"
+              colorScheme="whiteAlpha"
+              borderColor="seedclub.white"
+              color="seedclub.white"
+              onClick={handleWalletProviderSwitch}
+            >
               Switch
             </Button>
           </Stack>

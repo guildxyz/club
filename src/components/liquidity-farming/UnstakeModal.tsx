@@ -105,9 +105,11 @@ const UnstakeModal = ({
             <ScaleFade in={pickedUnstakeNft}>
               <HStack mt={4} spacing={3}>
                 <Button
-                  fontFamily="display"
+                  variant="outline"
+                  colorScheme="whiteAlpha"
                   w="max-content"
-                  colorScheme="gray"
+                  color="seedclub.white"
+                  borderColor="seedclub.white"
                   onClick={() => {
                     onClose()
                     setPickedUnstakeNft(null)
@@ -116,7 +118,6 @@ const UnstakeModal = ({
                   Cancel
                 </Button>
                 <Button
-                  fontFamily="display"
                   w="max-content"
                   isLoading={isClaimLoading}
                   loadingText="Claiming"

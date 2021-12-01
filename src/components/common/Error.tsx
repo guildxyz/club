@@ -43,7 +43,14 @@ const Error = <ErrorType,>({
 
   return (
     <Collapse in={delayedShow}>
-      <Alert status="error" mb="6">
+      <Alert
+        status="error"
+        mb="6"
+        bgColor="transparent"
+        borderColor="red.500"
+        borderWidth={2}
+        rounded="lg"
+      >
         <AlertIcon />
         <Stack>
           <AlertTitle>{state.title}</AlertTitle>

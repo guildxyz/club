@@ -42,20 +42,20 @@ const Account = (): JSX.Element => {
         isLoading={!triedEager}
         onClick={openWalletSelectorModal}
       >
-        Connect to a wallet
+        Connect
       </AccountButton>
     )
   }
   return (
     <>
-      <AccountButton onClick={onAccountModalOpen}>
-        <HStack spacing={3}>
-          <Text as="span" fontSize="md" fontWeight="semibold">
+      <HStack spacing={3}>
+        <Identicon address={account} size={40} />
+        <AccountButton onClick={onAccountModalOpen}>
+          <Text as="span" fontSize="lg" fontWeight="semibold">
             {ENSName || `${shortenHex(account, 3)}`}
           </Text>
-          <Identicon address={account} size={28} />
-        </HStack>
-      </AccountButton>
+        </AccountButton>
+      </HStack>
 
       <AccountModal isOpen={isAccountModalOpen} onClose={onAccountModalClose} />
     </>
