@@ -92,10 +92,10 @@ const LiquidityFarmingPage = (): JSX.Element => {
   }
 
   const ended = useMemo(
-    () => false,
-    // incentiveKey?.endTime
-    //   ? parseInt(incentiveKey.endTime) * 1000 >= Date.now()
-    //   : true,
+    () =>
+      incentiveKey?.endTime
+        ? parseInt(incentiveKey.endTime) * 1000 <= Date.now()
+        : true,
     []
   )
 
