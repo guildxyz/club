@@ -34,10 +34,9 @@ const Layout = ({
         )}
       </Head>
       <Box
-        borderWidth={8}
-        borderColor="seedclub.white"
         bgColor="seedclub.green.900"
-        bgImage="url('/img/noisy.png')"
+        bgImage="url('/img/dark-green-bg.jpg')"
+        bgSize="100% 100%"
         minHeight="100vh"
       >
         <Box pb={4} height={24} bgColor="seedclub.white">
@@ -47,12 +46,14 @@ const Layout = ({
             px={4}
             w="full"
             height={20}
-            bgImage="url('/img/pattern.png')"
+            bgImage="url('/img/grid-25x150.jpg')"
             bgSize="auto 100%"
-            borderWidth={1}
-            borderColor="#23882E"
+            borderTopWidth={8}
+            borderLeftWidth={8}
+            borderRightWidth={8}
+            borderColor="seedclub.white"
           >
-            <Link href="/">
+            <Link href="/" mr={8}>
               <Img h={10} bgColor="seedclub.white" src="/img/seedclub-logo.svg" />
             </Link>
             <HStack spacing="2">

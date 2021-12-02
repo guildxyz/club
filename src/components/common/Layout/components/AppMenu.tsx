@@ -16,7 +16,7 @@ const AppMenu = (): JSX.Element => {
     >
       <Link
         href="/"
-        _hover={{ textDecoration: "none", color: "seedclub.lightlime" }}
+        _hover={{ textDecoration: "none", color: "seedclub.white" }}
         borderBottomWidth={2}
         borderBottomColor={router.asPath === "/" ? "seedclub.white" : "transparent"}
       >
@@ -24,12 +24,10 @@ const AppMenu = (): JSX.Element => {
       </Link>
       <Link
         href="/liquidity-farming"
-        _hover={{ textDecoration: "none", color: "seedclub.lightlime" }}
+        _hover={{ textDecoration: "none", color: "seedclub.white" }}
         borderBottomWidth={2}
         borderBottomColor={
-          router.asPath === "/liquidity-farming"
-            ? "seedclub.lightlime"
-            : "transparent"
+          router.asPath === "/liquidity-farming" ? "seedclub.white" : "transparent"
         }
       >
         Liquidity Farming

@@ -25,8 +25,8 @@ const PageContent = ({
         borderWidth={40}
         borderColor="seedclub.green.600"
         sx={{
-          borderImage: "url('/img/border-pattern.png')",
-          borderImageSlice: "50 50",
+          borderImage: "url('/img/grid-150x150.jpg')",
+          borderImageSlice: "51 51",
           borderImageRepeat: "round",
         }}
       >
