@@ -15,9 +15,9 @@ const theme = extendTheme({
     11: "2.75rem",
   },
   fonts: {
-    body: "Inter var, Inter, sans-serif",
-    heading: "Inter var, Inter, sans-serif",
-    display: "ITC Garamond, sans-serif",
+    body: "GT America, sans-serif",
+    heading: "ITC Garamond Condensed, sans-serif",
+    display: "ITC Garamond Book Narrow, sans-serif",
   },
   shadows: {
     outline: "0 0 0 4px rgba(170, 170, 170, 0.6)",
