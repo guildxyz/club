@@ -1,4 +1,14 @@
-import { Button, SimpleGrid, Skeleton, Text, useDisclosure } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  HStack,
+  Icon,
+  SimpleGrid,
+  Skeleton,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react"
+import CircleTooltip from "components/common/CircleTooltip"
 import Link from "components/common/Link"
 import PageContent from "components/common/PageContent"
 import useCreateIncentive from "components/liquidity-farming/hooks/useCreateIncentive"
@@ -10,6 +20,7 @@ import StakeModal from "components/liquidity-farming/StakeModal"
 import UnstakeModal from "components/liquidity-farming/UnstakeModal"
 import useTokenData from "hooks/useTokenData"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
+import { Info } from "phosphor-react"
 import { useMemo, useState } from "react"
 import incentiveKey from "temporaryData/incentiveKey"
 import unique from "utils/uniqueFilter"
@@ -127,64 +138,82 @@ const LiquidityFarmingPage = (): JSX.Element => {
           <SimpleGrid
             width="full"
             gap={4}
-            gridTemplateColumns={{ base: "1fr", md: "5fr 2fr" }}
+            gridTemplateColumns={{ base: "1fr", md: "65% 35%" }}
           >
             <Text
               h="var(--chakra-sizes-11)"
               fontSize="3xl"
-              textAlign="right"
+              textAlign={{ base: "center", lg: "right" }}
               fontFamily="display"
               fontWeight="semibold"
             >{`${depositData?.length} Staked NFTs`}</Text>
 
-            {depositData?.length > 0 ? (
+            <HStack spacing={2}>
+              {depositData?.length > 0 ? (
+                <>
+                  <Button
+                    width="full"
+                    isDisabled={!depositData || depositData.length === 0}
+                    letterSpacing="wide"
+                    colorScheme="seedclub"
+                    onClick={() => {
+                      setClaimMode("unstakeWithdrawClaim")
+                      onDepositNftsModalOpen()
+                    }}
+                  >
+                    Claim &amp; unstake
+                  </Button>
+                  <Box boxSize={{ base: 0, lg: 6 }} />
+                </>
+              ) : (
+                <>
+                  <Button
+                    width="full"
+                    letterSpacing="wide"
+                    colorScheme="seedclub"
+                    onClick={onNftListModalOpen}
+                  >
+                    Deposit &amp; Stake
+                  </Button>
+                  <CircleTooltip
+                    label="DeFi staking, in its most narrow definition, refers to the practice of locking crypto assets into a smart contract in exchange for an APY."
+                    placement="right"
+                    boxSize={80}
+                  >
+                    <Icon as={Info} boxSize={5} />
+                  </CircleTooltip>
+                </>
+              )}
+            </HStack>
+          </SimpleGrid>
+
+          <SimpleGrid
+            width="full"
+            gap={4}
+            gridTemplateColumns={{ base: "1fr", md: "65% 35%" }}
+          >
+            <Text
+              h="var(--chakra-sizes-11)"
+              fontSize="3xl"
+              textAlign={{ base: "center", lg: "right" }}
+              fontFamily="display"
+              fontWeight="semibold"
+            >{`${sumUnclaimedRewards} pending rewards`}</Text>
+            <HStack spacing={2}>
               <Button
                 width="full"
                 isDisabled={!depositData || depositData.length === 0}
                 letterSpacing="wide"
                 colorScheme="seedclub"
                 onClick={() => {
-                  setClaimMode("unstakeWithdrawClaim")
+                  setClaimMode("claim")
                   onDepositNftsModalOpen()
                 }}
               >
-                Claim &amp; unstake
+                Claim
               </Button>
-            ) : (
-              <Button
-                letterSpacing="wide"
-                colorScheme="seedclub"
-                onClick={onNftListModalOpen}
-              >
-                Deposit &amp; Stake
-              </Button>
-            )}
-          </SimpleGrid>
-
-          <SimpleGrid
-            width="full"
-            gap={4}
-            gridTemplateColumns={{ base: "1fr", md: "5fr 2fr" }}
-          >
-            <Text
-              h="var(--chakra-sizes-11)"
-              fontSize="3xl"
-              textAlign="right"
-              fontFamily="display"
-              fontWeight="semibold"
-            >{`${sumUnclaimedRewards} pending rewards`}</Text>
-            <Button
-              width="full"
-              isDisabled={!depositData || depositData.length === 0}
-              letterSpacing="wide"
-              colorScheme="seedclub"
-              onClick={() => {
-                setClaimMode("claim")
-                onDepositNftsModalOpen()
-              }}
-            >
-              Claim
-            </Button>
+              <Box boxSize={{ base: 0, lg: 6 }} />
+            </HStack>
           </SimpleGrid>
         </>
       )}

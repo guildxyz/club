@@ -18,7 +18,7 @@ const PageContent = ({
   children,
 }: PropsWithChildren<Props>): JSX.Element => (
   <Layout title={layoutTitle}>
-    <Card p={4}>
+    <Card p={4} bgImage="url('/img/white-bg.jpg')" bgSize="cover">
       <Box
         px="38px"
         py="38px"
