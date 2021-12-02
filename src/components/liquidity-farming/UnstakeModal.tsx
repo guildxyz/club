@@ -37,17 +37,27 @@ const UnstakeModal = ({
   const { account, chainId, active } = useWeb3React()
 
   const { isValidating: isUserNftsLoading } = useUserNfts()
-  const [pickedUnstakeNft, setPickedUnstakeNft] = useState(null)
+  const [pickedUnstakeNfts, setPickedUnstakeNfts] = useState([])
+
+  const toggleNft = (tokenId: number) => {
+    const newNftList = [...pickedUnstakeNfts]
+    if (newNftList.includes(tokenId)) {
+      setPickedUnstakeNfts(newNftList.filter((nft) => nft !== tokenId))
+      return
+    }
+
+    setPickedUnstakeNfts(newNftList.concat([tokenId]))
+  }
 
   const {
     isLoading: isClaimLoading,
     onSubmit: onClaimSubmit,
     response: claimResponse,
-  } = useUnstakeWithdrawClaim(pickedUnstakeNft, claimMode)
+  } = useUnstakeWithdrawClaim(pickedUnstakeNfts, claimMode)
 
   useEffect(() => {
     if (claimResponse) {
-      setPickedUnstakeNft(null)
+      setPickedUnstakeNfts([])
       onClose()
       mutate(active ? ["stakingRewards", chainId, account] : null)
       mutate(active ? ["nfts", chainId, account] : null)
@@ -57,20 +67,20 @@ const UnstakeModal = ({
   // If the user has only 1 unstakable NFT, stake it by default
   useEffect(() => {
     if (!isOpen || !depositData || depositData.length !== 1) return
-    setPickedUnstakeNft(depositData[0].tokenId)
+    setPickedUnstakeNfts([depositData[0].tokenId])
   }, [isOpen, depositData])
 
   useEffect(() => {
-    if (!pickedUnstakeNft || depositData.length !== 1) return
+    if (!pickedUnstakeNfts?.length || depositData.length !== 1) return
     onClaimSubmit()
-  }, [pickedUnstakeNft])
+  }, [pickedUnstakeNfts])
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={() => {
         onClose()
-        setPickedUnstakeNft(null)
+        setPickedUnstakeNfts([])
       }}
     >
       <ModalOverlay />
@@ -91,8 +101,8 @@ const UnstakeModal = ({
                   <NftButton
                     key={nft.tokenId}
                     nft={nft}
-                    active={pickedUnstakeNft === nft.tokenId}
-                    onClick={() => setPickedUnstakeNft(nft.tokenId)}
+                    active={pickedUnstakeNfts.includes(nft.tokenId)}
+                    onClick={() => toggleNft(nft.tokenId)}
                   />
                 ))
               ) : (
@@ -101,8 +111,8 @@ const UnstakeModal = ({
             </VStack>
           )}
 
-          {pickedUnstakeNft && (
-            <ScaleFade in={pickedUnstakeNft}>
+          {pickedUnstakeNfts?.length > 0 && (
+            <ScaleFade in={pickedUnstakeNfts?.length > 0}>
               <HStack mt={4} spacing={3}>
                 <Button
                   variant="outline"
@@ -112,7 +122,7 @@ const UnstakeModal = ({
                   borderColor="seedclub.white"
                   onClick={() => {
                     onClose()
-                    setPickedUnstakeNft(null)
+                    setPickedUnstakeNfts([])
                   }}
                 >
                   Cancel
@@ -125,6 +135,9 @@ const UnstakeModal = ({
                   onClick={onClaimSubmit}
                 >
                   {claimMode === "claim" ? "Claim" : "Claim & unstake"}
+                  {pickedUnstakeNfts?.length > 1
+                    ? ` (${pickedUnstakeNfts?.length})`
+                    : ""}
                 </Button>
               </HStack>
             </ScaleFade>

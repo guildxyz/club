@@ -33,18 +33,28 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
   } = useTokenData(process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS)
 
   const { isValidating: isUserNftsLoading, data: userNfts } = useUserNfts()
-  const [pickedStakeNft, setPickedStakeNft] = useState(null)
+  const [pickedStakeNfts, setPickedStakeNfts] = useState([])
+
+  const toggleNft = (tokenId: number) => {
+    const newNftList = [...pickedStakeNfts]
+    if (newNftList.includes(tokenId)) {
+      setPickedStakeNfts(newNftList.filter((nft) => nft !== tokenId))
+      return
+    }
+
+    setPickedStakeNfts(newNftList.concat([tokenId]))
+  }
 
   const {
     isLoading: isStakeNftLoading,
     onSubmit: onDepositAndStake,
     response: depositAndStakeResponse,
-  } = useStakeNft(pickedStakeNft)
+  } = useStakeNft(pickedStakeNfts)
 
   useEffect(() => {
     if (depositAndStakeResponse) {
       onClose()
-      setPickedStakeNft(null)
+      setPickedStakeNfts([])
       mutate(active ? ["stakingRewards", chainId, account] : null)
       mutate(active ? ["nfts", chainId, account] : null)
     }
@@ -55,21 +65,24 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
   useEffect(() => {
     if (!isOpen || !userNfts || userNfts.filter((nft) => nft.canStake).length !== 1)
       return
-    setPickedStakeNft(userNfts.filter((nft) => nft.canStake)[0].tokenId)
+    setPickedStakeNfts([userNfts.filter((nft) => nft.canStake)[0].tokenId])
   }, [isOpen, userNfts])
 
   useEffect(() => {
-    if (!pickedStakeNft || userNfts.filter((nft) => nft.canStake).length !== 1)
+    if (
+      !pickedStakeNfts?.length ||
+      userNfts.filter((nft) => nft.canStake).length !== 1
+    )
       return
     onDepositAndStake()
-  }, [pickedStakeNft])
+  }, [pickedStakeNfts])
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={() => {
         onClose()
-        setPickedStakeNft(null)
+        setPickedStakeNfts([])
       }}
     >
       <ModalOverlay />
@@ -90,8 +103,8 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
                     <NftButton
                       key={nft.tokenId}
                       nft={nft}
-                      active={pickedStakeNft === nft.tokenId}
-                      onClick={() => setPickedStakeNft(nft.tokenId)}
+                      active={pickedStakeNfts.includes(nft.tokenId)}
+                      onClick={() => toggleNft(nft.tokenId)}
                     />
                   ))
               ) : (
@@ -100,8 +113,8 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
             </VStack>
           )}
 
-          {pickedStakeNft && (
-            <ScaleFade in={pickedStakeNft}>
+          {pickedStakeNfts?.length > 0 && (
+            <ScaleFade in={pickedStakeNfts?.length > 0}>
               <Text my={4}>
                 In order to earn {rewardTokenSymbol} rewards, you must deposit this
                 NFT to the Uniswap Staking contract, and stake it in Seed Club's
@@ -116,7 +129,7 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
                 mr={3}
                 onClick={() => {
                   onClose()
-                  setPickedStakeNft(null)
+                  setPickedStakeNfts([])
                 }}
               >
                 Cancel
@@ -128,7 +141,9 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
                 colorScheme="white"
                 onClick={onDepositAndStake}
               >
-                Deposit &amp; Stake
+                {`Deposit & Stake${
+                  pickedStakeNfts?.length > 1 ? ` (${pickedStakeNfts?.length})` : ""
+                }`}
               </Button>
             </ScaleFade>
           )}

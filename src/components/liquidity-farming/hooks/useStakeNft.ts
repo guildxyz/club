@@ -7,7 +7,7 @@ import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import incentiveKey from "temporaryData/incentiveKey"
 import parseError from "utils/parseError"
 
-const useStakeNft = (tokenId: number) => {
+const useStakeNft = (tokenIds: Array<number>) => {
   const { active, account } = useWeb3React()
 
   const nftContract = useContract(
@@ -20,26 +20,31 @@ const useStakeNft = (tokenId: number) => {
 
   // Temp. solution, should use 2 useSubmit hooks for this
   const stakeNft = async () => {
-    // Deposit & stake in one call
-    const depositAndStakeRes = await nftContract[
-      "safeTransferFrom(address,address,uint256,bytes)"
-    ](
-      account,
-      process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS,
-      tokenId,
-      defaultAbiCoder.encode(
-        ["address", "address", "uint", "uint", "address"],
-        [
-          incentiveKey.rewardToken,
-          incentiveKey.pool,
-          incentiveKey.startTime,
-          incentiveKey.endTime,
-          incentiveKey.refundee,
-        ]
+    // Deposit & stake every NFT in one call
+    const multicall = await nftContract.multicall(
+      tokenIds?.map((tokenId) =>
+        nftContract.interface.encodeFunctionData(
+          "safeTransferFrom(address,address,uint256,bytes)",
+          [
+            account,
+            process.env.NEXT_PUBLIC_STAKING_REWARDS_CONTRACT_ADDRESS,
+            tokenId,
+            defaultAbiCoder.encode(
+              ["address", "address", "uint", "uint", "address"],
+              [
+                incentiveKey.rewardToken,
+                incentiveKey.pool,
+                incentiveKey.startTime,
+                incentiveKey.endTime,
+                incentiveKey.refundee,
+              ]
+            ),
+          ]
+        )
       )
     )
 
-    return depositAndStakeRes?.wait().then((res) => {
+    return multicall?.wait().then((res) => {
       if (res.status === 0) throw new Error("An unknown error occurred.")
       return res
     })

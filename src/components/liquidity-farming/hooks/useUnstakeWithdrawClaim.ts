@@ -7,7 +7,7 @@ import incentiveKey from "temporaryData/incentiveKey"
 import parseError from "utils/parseError"
 
 const useUnstakeWithdrawClaim = (
-  tokenId: number,
+  tokenIds: Array<number>,
   mode: "claim" | "unstakeWithdrawClaim" = "unstakeWithdrawClaim"
 ) => {
   const { active, account } = useWeb3React()
@@ -31,16 +31,23 @@ const useUnstakeWithdrawClaim = (
       return claimRes?.wait()
     }
 
-    const multicall = await stakerContract.multicall([
-      stakerContract.interface.encodeFunctionData("unstakeToken", [
-        incentiveKey,
-        tokenId,
-      ]),
-      stakerContract.interface.encodeFunctionData("withdrawToken", [
-        tokenId,
-        account,
-        "0x00",
-      ]),
+    const unstakeWithdrawTokens = tokenIds
+      .map((tokenId) => [
+        stakerContract.interface.encodeFunctionData("unstakeToken", [
+          incentiveKey,
+          tokenId,
+        ]),
+        stakerContract.interface.encodeFunctionData("withdrawToken", [
+          tokenId,
+          account,
+          "0x00",
+        ]),
+      ])
+      ?.reduce((arr1, arr2) => arr1.concat(arr2))
+
+    const multicallAll = await stakerContract.multicall([
+      ...unstakeWithdrawTokens,
+      // We only need to claim rewards once at the end
       stakerContract.interface.encodeFunctionData("claimReward", [
         process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS,
         account,
@@ -48,7 +55,7 @@ const useUnstakeWithdrawClaim = (
       ]),
     ])
 
-    return multicall?.wait().then((res) => {
+    return multicallAll?.wait().then((res) => {
       if (res.status === 0) throw new Error("An unknown error occurred.")
       return res
     })
