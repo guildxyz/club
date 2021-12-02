@@ -35,6 +35,7 @@ const NetworkButton = ({ chain, requestNetworkChange }: Props) => {
           justifyContent="space-between"
           color="seedclub.white"
           borderColor="seedclub.white"
+          fontWeight="medium"
         >
           {RPC[chain].chainName}
         </Button>

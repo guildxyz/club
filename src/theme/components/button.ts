@@ -24,11 +24,22 @@ function variantSolid(props: Dict) {
 
   if (c === "seedclub") {
     return {
-      bg: "seedclub.green.800",
+      bg: "seedclub.green.900",
       _hover: {
-        bg: "seedclub.green.700",
+        bg: "seedclub.green.800",
       },
-      _active: { bg: "seedclub.green.600" },
+      _active: { bg: "seedclub.green.700" },
+    }
+  }
+
+  if (c === "white") {
+    return {
+      bg: "seedclub.white",
+      color: "seedclub.green.900",
+      _hover: {
+        bg: "gray.200",
+      },
+      _active: { bg: "gray.300" },
     }
   }
 
@@ -78,13 +89,15 @@ const styles = {
   baseStyle: {
     borderRadius: "lg",
     fontFamily: "display",
+    fontWeight: "normal",
   },
   sizes: {
     md: {
       h: "var(--chakra-space-11)",
+      fontSize: "xl",
     },
     xl: {
-      fontSize: "lg",
+      fontSize: "xl",
       h: 14,
       px: 8,
     },

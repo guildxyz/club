@@ -7,17 +7,18 @@ const CircleTooltip = ({
 }: PropsWithChildren<TooltipProps>): JSX.Element => (
   <Tooltip
     {...props}
-    px={6}
-    py={16}
+    p={6}
     bgColor="seedclub.white"
     rounded="full"
     color="black"
     textAlign="center"
     fontSize="xl"
     fontWeight="light"
-    alignItems="center"
     bgImage="url('/img/white-bg.jpg')"
     bgSize="cover"
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
   >
     {children}
   </Tooltip>

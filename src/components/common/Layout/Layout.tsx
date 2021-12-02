@@ -74,19 +74,22 @@ const Layout = ({
               <JoinCommunity />
             </>
           ) : (
-            <VStack spacing={0} color="seedclub.white" textAlign="center">
-              <Text fontSize="7xl" fontFamily="display">
-                Introducing
-              </Text>
-              <Text fontSize="15rem" fontFamily="display">
-                $CLUB
-              </Text>
-              <Text fontSize="4xl">
-                Starting today we’re opening up access to the DAO.
-                <br /> This is an invitation to join us in shaping the future of
-                tokenized communities.
-              </Text>
-            </VStack>
+            <>
+              <VStack spacing={0} mb={8} color="seedclub.white" textAlign="center">
+                <Text fontSize="7xl" fontFamily="heading" lineHeight="1">
+                  Introducing
+                </Text>
+                <Text fontSize="15rem" fontFamily="heading" lineHeight="1">
+                  $CLUB
+                </Text>
+                <Text fontSize="3xl" fontWeight="thin">
+                  Starting today we’re opening up access to the DAO.
+                  <br /> This is an invitation to join us in shaping the future of
+                  tokenized communities.
+                </Text>
+              </VStack>
+              <JoinCommunity fixed />
+            </>
           )}
         </Container>
       </Box>

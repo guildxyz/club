@@ -10,10 +10,9 @@ const styles = {
       overflow: "hidden",
       marginTop: "auto",
       marginBottom: { base: 0, sm: "auto" },
-      borderWidth: 8,
-      borderColor: "seedclub.white",
       bgColor: "seedclub.green.900",
-      bgImage: "url('/img/noisy.png')",
+      bgImage: "url('/img/dark-green-bg.jpg')",
+      bgSize: "100% 100%",
       color: "white",
       // we can't add data attributes to the Modal component so we have
       // to prevent the focus-visible polyfill from removing shadow on
@@ -31,9 +30,10 @@ const styles = {
       pl: { base: 6, sm: 10 },
       pr: { base: 16, sm: 10 },
       py: 8,
-      fontFamily: "display",
-      fontSize: "3xl",
-      fontWeight: "bold",
+      fontFamily: "heading",
+      fontSize: "4xl",
+      textAlign: "center",
+      fontWeight: "medium",
     },
     body: {
       px: { base: 6, sm: 10 },

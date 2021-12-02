@@ -33,6 +33,7 @@ const ConnectorButton = ({
     justifyContent="space-between"
     color="seedclub.white"
     borderColor="seedclub.white"
+    fontWeight="medium"
   >
     {`${name} ${isActive ? " - connected" : ""}`}
   </Button>

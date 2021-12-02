@@ -125,7 +125,7 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
                 w="max-content"
                 isLoading={isStakeNftLoading}
                 loadingText="Staking"
-                colorScheme="seedclub"
+                colorScheme="white"
                 onClick={onDepositAndStake}
               >
                 Deposit &amp; Stake

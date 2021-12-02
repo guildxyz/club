@@ -36,8 +36,8 @@ const PageContent = ({
             <Heading
               as="h1"
               fontFamily="display"
-              fontWeight="semibold"
-              fontSize={{ base: "4xl", md: "5xl" }}
+              fontWeight="normal"
+              fontSize={{ base: "5xl", md: "6xl" }}
             >
               {title}
             </Heading>

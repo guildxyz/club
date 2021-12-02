@@ -7,12 +7,15 @@ import {
   AlertDialogOverlay,
   Box,
   Button,
+  HStack,
+  Icon,
   Link,
   Text,
   VStack,
 } from "@chakra-ui/react"
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
+import CircleTooltip from "components/common/CircleTooltip"
 import LinkButton from "components/common/LinkButton"
 import PageContent from "components/common/PageContent"
 import useClaim from "components/index/hooks/useClaim"
@@ -23,6 +26,7 @@ import MerkleDistributor from "constants/MerkleDistributor"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
 import useWindowSize from "hooks/useWindowSize"
 import lottie from "lottie-web"
+import { Info } from "phosphor-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import Confetti from "react-confetti"
 import coins from "static/lotties/coins.json"
@@ -105,14 +109,22 @@ const AirdropPage = (): JSX.Element => {
   return (
     <PageContent
       layoutTitle={
-        (tokenSymbol &&
-          (isClaimed ? `$${tokenSymbol} Claimed!` : `Claim Your $${tokenSymbol}`)) ||
-        "Loading..."
+        account
+          ? (tokenSymbol &&
+              (isClaimed
+                ? `$${tokenSymbol} Claimed!`
+                : `Claim Your $${tokenSymbol}`)) ||
+            "Loading..."
+          : "Seed Club"
       }
       title={
-        (tokenSymbol &&
-          (isClaimed ? `$${tokenSymbol} Claimed!` : `Claim Your $${tokenSymbol}`)) ||
-        "Loading..."
+        account
+          ? (tokenSymbol &&
+              (isClaimed
+                ? `$${tokenSymbol} Claimed!`
+                : `Claim Your $${tokenSymbol}`)) ||
+            "Loading..."
+          : "Seed Club"
       }
     >
       {tokenSymbol && (
@@ -180,17 +192,25 @@ const AirdropPage = (): JSX.Element => {
           {eligible &&
             !isClaimed &&
             owner?.toLowerCase() !== account?.toLowerCase() && (
-              <Button
-                px={8}
-                letterSpacing="wide"
-                colorScheme="seedclub"
-                isDisabled={ended}
-                isLoading={isClaimLoading}
-                loadingText="Claiming"
-                onClick={onClaimSubmit}
-              >
-                Claim
-              </Button>
+              <HStack spacing={4}>
+                <Button
+                  px={8}
+                  letterSpacing="wide"
+                  colorScheme="seedclub"
+                  isDisabled={ended}
+                  isLoading={isClaimLoading}
+                  loadingText="Claiming"
+                  onClick={onClaimSubmit}
+                >
+                  Claim
+                </Button>
+                <CircleTooltip
+                  label="DeFi staking, in its most narrow definition, refers to the practice of locking crypto assets into a smart contract in exchange for an APY."
+                  boxSize={80}
+                >
+                  <Icon as={Info} boxSize={5} />
+                </CircleTooltip>
+              </HStack>
             )}
 
           {isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (

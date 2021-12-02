@@ -4,7 +4,6 @@ import {
   HStack,
   Icon,
   SimpleGrid,
-  Skeleton,
   Text,
   useDisclosure,
 } from "@chakra-ui/react"
@@ -122,9 +121,9 @@ const LiquidityFarmingPage = (): JSX.Element => {
     >
       {!ended && (
         <>
-          <Skeleton isLoaded={isIncentiveDataLoaded}>
+          {/* <Skeleton isLoaded={isIncentiveDataLoaded}>
             <Text>{formatDate(parseInt(incentiveKey.endTime))}</Text>
-          </Skeleton>
+          </Skeleton> */}
 
           <Text fontSize="xl">
             {`Earn rewards for supplying liquidity for $${liquidityToken0Symbol} on Uniswap V3. Learn more
@@ -142,10 +141,10 @@ const LiquidityFarmingPage = (): JSX.Element => {
           >
             <Text
               h="var(--chakra-sizes-11)"
-              fontSize="3xl"
+              fontSize="4xl"
               textAlign={{ base: "center", lg: "right" }}
               fontFamily="display"
-              fontWeight="semibold"
+              fontWeight="normal"
             >{`${depositData?.length} Staked NFTs`}</Text>
 
             <HStack spacing={2}>
@@ -176,7 +175,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                     Deposit &amp; Stake
                   </Button>
                   <CircleTooltip
-                    label="DeFi staking, in its most narrow definition, refers to the practice of locking crypto assets into a smart contract in exchange for an APY."
+                    label="Staking will deposit your NFT into the Uniswap V3 Staking contract and start earning you rewards."
                     placement="right"
                     boxSize={80}
                   >
@@ -194,10 +193,10 @@ const LiquidityFarmingPage = (): JSX.Element => {
           >
             <Text
               h="var(--chakra-sizes-11)"
-              fontSize="3xl"
+              fontSize="4xl"
               textAlign={{ base: "center", lg: "right" }}
               fontFamily="display"
-              fontWeight="semibold"
+              fontWeight="normal"
             >{`${sumUnclaimedRewards} pending rewards`}</Text>
             <HStack spacing={2}>
               <Button
@@ -212,7 +211,13 @@ const LiquidityFarmingPage = (): JSX.Element => {
               >
                 Claim
               </Button>
-              <Box boxSize={{ base: 0, lg: 6 }} />
+              <CircleTooltip
+                label="Claiming rewards will unstake your NFT. We recommend only doing this when you’re ready to claim a lump sum of rewards as the gas cost will likely be high."
+                placement="right"
+                boxSize={80}
+              >
+                <Icon as={Info} boxSize={5} />
+              </CircleTooltip>
             </HStack>
           </SimpleGrid>
         </>

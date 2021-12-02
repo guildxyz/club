@@ -121,7 +121,7 @@ const UnstakeModal = ({
                   w="max-content"
                   isLoading={isClaimLoading}
                   loadingText="Claiming"
-                  colorScheme="seedclub"
+                  colorScheme="white"
                   onClick={onClaimSubmit}
                 >
                   {claimMode === "claim" ? "Claim" : "Claim & unstake"}
