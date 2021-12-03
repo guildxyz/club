@@ -25,8 +25,14 @@ function variantSolid(props: Dict) {
   if (c === "seedclub") {
     return {
       bg: "seedclub.green.900",
+      _disabled: {
+        bg: "seedclub.green.900",
+      },
       _hover: {
         bg: "seedclub.green.800",
+        _disabled: {
+          bg: "seedclub.green.900",
+        },
       },
       _active: { bg: "seedclub.green.700" },
     }
@@ -35,9 +41,15 @@ function variantSolid(props: Dict) {
   if (c === "white") {
     return {
       bg: "seedclub.white",
+      _disabled: {
+        bg: "seedclub.white",
+      },
       color: "seedclub.green.900",
       _hover: {
         bg: "gray.200",
+        _disabled: {
+          bg: "seedclub.white",
+        },
       },
       _active: { bg: "gray.300" },
     }
