@@ -11,8 +11,10 @@ const styles = {
       marginTop: "auto",
       marginBottom: { base: 0, sm: "auto" },
       bgColor: "seedclub.green.900",
-      bgImage: "url('/img/dark-green-bg.jpg')",
-      bgSize: "100% 100%",
+      bgImage: "url('/img/dark-green-bg-simple.jpg')",
+      bgSize: "cover",
+      borderWidth: 8,
+      borderColor: "seedclub.white",
       color: "white",
       // we can't add data attributes to the Modal component so we have
       // to prevent the focus-visible polyfill from removing shadow on

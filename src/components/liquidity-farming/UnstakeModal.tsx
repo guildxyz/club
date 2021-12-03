@@ -8,7 +8,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  ScaleFade,
   Spinner,
   Text,
   VStack,
@@ -90,6 +89,11 @@ const UnstakeModal = ({
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <Text my={4}>
+            Claiming rewards will unstake your NFT. We recommend only doing this when
+            you’re ready to claim a lump sum of rewards as the gas cost will likely
+            be high.
+          </Text>
           {isUserNftsLoading ? (
             <Flex alignItems="center" justifyContent="center">
               <Spinner size="lg" />
@@ -111,37 +115,34 @@ const UnstakeModal = ({
             </VStack>
           )}
 
-          {pickedUnstakeNfts?.length > 0 && (
-            <ScaleFade in={pickedUnstakeNfts?.length > 0}>
-              <HStack mt={4} spacing={3}>
-                <Button
-                  variant="outline"
-                  colorScheme="whiteAlpha"
-                  w="max-content"
-                  color="seedclub.white"
-                  borderColor="seedclub.white"
-                  onClick={() => {
-                    onClose()
-                    setPickedUnstakeNfts([])
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  w="max-content"
-                  isLoading={isClaimLoading}
-                  loadingText="Claiming"
-                  colorScheme="white"
-                  onClick={onClaimSubmit}
-                >
-                  {claimMode === "claim" ? "Claim" : "Claim & unstake"}
-                  {pickedUnstakeNfts?.length > 1
-                    ? ` (${pickedUnstakeNfts?.length})`
-                    : ""}
-                </Button>
-              </HStack>
-            </ScaleFade>
-          )}
+          <HStack mt={4} spacing={3}>
+            <Button
+              variant="outline"
+              colorScheme="whiteAlpha"
+              w="max-content"
+              color="seedclub.white"
+              borderColor="seedclub.white"
+              onClick={() => {
+                onClose()
+                setPickedUnstakeNfts([])
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              w="max-content"
+              isLoading={isClaimLoading}
+              isDisabled={pickedUnstakeNfts?.length < 1}
+              loadingText="Claiming"
+              colorScheme="white"
+              onClick={onClaimSubmit}
+            >
+              {claimMode === "claim" ? "Claim" : "Claim & unstake"}
+              {pickedUnstakeNfts?.length > 1
+                ? ` (${pickedUnstakeNfts?.length})`
+                : ""}
+            </Button>
+          </HStack>
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -7,7 +7,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  ScaleFade,
   Spinner,
   Text,
   VStack,
@@ -90,12 +89,17 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
         <ModalHeader>Deposit & Stake</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <Text my={4}>
+            Staking will deposit your NFT into the Uniswap V3 Staking contract and
+            start earning you rewards.
+          </Text>
+
           {isUserNftsLoading ? (
-            <Flex alignItems="center" justifyContent="center">
+            <Flex mb={8} alignItems="center" justifyContent="center">
               <Spinner size="lg" />
             </Flex>
           ) : (
-            <VStack alignItems="start">
+            <VStack mb={8} alignItems="start">
               {userNfts?.filter((nft) => nft.canStake)?.length > 0 ? (
                 userNfts
                   .filter((nft) => nft.canStake)
@@ -113,40 +117,32 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
             </VStack>
           )}
 
-          {pickedStakeNfts?.length > 0 && (
-            <ScaleFade in={pickedStakeNfts?.length > 0}>
-              <Text my={4}>
-                In order to earn {rewardTokenSymbol} rewards, you must deposit this
-                NFT to the Uniswap Staking contract, and stake it in Seed Club's
-                farm.
-              </Text>
-              <Button
-                variant="outline"
-                colorScheme="whiteAlpha"
-                borderColor="seedclub.white"
-                color="seedclub.white"
-                w="max-content"
-                mr={3}
-                onClick={() => {
-                  onClose()
-                  setPickedStakeNfts([])
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                w="max-content"
-                isLoading={isStakeNftLoading}
-                loadingText="Staking"
-                colorScheme="white"
-                onClick={onDepositAndStake}
-              >
-                {`Deposit & Stake${
-                  pickedStakeNfts?.length > 1 ? ` (${pickedStakeNfts?.length})` : ""
-                }`}
-              </Button>
-            </ScaleFade>
-          )}
+          <Button
+            variant="outline"
+            colorScheme="whiteAlpha"
+            borderColor="seedclub.white"
+            color="seedclub.white"
+            w="max-content"
+            mr={3}
+            onClick={() => {
+              onClose()
+              setPickedStakeNfts([])
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            w="max-content"
+            isLoading={isStakeNftLoading}
+            isDisabled={pickedStakeNfts?.length < 1}
+            loadingText="Staking"
+            colorScheme="white"
+            onClick={onDepositAndStake}
+          >
+            {`Deposit & Stake${
+              pickedStakeNfts?.length > 1 ? ` (${pickedStakeNfts?.length})` : ""
+            }`}
+          </Button>
         </ModalBody>
       </ModalContent>
     </Modal>

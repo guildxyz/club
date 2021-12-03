@@ -27,10 +27,14 @@ const NftButton = ({ nft, active, onClick }: Props): JSX.Element => {
       color="seedclub.white"
       justifyContent="start"
       boxSizing="border-box"
-      borderColor={active ? "seedclub.green.700" : "seedclub.white"}
+      borderColor={active ? "seedclub.lightlime" : "seedclub.white"}
       borderWidth={3}
       height="auto"
       onClick={onClick}
+      _active={{
+        borderColor: "seedclub.lightlime",
+        color: "seedclub.lightlime",
+      }}
     >
       <VStack py={4} spacing={2} alignItems="start">
         <Text as="span" fontSize="3xl">
