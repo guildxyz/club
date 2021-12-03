@@ -30,10 +30,14 @@ const ConnectorButton = ({
     spinnerPlacement="end"
     loadingText={`${name} - connecting...`}
     size="xl"
-    justifyContent="space-between"
+    justifyContent="center"
     color="seedclub.white"
     borderColor="seedclub.white"
     fontWeight="medium"
+    _active={{
+      borderColor: "seedclub.lightlime",
+      color: "seedclub.lightlime",
+    }}
   >
     {`${name} ${isActive ? " - connected" : ""}`}
   </Button>
