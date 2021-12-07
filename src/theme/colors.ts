@@ -19,6 +19,8 @@ const colors = {
   seedclub: {
     white: "#F2F2F2",
     lightlime: "#C9FAA6",
+    lightgreen: "#00AE22",
+    pastelgreen: "#A3BAA0",
     green: {
       50: "#EFFDF8",
       100: "#D4F7EA",

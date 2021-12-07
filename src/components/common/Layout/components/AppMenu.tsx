@@ -23,14 +23,14 @@ const AppMenu = (): JSX.Element => {
         CLUBdrop
       </Link>
       <Link
-        href="/liquidity-farming"
+        href="/liquidity-mining"
         _hover={{ textDecoration: "none", color: "seedclub.white" }}
         borderBottomWidth={2}
         borderBottomColor={
-          router.asPath === "/liquidity-farming" ? "seedclub.white" : "transparent"
+          router.asPath === "/liquidity-mining" ? "seedclub.white" : "transparent"
         }
       >
-        Liquidity Farming
+        Liquidity Mining
       </Link>
     </HStack>
   )
