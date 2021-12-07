@@ -62,20 +62,22 @@ const ClaimPage = ({ onClose, depositData, claimMode }: Props): JSX.Element => {
           <Spinner size="lg" />
         </Flex>
       ) : (
-        <VStack mb={8} alignItems="start">
-          {depositData?.length > 0 ? (
-            depositData.map((nft) => (
-              <NftButton
-                key={nft.tokenId}
-                nft={nft}
-                active={pickedUnstakeNfts.includes(nft.tokenId)}
-                onClick={() => toggleNft(nft.tokenId)}
-              />
-            ))
-          ) : (
-            <Text>Seems like you don't have any staked NFTs.</Text>
-          )}
-        </VStack>
+        <>
+          <VStack mb={8} alignItems="start">
+            {depositData?.length > 0 ? (
+              depositData.map((nft) => (
+                <NftButton
+                  key={nft.tokenId}
+                  nft={nft}
+                  active={pickedUnstakeNfts.includes(nft.tokenId)}
+                  onClick={() => toggleNft(nft.tokenId)}
+                />
+              ))
+            ) : (
+              <Text>Seems like you don't have any staked NFTs.</Text>
+            )}
+          </VStack>
+        </>
       )}
 
       <Button
@@ -92,7 +94,7 @@ const ClaimPage = ({ onClose, depositData, claimMode }: Props): JSX.Element => {
       <Button
         w="max-content"
         isLoading={isClaimLoading}
-        isDisabled={pickedUnstakeNfts?.length < 1}
+        isDisabled={isUserNftsLoading || pickedUnstakeNfts?.length < 1}
         loadingText="Claiming"
         colorScheme="seedclub"
         onClick={onClaimSubmit}

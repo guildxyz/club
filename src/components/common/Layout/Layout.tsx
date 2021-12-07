@@ -35,8 +35,10 @@ const Layout = ({
       </Head>
       <Box
         bgColor="seedclub.green.900"
-        bgImage="url('/img/dark-green-bg.jpg')"
+        bgImage="url('/img/dark-green-bg-full.jpg')"
         bgSize="100% 100%"
+        borderWidth={8}
+        borderColor="seedclub.white"
         minHeight="100vh"
       >
         <Box pb={4} height={24} bgColor="seedclub.white">

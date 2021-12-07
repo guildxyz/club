@@ -18,7 +18,7 @@
 
 @font-face {
   font-family: 'GT America';
-  src: url('GT-America-Extended-Medium') format('woff2'),
+  src: url('GT-America-Extended-Medium.woff2') format('woff2'),
     url('GT-America-Extended-Medium.woff') format('woff'),
     url('GT-America-Extended-Medium.ttf') format('truetype');
   font-weight: normal;
@@ -27,7 +27,7 @@
 
 @font-face {
   font-family: 'GT America';
-  src: url('GT-America-Extended-Thin') format('woff2'),
+  src: url('GT-America-Extended-Thin.woff2') format('woff2'),
     url('GT-America-Extended-Thin.woff') format('woff'),
     url('GT-America-Extended-Thin.ttf') format('truetype');
   font-weight: thin;
