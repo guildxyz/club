@@ -69,11 +69,6 @@ const UnstakeModal = ({
     setPickedUnstakeNfts([depositData[0].tokenId])
   }, [isOpen, depositData])
 
-  useEffect(() => {
-    if (!pickedUnstakeNfts?.length || depositData.length !== 1) return
-    onClaimSubmit()
-  }, [pickedUnstakeNfts])
-
   return (
     <Modal
       isOpen={isOpen}

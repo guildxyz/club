@@ -67,15 +67,6 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
     setPickedStakeNfts([userNfts.filter((nft) => nft.canStake)[0].tokenId])
   }, [isOpen, userNfts])
 
-  useEffect(() => {
-    if (
-      !pickedStakeNfts?.length ||
-      userNfts.filter((nft) => nft.canStake).length !== 1
-    )
-      return
-    onDepositAndStake()
-  }, [pickedStakeNfts])
-
   return (
     <Modal
       isOpen={isOpen}
