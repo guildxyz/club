@@ -4,6 +4,7 @@ import {
   HStack,
   Icon,
   SimpleGrid,
+  Skeleton,
   Text,
   useDisclosure,
 } from "@chakra-ui/react"
@@ -136,16 +137,19 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
           <SimpleGrid
             width="full"
+            mb={2}
             gap={4}
             gridTemplateColumns={{ base: "1fr", md: "65% 35%" }}
           >
-            <Text
-              h="var(--chakra-sizes-11)"
-              fontSize="4xl"
-              textAlign={{ base: "center", lg: "right" }}
-              fontFamily="display"
-              fontWeight="normal"
-            >{`${depositData?.length} Staked NFTs`}</Text>
+            <Skeleton isLoaded={isIncentiveDataLoaded}>
+              <Text
+                h={10}
+                fontSize="4xl"
+                textAlign={{ base: "center", lg: "right" }}
+                fontFamily="display"
+                fontWeight="normal"
+              >{`${depositData?.length} Staked NFTs`}</Text>
+            </Skeleton>
 
             <HStack spacing={2}>
               {depositData?.length > 0 ? (
@@ -191,13 +195,15 @@ const LiquidityFarmingPage = (): JSX.Element => {
             gap={4}
             gridTemplateColumns={{ base: "1fr", md: "65% 35%" }}
           >
-            <Text
-              h="var(--chakra-sizes-11)"
-              fontSize="4xl"
-              textAlign={{ base: "center", lg: "right" }}
-              fontFamily="display"
-              fontWeight="normal"
-            >{`${sumUnclaimedRewards} pending rewards`}</Text>
+            <Skeleton isLoaded={isIncentiveDataLoaded}>
+              <Text
+                h={10}
+                fontSize="4xl"
+                textAlign={{ base: "center", lg: "right" }}
+                fontFamily="display"
+                fontWeight="normal"
+              >{`${sumUnclaimedRewards} pending rewards`}</Text>
+            </Skeleton>
             <HStack spacing={2}>
               <Button
                 width="full"

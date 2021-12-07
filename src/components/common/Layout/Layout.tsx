@@ -50,9 +50,6 @@ const Layout = ({
             height={20}
             bgImage="url('/img/grid-25x150.jpg')"
             bgSize="auto 100%"
-            borderTopWidth={8}
-            borderLeftWidth={8}
-            borderRightWidth={8}
             borderColor="seedclub.white"
           >
             <Link href="/" mr={8}>
