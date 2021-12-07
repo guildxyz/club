@@ -1,15 +1,16 @@
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  border-radius: 4px;
+  width: 16px;
+  height: 16px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  background: var(--chakra-colors-seedclub-pastelgreen);
+  border: 1px solid var(--chakra-colors-seedclub-lightgreen);
+  border-radius: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--chakra-colors-seedclub-white);
+  border: 1px solid var(--chakra-colors-seedclub-lightgreen);
+  border-radius: 8px;
 }
