@@ -228,7 +228,7 @@ const AirdropPage = (): JSX.Element => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize="3xl" fontWeight="bold">
+            <AlertDialogHeader fontSize="4xl" fontWeight="bold">
               Congrats!
             </AlertDialogHeader>
 
@@ -238,7 +238,7 @@ const AirdropPage = (): JSX.Element => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button colorScheme="seedclub" ref={cancelRef} onClick={onClose}>
+              <Button colorScheme="white" ref={cancelRef} onClick={onClose}>
                 Ok
               </Button>
             </AlertDialogFooter>
