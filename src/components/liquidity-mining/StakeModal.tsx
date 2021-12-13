@@ -1,6 +1,8 @@
 import {
+  Box,
   Button,
   Flex,
+  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -69,6 +71,7 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
 
   return (
     <Modal
+      size="lg"
       isOpen={isOpen}
       onClose={() => {
         onClose()
@@ -80,11 +83,6 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
         <ModalHeader>Deposit & Stake</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text my={4}>
-            Staking will deposit your NFT into the Uniswap V3 Staking contract and
-            start earning you rewards.
-          </Text>
-
           {isUserNftsLoading ? (
             <Flex mb={8} alignItems="center" justifyContent="center">
               <Spinner size="lg" />
@@ -92,48 +90,84 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
           ) : (
             <VStack mb={8} alignItems="start">
               {userNfts?.filter((nft) => nft.canStake)?.length > 0 ? (
-                userNfts
-                  .filter((nft) => nft.canStake)
-                  .map((nft) => (
-                    <NftButton
-                      key={nft.tokenId}
-                      nft={nft}
-                      active={pickedStakeNfts.includes(nft.tokenId)}
-                      onClick={() => toggleNft(nft.tokenId)}
-                    />
-                  ))
+                <>
+                  <Heading mb={4} w="full" fontWeight="light" textAlign="center">
+                    Available to Stake
+                  </Heading>
+                  <Box
+                    position="relative"
+                    px={2}
+                    width="full"
+                    bgColor="seedclub.lightlime"
+                    bgImage=""
+                    borderColor="seedclub.white"
+                    borderWidth={1}
+                    borderRadius="lg"
+                    overflow="hidden"
+                    _before={{
+                      content: '""',
+                      bgImage: "url('/img/light-lime-bg.jpg')",
+                      bgSize: "cover",
+                      pos: "absolute",
+                      inset: 0,
+                      opacity: 0.75,
+                    }}
+                  >
+                    <Box
+                      position="relative"
+                      maxH={56}
+                      overflowY="auto"
+                      className="custom-scrollbar"
+                    >
+                      <VStack mr={1} py={2}>
+                        {userNfts
+                          .filter((nft) => nft.canStake)
+                          .map((nft) => (
+                            <NftButton
+                              key={nft.tokenId}
+                              nft={nft}
+                              active={pickedStakeNfts.includes(nft.tokenId)}
+                              onClick={() => toggleNft(nft.tokenId)}
+                            />
+                          ))}
+                      </VStack>
+                    </Box>
+                  </Box>
+                </>
               ) : (
-                <Text>Seems like you don't have any NFTs.</Text>
+                <NftButton
+                  title="No NFT Available"
+                  infoText="Provide liquidity on Uniswap V3"
+                  infoLink="#"
+                />
               )}
             </VStack>
           )}
 
-          <Button
-            variant="outline"
-            colorScheme="whiteAlpha"
-            borderColor="seedclub.white"
-            color="seedclub.white"
-            w="max-content"
-            mr={3}
-            onClick={() => {
-              onClose()
-              setPickedStakeNfts([])
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            w="max-content"
-            isLoading={isStakeNftLoading}
-            isDisabled={pickedStakeNfts?.length < 1}
-            loadingText="Staking"
-            colorScheme="white"
-            onClick={onDepositAndStake}
-          >
-            {`Deposit & Stake${
-              pickedStakeNfts?.length > 1 ? ` (${pickedStakeNfts?.length})` : ""
-            }`}
-          </Button>
+          <Text my={8} fontSize="xl" textAlign="center">
+            This will deposit and stake your NFT into the Uniswap V3 Staking contract
+            and start earning you rewards.
+          </Text>
+
+          <Flex justifyContent="center">
+            <Button
+              size="xl"
+              variant="outline"
+              borderWidth={1}
+              colorScheme="whiteAlpha"
+              borderColor="seedclub.white"
+              color="seedclub.white"
+              w="max-content"
+              isLoading={isStakeNftLoading}
+              isDisabled={pickedStakeNfts?.length < 1}
+              loadingText="Staking"
+              onClick={onDepositAndStake}
+            >
+              {`Deposit & Stake${
+                pickedStakeNfts?.length > 1 ? ` (${pickedStakeNfts?.length})` : ""
+              }`}
+            </Button>
+          </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>

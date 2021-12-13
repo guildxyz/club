@@ -63,7 +63,7 @@ const WalletSelectorModal = ({
 
   return (
     <>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal size="xl" isOpen={isModalOpen} onClose={closeModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Connect to Seed Club</ModalHeader>

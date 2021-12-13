@@ -46,6 +46,8 @@ const AirdropPage = (): JSX.Element => {
   } = useMerkleDistributor()
   const { tokenSymbol } = useTokenDataWithImage(token)
 
+  const userMerkleData = useMemo(() => MerkleDistributor.claims[account], [account])
+
   const ended = useMemo(
     () =>
       distributionEnd
@@ -112,7 +114,7 @@ const AirdropPage = (): JSX.Element => {
         account
           ? (tokenSymbol &&
               (isClaimed
-                ? `$${tokenSymbol} Claimed!`
+                ? `${formatUnits(userMerkleData?.amount)} $${tokenSymbol} Claimed!`
                 : `Claim Your $${tokenSymbol}`)) ||
             "Loading..."
           : "Seed Club"
@@ -129,10 +131,10 @@ const AirdropPage = (): JSX.Element => {
     >
       {tokenSymbol && (
         <>
-          <VStack spacing={6} fontSize="xl" py={8}>
+          <VStack spacing={6} pt={8} pb={16}>
             {isClaimed ? (
               <>
-                <Text fontSize="xl">
+                <Text>
                   <Link href="" target="_blank" textDecoration="underline">
                     Read this post
                   </Link>{" "}
@@ -146,7 +148,9 @@ const AirdropPage = (): JSX.Element => {
                   <>
                     <Text mb={4}>Congrats!</Text>
                     <Text>
-                      {`You'll receive ${tokenSymbol} for being an early participant in our community.`}
+                      {`You'll receive ${formatUnits(
+                        userMerkleData?.amount
+                      )} $${tokenSymbol} for being an early participant in our community.`}
                     </Text>
                     <Text>
                       <Link href="" target="_blank" textDecoration="underline">
@@ -177,6 +181,7 @@ const AirdropPage = (): JSX.Element => {
 
           {ended && owner && owner?.toLowerCase() === account?.toLowerCase() && (
             <Button
+              size="xl"
               px={8}
               letterSpacing="wide"
               colorScheme="seedclub"
@@ -194,6 +199,7 @@ const AirdropPage = (): JSX.Element => {
             owner?.toLowerCase() !== account?.toLowerCase() && (
               <HStack spacing={4}>
                 <Button
+                  size="xl"
                   px={8}
                   letterSpacing="wide"
                   colorScheme="seedclub"
@@ -214,7 +220,11 @@ const AirdropPage = (): JSX.Element => {
             )}
 
           {isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (
-            <LinkButton href="https://discord.gg/42UjJskuEF" colorScheme="seedclub">
+            <LinkButton
+              size="xl"
+              href="https://discord.gg/42UjJskuEF"
+              colorScheme="seedclub"
+            >
               Open SeedClub Discord
             </LinkButton>
           )}

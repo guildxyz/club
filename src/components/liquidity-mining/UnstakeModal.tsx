@@ -1,7 +1,8 @@
 import {
+  Box,
   Button,
   Flex,
-  HStack,
+  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -71,6 +72,7 @@ const UnstakeModal = ({
 
   return (
     <Modal
+      size="lg"
       isOpen={isOpen}
       onClose={() => {
         onClose()
@@ -84,11 +86,6 @@ const UnstakeModal = ({
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text my={4}>
-            Claiming rewards will unstake your NFT. We recommend only doing this when
-            you’re ready to claim a lump sum of rewards as the gas cost will likely
-            be high.
-          </Text>
           {isUserNftsLoading ? (
             <Flex alignItems="center" justifyContent="center">
               <Spinner size="lg" />
@@ -96,40 +93,72 @@ const UnstakeModal = ({
           ) : (
             <VStack alignItems="start">
               {depositData?.length > 0 ? (
-                depositData.map((nft) => (
-                  <NftButton
-                    key={nft.tokenId}
-                    nft={nft}
-                    active={pickedUnstakeNfts.includes(nft.tokenId)}
-                    onClick={() => toggleNft(nft.tokenId)}
-                  />
-                ))
+                <>
+                  <Heading mb={4} w="full" fontWeight="light" textAlign="center">
+                    Staked V3 NFTs
+                  </Heading>
+                  <Box
+                    position="relative"
+                    px={2}
+                    width="full"
+                    bgColor="seedclub.lightlime"
+                    bgImage=""
+                    borderColor="seedclub.white"
+                    borderWidth={1}
+                    borderRadius="lg"
+                    overflow="hidden"
+                    _before={{
+                      content: '""',
+                      bgImage: "url('/img/light-lime-bg.jpg')",
+                      bgSize: "cover",
+                      pos: "absolute",
+                      inset: 0,
+                      opacity: 0.75,
+                    }}
+                  >
+                    <Box
+                      position="relative"
+                      maxH={56}
+                      overflowY="auto"
+                      className="custom-scrollbar"
+                    >
+                      <VStack mr={1} py={2}>
+                        {depositData.map((nft) => (
+                          <NftButton
+                            key={nft.tokenId}
+                            nft={nft}
+                            active={pickedUnstakeNfts.includes(nft.tokenId)}
+                            onClick={() => toggleNft(nft.tokenId)}
+                          />
+                        ))}
+                      </VStack>
+                    </Box>
+                  </Box>
+                </>
               ) : (
                 <Text>Seems like you don't have any staked NFTs.</Text>
               )}
             </VStack>
           )}
 
-          <HStack mt={4} spacing={3}>
+          <Text my={8} fontSize="xl" textAlign="center">
+            Claiming rewards will unstake and withdraw your NFT. We recommend only
+            doing this when you're ready to claim a lump sum of rewards as the gas
+            cost will likely be high.
+          </Text>
+
+          <Flex justifyContent="center">
             <Button
+              size="xl"
               variant="outline"
+              borderWidth={1}
               colorScheme="whiteAlpha"
               w="max-content"
               color="seedclub.white"
               borderColor="seedclub.white"
-              onClick={() => {
-                onClose()
-                setPickedUnstakeNfts([])
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              w="max-content"
               isLoading={isClaimLoading}
               isDisabled={pickedUnstakeNfts?.length < 1}
               loadingText="Claiming"
-              colorScheme="white"
               onClick={onClaimSubmit}
             >
               {claimMode === "claim" ? "Claim" : "Claim & unstake"}
@@ -137,7 +166,7 @@ const UnstakeModal = ({
                 ? ` (${pickedUnstakeNfts?.length})`
                 : ""}
             </Button>
-          </HStack>
+          </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>

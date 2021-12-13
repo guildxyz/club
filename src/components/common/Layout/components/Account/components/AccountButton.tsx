@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/react"
 
 const AccountButton = ({ children, ...rest }): JSX.Element => (
-  <Button size="lg" flexGrow={1} colorScheme="seedclub" {...rest}>
+  <Button size="xl" flexGrow={1} colorScheme="seedclub" {...rest}>
     {children}
   </Button>
 )

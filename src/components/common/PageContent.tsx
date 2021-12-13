@@ -18,7 +18,7 @@ const PageContent = ({
   children,
 }: PropsWithChildren<Props>): JSX.Element => (
   <Layout title={layoutTitle}>
-    <Card p={4} bgImage="url('/img/white-bg.jpg')" bgSize="cover">
+    <Card p={4} bgImage="url('/img/white-bg.jpg')" bgSize="cover" fontSize="24px">
       <Box
         px="38px"
         py="38px"
@@ -30,15 +30,10 @@ const PageContent = ({
           borderImageRepeat: "round",
         }}
       >
-        <VStack spacing={8} textAlign="center">
+        <VStack spacing={10} px={8} textAlign="center">
           <VStack spacing={2}>
             {header}
-            <Heading
-              as="h1"
-              fontFamily="display"
-              fontWeight="normal"
-              fontSize={{ base: "5xl", md: "6xl" }}
-            >
+            <Heading as="h1" fontWeight="thin" fontSize="72px">
               {title}
             </Heading>
             {subTitle}

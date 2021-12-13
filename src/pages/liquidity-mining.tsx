@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   HStack,
   Icon,
@@ -126,67 +125,48 @@ const LiquidityFarmingPage = (): JSX.Element => {
             <Text>{formatDate(parseInt(incentiveKey.endTime))}</Text>
           </Skeleton> */}
 
-          <Text fontSize="xl">
+          <Text>
             {`Earn rewards for supplying liquidity for $${liquidityToken0Symbol} on Uniswap V3. Learn more
             here.`}
           </Text>
 
-          <Link href="#" fontSize="xl" textDecoration="underline">
+          <Link href="#" textDecoration="underline">
             Learn more here
           </Link>
 
           <SimpleGrid
             width="full"
             mb={2}
+            pt={8}
             gap={4}
             gridTemplateColumns={{ base: "1fr", md: "65% 35%" }}
           >
             <Skeleton isLoaded={isIncentiveDataLoaded}>
               <Text
                 h={10}
-                fontSize="4xl"
+                fontSize="48px"
                 textAlign={{ base: "center", lg: "right" }}
-                fontFamily="display"
-                fontWeight="normal"
+                fontFamily="heading"
               >{`${depositData?.length} Staked NFTs`}</Text>
             </Skeleton>
 
             <HStack spacing={2}>
-              {depositData?.length > 0 ? (
-                <>
-                  <Button
-                    width="full"
-                    isDisabled={!depositData || depositData.length === 0}
-                    letterSpacing="wide"
-                    colorScheme="seedclub"
-                    onClick={() => {
-                      setClaimMode("unstakeWithdrawClaim")
-                      onDepositNftsModalOpen()
-                    }}
-                  >
-                    Claim &amp; unstake
-                  </Button>
-                  <Box boxSize={{ base: 0, lg: 6 }} />
-                </>
-              ) : (
-                <>
-                  <Button
-                    width="full"
-                    letterSpacing="wide"
-                    colorScheme="seedclub"
-                    onClick={onNftListModalOpen}
-                  >
-                    Deposit &amp; Stake
-                  </Button>
-                  <CircleTooltip
-                    label="Staking will deposit your NFT into the Uniswap V3 Staking contract and start earning you rewards."
-                    placement="right"
-                    boxSize={80}
-                  >
-                    <Icon as={Info} boxSize={5} />
-                  </CircleTooltip>
-                </>
-              )}
+              <Button
+                size="xl"
+                width="full"
+                letterSpacing="wide"
+                colorScheme="seedclub"
+                onClick={onNftListModalOpen}
+              >
+                Stake
+              </Button>
+              <CircleTooltip
+                label="Staking will deposit your NFT into the Uniswap V3 Staking contract and start earning you rewards."
+                placement="right"
+                boxSize={80}
+              >
+                <Icon as={Info} boxSize={5} />
+              </CircleTooltip>
             </HStack>
           </SimpleGrid>
 
@@ -198,20 +178,20 @@ const LiquidityFarmingPage = (): JSX.Element => {
             <Skeleton isLoaded={isIncentiveDataLoaded}>
               <Text
                 h={10}
-                fontSize="4xl"
+                fontSize="48px"
                 textAlign={{ base: "center", lg: "right" }}
-                fontFamily="display"
-                fontWeight="normal"
+                fontFamily="heading"
               >{`${sumUnclaimedRewards} pending rewards`}</Text>
             </Skeleton>
             <HStack spacing={2}>
               <Button
+                size="xl"
                 width="full"
                 isDisabled={!depositData || depositData.length === 0}
                 letterSpacing="wide"
                 colorScheme="seedclub"
                 onClick={() => {
-                  setClaimMode("claim")
+                  setClaimMode("unstakeWithdrawClaim")
                   onDepositNftsModalOpen()
                 }}
               >
@@ -231,9 +211,10 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
       {ended && (
         <>
-          <Text fontSize="xl">This incentive has ended!</Text>
+          <Text>This incentive has ended!</Text>
           {depositData?.length > 0 && (
             <Button
+              size="xl"
               colorScheme="seedclub"
               letterSpacing="wide"
               onClick={() => {

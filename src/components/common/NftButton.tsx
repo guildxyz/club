@@ -1,13 +1,23 @@
-import { Button, ButtonProps, Spinner, Text, VStack } from "@chakra-ui/react"
+import { Button, ButtonProps, Link, Spinner, Text, VStack } from "@chakra-ui/react"
 import useTokenData from "hooks/useTokenData"
 import { NFT } from "temporaryData/types"
 
 type Props = {
-  nft: NFT
+  title?: string
+  infoText?: string
+  infoLink?: string
+  nft?: NFT
   active?: boolean
 } & ButtonProps
 
-const NftButton = ({ nft, active, onClick }: Props): JSX.Element => {
+const NftButton = ({
+  title,
+  infoText,
+  infoLink,
+  nft,
+  active,
+  onClick,
+}: Props): JSX.Element => {
   const {
     isValidating: isToken0Loading,
     data: [, token0Symbol],
@@ -19,7 +29,6 @@ const NftButton = ({ nft, active, onClick }: Props): JSX.Element => {
 
   return (
     <Button
-      key={nft.tokenId}
       isFullWidth
       size="xl"
       variant="outline"
@@ -28,45 +37,74 @@ const NftButton = ({ nft, active, onClick }: Props): JSX.Element => {
       justifyContent="start"
       boxSizing="border-box"
       borderColor={active ? "seedclub.lightlime" : "seedclub.white"}
-      borderWidth={3}
+      borderWidth={1}
       height="auto"
+      bgColor="seedclub.green.900"
+      bgImage="url('/img/dark-green-bg.jpg')"
+      overflow="hidden"
+      position="relative"
+      opacity={active ? 0.9 : 1}
+      _before={{
+        content: '""',
+        position: "absolute",
+        inset: 0,
+        bgColor: "seedclub.green.900",
+        bgImage: "url('/img/dark-green-bg.jpg')",
+        opacity: 0.95,
+      }}
       onClick={onClick}
       _active={{
         borderColor: "seedclub.lightlime",
         color: "seedclub.lightlime",
       }}
     >
-      <VStack py={4} spacing={2} alignItems="start">
+      <VStack position="relative" py={4} width="full" spacing={2} alignItems="start">
         <Text as="span" fontSize="3xl">
-          {nft?.tokenId}
+          {title || nft?.tokenId}
         </Text>
-        <Text as="span" fontSize="sm" fontFamily="body">
-          <Text as="span" fontWeight="extrabold">
-            Fee:{" "}
-          </Text>
-          {`${nft?.fee / 10000}%`}
-        </Text>
-        <Text as="span" fontSize="sm" fontFamily="body">
-          <Text as="span" fontWeight="extrabold">
-            Liquidity:{" "}
-          </Text>
-          {nft?.liquidity}
-        </Text>
+        {nft && (
+          <>
+            <Text as="span" fontSize="sm" fontFamily="body">
+              {`Fee: ${nft?.fee / 10000}%`}
+            </Text>
+            <Text as="span" fontSize="sm" fontFamily="body">
+              {`Liquidity: ${nft?.liquidity}`}
+            </Text>
+          </>
+        )}
 
-        <Text
-          position="absolute"
-          top={3}
-          right={8}
-          as="span"
-          fontSize="sm"
-          fontFamily="body"
-        >
-          {isToken0Loading ? (
-            <Spinner size="xs" />
-          ) : (
-            !isToken1Loading && `${token0Symbol} / ${token1Symbol}`
-          )}
-        </Text>
+        {infoText && (
+          <>
+            {infoLink ? (
+              <Link href={infoLink}>
+                <Text as="span" fontSize="medium" fontFamily="body">
+                  {infoText}
+                </Text>
+              </Link>
+            ) : (
+              <Text as="span" fontSize="medium" fontFamily="body">
+                {infoText}
+              </Text>
+            )}
+          </>
+        )}
+
+        {nft && (
+          <Text
+            position="absolute"
+            top={3}
+            right={0}
+            as="span"
+            fontSize="sm"
+            fontFamily="body"
+          >
+            {isToken0Loading ? (
+              <Spinner size="xs" />
+            ) : (
+              !isToken1Loading && `${token0Symbol} / ${token1Symbol}`
+            )}
+          </Text>
+        )}
       </VStack>
     </Button>
   )

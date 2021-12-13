@@ -109,8 +109,9 @@ const styles = {
       fontSize: "xl",
     },
     xl: {
-      fontSize: "xl",
-      h: 14,
+      fontFamily: "heading",
+      fontSize: "36px",
+      h: "64px",
       px: 8,
     },
   },

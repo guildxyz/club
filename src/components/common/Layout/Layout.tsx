@@ -33,6 +33,7 @@ const Layout = ({
           </>
         )}
       </Head>
+
       <Box
         bgColor="seedclub.green.900"
         bgImage="url('/img/dark-green-bg-full.jpg')"
@@ -41,27 +42,40 @@ const Layout = ({
         borderColor="seedclub.white"
         minHeight="100vh"
       >
-        <Box pb={4} height={24} bgColor="seedclub.white">
+        <Box height="7.5rem" bgColor="seedclub.white">
           <Flex
+            position="relative"
             justifyContent="space-between"
             alignItems="center"
-            px={4}
             w="full"
-            height={20}
-            bgImage="url('/img/grid-25x150.jpg')"
-            bgSize="auto 100%"
-            borderColor="seedclub.white"
+            height={28}
+            bgSize="100% auto"
+            bgRepeat="no-repeat"
           >
-            <Link href="/" mr={8}>
-              <Img h={10} bgColor="seedclub.white" src="/img/seedclub-logo.svg" />
+            <Box
+              position="absolute"
+              top={0}
+              left={0}
+              bgColor="red.500"
+              width="full"
+              height={0}
+              borderWidth={56}
+              sx={{
+                borderImage: "url('/img/header-border-180x180.jpg')",
+                borderImageSlice: "60 60",
+                borderImageRepeat: "round",
+              }}
+            />
+            <Link href="/" position="relative" ml={12}>
+              <Img h={16} bgColor="seedclub.white" src="/img/seedclub-logo.svg" />
             </Link>
-            <HStack spacing="2">
+            <HStack position="relative" spacing="2" mr={12}>
               <Account />
             </HStack>
           </Flex>
         </Box>
         <Container
-          maxW={account ? "container.md" : "container.lg"}
+          maxW="calc(var(--chakra-sizes-container-lg) - 100px)"
           pt={{ base: 4, md: 9 }}
           pb={{ base: 20, md: 14 }}
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}
@@ -75,14 +89,14 @@ const Layout = ({
           ) : (
             <>
               <VStack spacing={0} mb={8} color="seedclub.white" textAlign="center">
-                <Text fontSize="7xl" fontFamily="heading" lineHeight="1">
+                <Text fontSize="112px" fontFamily="heading" lineHeight="1.5">
                   Introducing
                 </Text>
-                <Text fontSize="15rem" fontFamily="heading" lineHeight="1">
+                <Text fontSize="350px" fontFamily="heading" lineHeight="1.1">
                   $CLUB
                 </Text>
-                <Text fontSize="3xl" fontWeight="thin">
-                  Starting today we’re opening up access to the DAO.
+                <Text fontSize="36px" fontWeight="thin">
+                  Starting today we're opening up access to the DAO.
                   <br /> This is an invitation to join us in shaping the future of
                   tokenized communities.
                 </Text>

@@ -1,15 +1,20 @@
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  border-radius: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 7px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  /* background: var(--chakra-colors-seedclub-lightlime) url("/img/light-lime-bg.jpg"); */
+  background: transparent;
+  border-radius: 7px;
+  border: 1px solid var(--chakra-colors-seedclub-white);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.4);
+  border-radius: 7px;
+  background: var(--chakra-colors-seedclub-green-900) url("/img/dark-green-bg.jpg");
+  border: 1px solid var(--chakra-colors-seedclub-white);
 }

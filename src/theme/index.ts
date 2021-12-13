@@ -14,6 +14,9 @@ const theme = extendTheme({
   space: {
     11: "2.75rem",
   },
+  sizes: {
+    22: "5.5rem",
+  },
   fonts: {
     body: "GT America, sans-serif",
     heading: "ITC Garamond Condensed, sans-serif",
