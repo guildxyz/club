@@ -56,7 +56,6 @@ const Layout = ({
               position="absolute"
               top={0}
               left={0}
-              bgColor="red.500"
               width="full"
               height={0}
               borderWidth={56}
