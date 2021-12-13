@@ -198,7 +198,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                 Claim
               </Button>
               <CircleTooltip
-                label="Claiming rewards will unstake your NFT. We recommend only doing this when you’re ready to claim a lump sum of rewards as the gas cost will likely be high."
+                label="Claiming rewards will unstake your NFT. We recommend only doing this when you're ready to claim a lump sum of rewards as the gas cost will likely be high."
                 placement="right"
                 boxSize={80}
               >

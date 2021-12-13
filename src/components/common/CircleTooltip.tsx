@@ -7,7 +7,7 @@ const CircleTooltip = ({
 }: PropsWithChildren<TooltipProps>): JSX.Element => (
   <Tooltip
     {...props}
-    p={6}
+    px={8}
     bgColor="seedclub.white"
     rounded="full"
     color="black"

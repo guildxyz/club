@@ -6,9 +6,9 @@ type Props = {
 
 const JoinCommunity = ({ fixed }: Props): JSX.Element => (
   <VStack
-    position={fixed ? "relative" : { base: "relative", lg: "fixed" }}
-    right={fixed ? 0 : { base: 0, lg: 10 }}
-    bottom={fixed ? 0 : { base: 0, lg: 8 }}
+    position={fixed ? "relative" : { base: "relative", xl: "fixed" }}
+    right={fixed ? 0 : { base: 0, xl: 10 }}
+    bottom={fixed ? 0 : { base: 0, xl: 8 }}
     mt={8}
     spacing={2}
   >
