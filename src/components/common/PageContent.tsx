@@ -20,7 +20,7 @@ const PageContent = ({
   ...rest
 }: PropsWithChildren<Props>): JSX.Element => (
   <Layout title={layoutTitle}>
-    <Card p={4} bgImage="url('/img/white-bg.jpg')" bgSize="cover" fontSize="24px">
+    <Card p={3} bgImage="url('/img/white-bg.jpg')" bgSize="cover" fontSize="24px">
       <Box
         px="30px"
         py="30px"

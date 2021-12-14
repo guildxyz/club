@@ -80,7 +80,7 @@ const Layout = ({
           </Flex>
         </Box>
         <Container
-          maxW="calc(var(--chakra-sizes-container-lg) - 15rem)"
+          maxW="calc(var(--chakra-sizes-container-lg) - 14rem)"
           pt={1.5}
           pb={{ base: 20, md: 14 }}
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}
