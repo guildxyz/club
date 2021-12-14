@@ -145,7 +145,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             <Skeleton isLoaded={isIncentiveDataLoaded}>
               <Text
                 h={10}
-                fontSize="44px"
+                fontSize="2.25rem"
                 textAlign={{ base: "center", lg: "right" }}
                 fontFamily="heading"
               >{`${depositData?.length} Staked NFTs`}</Text>
@@ -179,7 +179,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             <Skeleton isLoaded={isIncentiveDataLoaded}>
               <Text
                 h={10}
-                fontSize="44px"
+                fontSize="2.25rem"
                 textAlign={{ base: "center", lg: "right" }}
                 fontFamily="heading"
               >{`${sumUnclaimedRewards} pending rewards`}</Text>

@@ -17,7 +17,16 @@ const Identicon = ({ address, size = 40 }: Props): JSX.Element => {
     }
   }, [address, size])
 
-  return <Center ref={ref} />
+  return (
+    <Center
+      boxSize="3.25rem"
+      maxW="3.25rem"
+      maxH="3.25rem"
+      overflow="hidden"
+      rounded="full"
+      ref={ref}
+    />
+  )
 }
 
 export default Identicon
