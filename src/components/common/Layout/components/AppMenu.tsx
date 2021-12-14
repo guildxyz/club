@@ -7,7 +7,7 @@ const AppMenu = (): JSX.Element => {
 
   return (
     <HStack
-      my={8}
+      my={6}
       spacing={16}
       fontSize="48px"
       color="seedclub.white"
@@ -16,19 +16,15 @@ const AppMenu = (): JSX.Element => {
     >
       <Link
         href="/"
-        _hover={{ textDecoration: "none", color: "seedclub.white" }}
-        borderBottomWidth={2}
-        borderBottomColor={router.asPath === "/" ? "seedclub.white" : "transparent"}
+        _hover={{ textDecoration: "none" }}
+        textDecoration={router.asPath === "/" ? "underline" : "none"}
       >
         CLUBdrop
       </Link>
       <Link
         href="/liquidity-mining"
-        _hover={{ textDecoration: "none", color: "seedclub.white" }}
-        borderBottomWidth={2}
-        borderBottomColor={
-          router.asPath === "/liquidity-mining" ? "seedclub.white" : "transparent"
-        }
+        _hover={{ textDecoration: "none" }}
+        textDecoration={router.asPath === "/liquidity-mining" ? "underline" : "none"}
       >
         Liquidity Mining
       </Link>

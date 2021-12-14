@@ -111,6 +111,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   return (
     <PageContent
+      p={1}
       title={
         <>
           Seed Club <br />
@@ -144,7 +145,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             <Skeleton isLoaded={isIncentiveDataLoaded}>
               <Text
                 h={10}
-                fontSize="48px"
+                fontSize="44px"
                 textAlign={{ base: "center", lg: "right" }}
                 fontFamily="heading"
               >{`${depositData?.length} Staked NFTs`}</Text>
@@ -178,7 +179,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             <Skeleton isLoaded={isIncentiveDataLoaded}>
               <Text
                 h={10}
-                fontSize="48px"
+                fontSize="44px"
                 textAlign={{ base: "center", lg: "right" }}
                 fontFamily="heading"
               >{`${sumUnclaimedRewards} pending rewards`}</Text>

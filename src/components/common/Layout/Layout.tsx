@@ -36,13 +36,13 @@ const Layout = ({
 
       <Box
         bgColor="seedclub.green.900"
-        bgImage="url('/img/dark-green-bg-full.jpg')"
+        bgImage="url('/img/dark-green-original.jpg')"
         bgSize="100% 100%"
-        borderWidth={8}
-        borderColor="seedclub.white"
+        // borderWidth={8}
+        // borderColor="seedclub.white"
         minHeight="100vh"
       >
-        <Box height="7.5rem" bgColor="seedclub.white">
+        <Box height="7.75rem" bgColor="seedclub.white">
           <Flex
             position="relative"
             justifyContent="space-between"
@@ -51,6 +51,8 @@ const Layout = ({
             height={28}
             bgSize="100% auto"
             bgRepeat="no-repeat"
+            borderWidth={8}
+            borderColor="seedclub.white"
           >
             <Box
               position="absolute"
@@ -58,15 +60,19 @@ const Layout = ({
               left={0}
               width="full"
               height={0}
-              borderWidth={56}
+              borderWidth={48}
               sx={{
                 borderImage: "url('/img/header-border-180x180.jpg')",
                 borderImageSlice: "60 60",
                 borderImageRepeat: "round",
               }}
             />
-            <Link href="/" position="relative" ml={12}>
-              <Img h={16} bgColor="seedclub.white" src="/img/seedclub-logo.svg" />
+            <Link href="/" position="relative" ml="3.25rem">
+              <Img
+                h="3.75rem"
+                bgColor="seedclub.white"
+                src="/img/seedclub-logo.svg"
+              />
             </Link>
             <HStack position="relative" spacing="2" mr={12}>
               <Account />
@@ -74,8 +80,8 @@ const Layout = ({
           </Flex>
         </Box>
         <Container
-          maxW="calc(var(--chakra-sizes-container-lg) - 100px)"
-          pt={{ base: 4, md: 9 }}
+          maxW="calc(var(--chakra-sizes-container-lg) - 15rem)"
+          pt={1.5}
           pb={{ base: 20, md: 14 }}
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}
         >

@@ -63,14 +63,14 @@ const WalletSelectorModal = ({
 
   return (
     <>
-      <Modal size="xl" isOpen={isModalOpen} onClose={closeModal}>
+      <Modal size="4xl" isOpen={isModalOpen} onClose={closeModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Connect to Seed Club</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Error error={error} processError={processConnectionError} />
-            <Stack spacing="4">
+            <Stack px={12} pb={8} spacing="4">
               <ConnectorButton
                 name={
                   typeof window !== "undefined" &&
