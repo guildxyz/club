@@ -111,7 +111,7 @@ const styles = {
     xl: {
       fontFamily: "heading",
       fontSize: "2rem",
-      h: 14,
+      h: "3.25rem",
       px: 8,
     },
   },

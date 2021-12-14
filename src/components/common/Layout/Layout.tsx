@@ -80,7 +80,7 @@ const Layout = ({
           </Flex>
         </Box>
         <Container
-          maxW="42rem"
+          maxW={account ? "42rem" : "full"}
           pt={1.5}
           pb={{ base: 20, md: 14 }}
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}
@@ -93,16 +93,17 @@ const Layout = ({
             </>
           ) : (
             <>
-              <VStack spacing={0} mb={8} color="seedclub.white" textAlign="center">
-                <Text fontSize="112px" fontFamily="heading" lineHeight="1.5">
+              <VStack spacing={0} my={8} color="seedclub.white" textAlign="center">
+                <Text fontSize="6rem" fontFamily="heading" lineHeight="1.5">
                   Introducing
                 </Text>
-                <Text fontSize="350px" fontFamily="heading" lineHeight="1.1">
+                <Text fontSize="18rem" fontFamily="heading" lineHeight="1.1">
                   $CLUB
                 </Text>
-                <Text fontSize="36px" fontWeight="thin">
+                <Text fontSize="2rem" fontWeight="thin">
                   Starting today we're opening up access to the DAO.
                   <br /> This is an invitation to join us in shaping the future of
+                  <br />
                   tokenized communities.
                 </Text>
               </VStack>
