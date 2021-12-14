@@ -14,11 +14,11 @@ const JoinCommunity = ({ fixed }: Props): JSX.Element => (
   >
     <HStack spacing={2}>
       <Link href="https://twitter.com/seedclubhq" target="_blank" rel="noreferrer">
-        <Img src="/img/twitter.png" height={8} />
+        <Img src="/img/twitter.png" height={10} />
       </Link>
 
       <Link href="https://discord.gg/42UjJskuEF" target="_blank" rel="noreferrer">
-        <Img src="/img/discord.png" height={8} />
+        <Img src="/img/discord.png" height={10} />
       </Link>
 
       <Link href="#" target="_blank" rel="noreferrer">
@@ -27,7 +27,7 @@ const JoinCommunity = ({ fixed }: Props): JSX.Element => (
           position="relative"
           top={-0.5}
           src="/img/mirror.png"
-          height={8}
+          height={10}
         />
       </Link>
     </HStack>

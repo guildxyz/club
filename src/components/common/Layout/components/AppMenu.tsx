@@ -9,7 +9,7 @@ const AppMenu = (): JSX.Element => {
     <HStack
       my={6}
       spacing={16}
-      fontSize="48px"
+      fontSize="2.5rem"
       color="seedclub.white"
       justifyContent="center"
       fontFamily="heading"

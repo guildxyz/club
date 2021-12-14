@@ -42,16 +42,16 @@ const Layout = ({
         // borderColor="seedclub.white"
         minHeight="100vh"
       >
-        <Box height="7.75rem" bgColor="seedclub.white">
+        <Box height="6.5rem" bgColor="seedclub.white">
           <Flex
             position="relative"
             justifyContent="space-between"
             alignItems="center"
             w="full"
-            height={28}
+            height="6.5rem"
             bgSize="100% auto"
             bgRepeat="no-repeat"
-            borderWidth={8}
+            borderWidth="0.5rem"
             borderColor="seedclub.white"
           >
             <Box
@@ -60,27 +60,27 @@ const Layout = ({
               left={0}
               width="full"
               height={0}
-              borderWidth={48}
+              borderWidth="2.5rem"
               sx={{
                 borderImage: "url('/img/header-border-180x180.jpg')",
                 borderImageSlice: "60 60",
                 borderImageRepeat: "round",
               }}
             />
-            <Link href="/" position="relative" ml="3.25rem">
+            <Link href="/" position="relative" mt="-0.5rem" ml="2.55rem">
               <Img
-                h="3.75rem"
+                h="3.2rem"
                 bgColor="seedclub.white"
                 src="/img/seedclub-logo.svg"
               />
             </Link>
-            <HStack position="relative" spacing="2" mr={12}>
+            <HStack position="relative" spacing="2" mt="-0.5rem" mr="2.25rem">
               <Account />
             </HStack>
           </Flex>
         </Box>
         <Container
-          maxW="calc(var(--chakra-sizes-container-lg) - 14rem)"
+          maxW="42rem"
           pt={1.5}
           pb={{ base: 20, md: 14 }}
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}
