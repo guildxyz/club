@@ -5,7 +5,7 @@ import useContract from "hooks/useContract"
 import REWARD_TOKEN_ABI from "static/abis/RewardTokenAbi.json"
 import useSWR from "swr"
 
-const getBalanceOf = (contract: Contract, merkleContractAddress: string) =>
+const getBalanceOf = (contract: Contract, merkleContractAddress: string) => () =>
   contract?.balanceOf(merkleContractAddress).catch((error) => {
     console.log('Error in "useWithdrawAmount" hook:', error)
     /**
