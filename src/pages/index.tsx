@@ -214,7 +214,8 @@ const AirdropPage = (): JSX.Element => {
                 </Button>
                 <CircleTooltip
                   label="DeFi staking, in its most narrow definition, refers to the practice of locking crypto assets into a smart contract in exchange for an APY."
-                  boxSize={80}
+                  boxSize={96}
+                  minW={96}
                 >
                   <Icon as={Info} boxSize={5} />
                 </CircleTooltip>

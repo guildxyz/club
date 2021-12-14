@@ -33,9 +33,9 @@ const ConnectorButton = ({
     justifyContent="center"
     color="seedclub.white"
     borderColor="seedclub.white"
-    fontSize="5xl"
+    fontSize="4xl"
     fontWeight="medium"
-    h={20}
+    h="4.5rem"
     _active={{
       borderColor: "seedclub.lightlime",
       color: "seedclub.lightlime",

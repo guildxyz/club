@@ -164,7 +164,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
               <CircleTooltip
                 label="Staking will deposit your NFT into the Uniswap V3 Staking contract and start earning you rewards."
                 placement="right"
-                boxSize={80}
+                boxSize={96}
+                minW={96}
               >
                 <Icon as={Info} boxSize={5} />
               </CircleTooltip>
@@ -201,7 +202,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
               <CircleTooltip
                 label="Claiming rewards will unstake your NFT. We recommend only doing this when you're ready to claim a lump sum of rewards as the gas cost will likely be high."
                 placement="right"
-                boxSize={80}
+                boxSize={96}
+                minW={96}
               >
                 <Icon as={Info} boxSize={5} />
               </CircleTooltip>

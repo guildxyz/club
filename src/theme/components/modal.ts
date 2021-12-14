@@ -13,7 +13,7 @@ const styles = {
       bgColor: "seedclub.green.900",
       bgImage: "url('/img/dark-green-bg.jpg')",
       bgSize: "cover",
-      borderWidth: 8,
+      borderWidth: "0.25rem",
       borderColor: "seedclub.white",
       color: "white",
       // we can't add data attributes to the Modal component so we have

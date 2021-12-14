@@ -100,7 +100,7 @@ const Layout = ({
                 <Text fontSize="18rem" fontFamily="heading" lineHeight="1.1">
                   $CLUB
                 </Text>
-                <Text fontSize="2rem" fontWeight="thin">
+                <Text fontSize="2rem" lineHeight="1.2" fontWeight="medium">
                   Starting today we're opening up access to the DAO.
                   <br /> This is an invitation to join us in shaping the future of
                   <br />
