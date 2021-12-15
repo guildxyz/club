@@ -28,6 +28,7 @@ function variantSolid(props: Dict) {
       _disabled: {
         bg: "seedclub.green.900",
       },
+      color: "white",
       _hover: {
         bg: "seedclub.green.800",
         _disabled: {

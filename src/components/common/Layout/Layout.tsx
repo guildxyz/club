@@ -55,41 +55,21 @@ const Layout = ({
         borderColor="seedclub.white"
       >
         <Flex
-          position="relative"
           justifyContent="space-between"
           alignItems="center"
           w="full"
-          height="5.5rem"
-          bgSize="100% auto"
-          bgRepeat="no-repeat"
+          height="5rem"
+          bg="url('/img/pattern.png') 0 0 round"
+          bgSize={{ base: "0.625rem 0.625rem", sm: "0.875rem 0.875rem" }}
         >
-          <Box
-            position="absolute"
-            top={0}
-            left={0}
-            width="full"
-            height="5rem"
-            bg="url('/img/pattern.png') 0 0 round"
-            bgSize={{ base: "0.625rem 0.625rem", sm: "0.875rem 0.875rem" }}
-          />
-          <Link
-            href="/"
-            position="relative"
-            mt="-0.5rem"
-            ml={{ base: 2, sm: "2.55rem" }}
-          >
+          <Link href="/" ml={{ base: 2, sm: "2.75rem" }}>
             <Img
               h={{ base: "3.25rem", sm: "3.2rem" }}
               bgColor="seedclub.white"
               src={logoSrc}
             />
           </Link>
-          <HStack
-            position="relative"
-            spacing="2"
-            mt="-0.5rem"
-            mr={{ base: 2, sm: "2.25rem" }}
-          >
+          <HStack position="relative" spacing="2" mr={{ base: 2, sm: "2.25rem" }}>
             <Account />
           </HStack>
         </Flex>
