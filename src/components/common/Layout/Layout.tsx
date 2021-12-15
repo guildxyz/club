@@ -35,6 +35,11 @@ const Layout = ({
     sm: "/img/seedclub-logo.svg",
   })
 
+  const borderImage = useBreakpointValue({
+    base: "url('/img/mobile-header.jpg')",
+    sm: "url('/img/header-border-180x180.jpg')",
+  })
+
   return (
     <>
       <Head>
@@ -71,10 +76,7 @@ const Layout = ({
             height={0}
             borderWidth="2.5rem"
             sx={{
-              borderImage: {
-                base: "url('/img/mobile-header.jpg')",
-                sm: "url('/img/header-border-180x180.jpg')",
-              },
+              borderImage: borderImage,
               borderImageSlice: "60 60",
               borderImageRepeat: "round",
             }}
