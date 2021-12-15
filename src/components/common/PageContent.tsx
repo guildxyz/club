@@ -21,7 +21,7 @@ const PageContent = ({
 }: PropsWithChildren<Props>): JSX.Element => (
   <Layout title={layoutTitle}>
     <Card
-      p="0.5rem"
+      p="0.75rem"
       bgImage="url('/img/white-bg.jpg')"
       bgSize="cover"
       fontSize={{ base: "0.8rem", sm: "1.5rem" }}

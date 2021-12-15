@@ -84,7 +84,7 @@ const Layout = ({
         borderColor="seedclub.white"
       >
         <Container
-          maxW={account ? "42rem" : "full"}
+          maxW={account ? "44.875rem" : "full"}
           pt={1.5}
           pb={{ base: 20, md: 14 }}
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}

@@ -116,7 +116,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
   return (
     <PageContent
       px={{ base: 0, sm: 1 }}
-      py={1}
+      pt={6}
+      pb={10}
       title={
         <>
           Seed Club <br />
@@ -141,7 +142,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
             to learn more
           </Text>
 
-          <VStack spacing={{ base: 0, sm: 1 }}>
+          <VStack spacing={{ base: 0, sm: 2 }}>
             <SimpleGrid
               width="full"
               mb={{ base: 0.5, sm: 2 }}

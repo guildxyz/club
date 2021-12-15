@@ -99,7 +99,7 @@ const AirdropPage = (): JSX.Element => {
   return (
     <PageContent
       px={{ base: 0, sm: 8 }}
-      py={6}
+      py={12}
       layoutTitle={
         account
           ? (tokenSymbol &&
