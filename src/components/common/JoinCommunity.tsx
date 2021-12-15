@@ -21,7 +21,7 @@ const JoinCommunity = ({ fixed }: Props): JSX.Element => (
         <Img src="/img/discord.png" height={10} />
       </Link>
 
-      <Link href="#" target="_blank" rel="noreferrer">
+      <Link href="https://club.mirror.xyz" target="_blank" rel="noreferrer">
         <Img
           mx={1}
           position="relative"
