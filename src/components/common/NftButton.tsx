@@ -77,12 +77,16 @@ const NftButton = ({
           <>
             {infoLink ? (
               <Link href={infoLink}>
-                <Text as="span" fontSize="md" fontFamily="body">
+                <Text
+                  as="span"
+                  fontSize={{ base: "sm", sm: "md" }}
+                  fontFamily="body"
+                >
                   {infoText}
                 </Text>
               </Link>
             ) : (
-              <Text as="span" fontSize="md" fontFamily="body">
+              <Text as="span" fontSize={{ base: "sm", sm: "md" }} fontFamily="body">
                 {infoText}
               </Text>
             )}

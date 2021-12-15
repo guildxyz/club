@@ -51,9 +51,7 @@ const Account = (): JSX.Element => {
       <HStack spacing={3}>
         <Identicon address={account} size={64} />
         <AccountButton onClick={onAccountModalOpen}>
-          <Text as="span" fontWeight="semibold">
-            {ENSName || `${shortenHex(account, 3)}`}
-          </Text>
+          <Text as="span">{ENSName || `${shortenHex(account, 3)}`}</Text>
         </AccountButton>
       </HStack>
 

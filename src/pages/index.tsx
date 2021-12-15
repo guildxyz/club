@@ -9,6 +9,7 @@ import {
   Img,
   Link,
   Text,
+  useBreakpointValue,
   VStack,
 } from "@chakra-ui/react"
 import { formatUnits } from "@ethersproject/units"
@@ -29,6 +30,7 @@ import { mutate } from "swr"
 const AirdropPage = (): JSX.Element => {
   const { width, height } = useWindowSize()
   const [runConfetti, setRunConfetti] = useState(false)
+  const buttonSize = useBreakpointValue({ base: "md", sm: "xl" })
 
   const { active, account, chainId } = useWeb3React()
   const eligible = useMemo(
@@ -96,7 +98,7 @@ const AirdropPage = (): JSX.Element => {
 
   return (
     <PageContent
-      px={8}
+      px={{ base: 0, sm: 8 }}
       py={6}
       layoutTitle={
         account
@@ -134,7 +136,7 @@ const AirdropPage = (): JSX.Element => {
               <>
                 {!ended && eligible && (
                   <>
-                    <Text mb={4}>Congrats!</Text>
+                    <Text mb={{ base: 0, sm: 4 }}>Congrats!</Text>
                     <Text>
                       {`You're eligible for ${formatUnits(
                         userMerkleData?.amount
@@ -169,7 +171,7 @@ const AirdropPage = (): JSX.Element => {
 
           {ended && owner && owner?.toLowerCase() === account?.toLowerCase() && (
             <Button
-              size="xl"
+              size={buttonSize}
               px={8}
               letterSpacing="wide"
               colorScheme="seedclub"
@@ -186,8 +188,8 @@ const AirdropPage = (): JSX.Element => {
             !isClaimed &&
             owner?.toLowerCase() !== account?.toLowerCase() && (
               <Button
-                size="xl"
-                px={8}
+                size={buttonSize}
+                px={16}
                 letterSpacing="wide"
                 colorScheme="seedclub"
                 isDisabled={ended}

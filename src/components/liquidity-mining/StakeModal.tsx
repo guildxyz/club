@@ -144,7 +144,7 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
             </VStack>
           )}
 
-          <Text my={8} fontSize="xl" textAlign="center">
+          <Text my={8} fontSize={{ base: "md", sm: "xl" }} textAlign="center">
             This will deposit and stake your NFT into the Uniswap V3 Staking contract
             and start earning you rewards.
           </Text>

@@ -99,14 +99,15 @@ const variantOutline = (props: Dict) => {
 
 const styles = {
   baseStyle: {
-    borderRadius: "lg",
+    borderRadius: "md",
     fontFamily: "display",
     fontWeight: "normal",
   },
   sizes: {
     md: {
-      h: "var(--chakra-space-11)",
+      fontFamily: "heading",
       fontSize: "xl",
+      h: 10,
     },
     xl: {
       fontFamily: "heading",

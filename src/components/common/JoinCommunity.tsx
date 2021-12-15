@@ -30,6 +30,10 @@ const JoinCommunity = ({ fixed }: Props): JSX.Element => (
           height={10}
         />
       </Link>
+
+      <Link href="#" target="_blank" rel="noreferrer">
+        <Img position="relative" top={-1} src="/img/uniswap.png" height={12} />
+      </Link>
     </HStack>
   </VStack>
 )

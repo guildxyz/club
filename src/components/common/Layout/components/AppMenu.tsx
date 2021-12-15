@@ -8,8 +8,8 @@ const AppMenu = (): JSX.Element => {
   return (
     <HStack
       my={6}
-      spacing={16}
-      fontSize="2.5rem"
+      spacing={{ base: 8, sm: 16 }}
+      fontSize={{ base: "1.75rem", sm: "2.5rem" }}
       color="seedclub.white"
       justifyContent="center"
       fontFamily="heading"

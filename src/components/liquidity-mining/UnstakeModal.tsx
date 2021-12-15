@@ -141,7 +141,7 @@ const UnstakeModal = ({
             </VStack>
           )}
 
-          <Text my={8} fontSize="xl" textAlign="center">
+          <Text my={8} fontSize={{ base: "md", sm: "xl" }} textAlign="center">
             Claiming rewards will unstake and withdraw your NFT. We recommend only
             doing this when you're ready to claim a lump sum of rewards as the gas
             cost will likely be high.

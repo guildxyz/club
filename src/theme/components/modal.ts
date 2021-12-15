@@ -29,11 +29,10 @@ const styles = {
       right: 7,
     },
     header: {
-      pl: { base: 6, sm: 10 },
-      pr: { base: 16, sm: 10 },
+      px: { base: 6, sm: 10 },
       py: 8,
       fontFamily: "heading",
-      fontSize: "6xl",
+      fontSize: { base: "5xl", sm: "6xl" },
       textAlign: "center",
       fontWeight: "medium",
     },

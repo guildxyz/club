@@ -5,7 +5,9 @@ import {
   SimpleGrid,
   Skeleton,
   Text,
+  useBreakpointValue,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react"
 import CircleTooltip from "components/common/CircleTooltip"
 import Link from "components/common/Link"
@@ -25,6 +27,8 @@ import incentiveKey from "temporaryData/incentiveKey"
 import unique from "utils/uniqueFilter"
 
 const LiquidityFarmingPage = (): JSX.Element => {
+  const buttonSize = useBreakpointValue({ base: "sm", sm: "xl" })
+
   // Modals
   const {
     onOpen: onNftListModalOpen,
@@ -111,7 +115,8 @@ const LiquidityFarmingPage = (): JSX.Element => {
 
   return (
     <PageContent
-      p={1}
+      px={{ base: 0, sm: 1 }}
+      py={1}
       title={
         <>
           Seed Club <br />
@@ -136,80 +141,84 @@ const LiquidityFarmingPage = (): JSX.Element => {
             to learn more
           </Text>
 
-          <SimpleGrid
-            width="full"
-            mb={2}
-            pt={8}
-            gap={4}
-            gridTemplateColumns={{ base: "1fr", md: "65% 35%" }}
-          >
-            <Skeleton isLoaded={isIncentiveDataLoaded}>
-              <Text
-                h={10}
-                fontSize="2.25rem"
-                textAlign={{ base: "center", lg: "right" }}
-                fontFamily="heading"
-              >{`${depositData?.length} Staked NFT(s)`}</Text>
-            </Skeleton>
+          <VStack spacing={{ base: 0, sm: 1 }}>
+            <SimpleGrid
+              width="full"
+              mb={{ base: 0.5, sm: 2 }}
+              pt={8}
+              gap={{ base: 1, sm: 4 }}
+              gridTemplateColumns={{ base: "70% 30%", sm: "65% 35%" }}
+            >
+              <Skeleton isLoaded={isIncentiveDataLoaded}>
+                <Text
+                  h={10}
+                  fontSize={{ base: "1.25rem", sm: "2.25rem" }}
+                  textAlign="right"
+                  fontFamily="heading"
+                  lineHeight={{ base: 2, sm: 1.5 }}
+                >{`${depositData?.length} Staked NFT(s)`}</Text>
+              </Skeleton>
 
-            <HStack spacing={2}>
-              <Button
-                size="xl"
-                width="full"
-                letterSpacing="wide"
-                colorScheme="seedclub"
-                onClick={onNftListModalOpen}
-              >
-                Stake
-              </Button>
-              <CircleTooltip
-                label="Staking will deposit your NFT into the Uniswap V3 Staking contract and start earning you rewards."
-                placement="right"
-                boxSize={96}
-                minW={96}
-              >
-                <Icon as={Info} boxSize={5} />
-              </CircleTooltip>
-            </HStack>
-          </SimpleGrid>
+              <HStack spacing={{ base: 0.5, sm: 2 }}>
+                <Button
+                  size={buttonSize}
+                  width="full"
+                  letterSpacing="wide"
+                  colorScheme="seedclub"
+                  onClick={onNftListModalOpen}
+                >
+                  Stake
+                </Button>
+                <CircleTooltip
+                  label="Staking will deposit your NFT into the Uniswap V3 Staking contract and start earning you rewards."
+                  placement="right"
+                  boxSize={96}
+                  minW={96}
+                >
+                  <Icon as={Info} boxSize={5} />
+                </CircleTooltip>
+              </HStack>
+            </SimpleGrid>
 
-          <SimpleGrid
-            width="full"
-            gap={4}
-            gridTemplateColumns={{ base: "1fr", md: "65% 35%" }}
-          >
-            <Skeleton isLoaded={isIncentiveDataLoaded}>
-              <Text
-                h={10}
-                fontSize="2.25rem"
-                textAlign={{ base: "center", lg: "right" }}
-                fontFamily="heading"
-              >{`${sumUnclaimedRewards} Pending Rewards`}</Text>
-            </Skeleton>
-            <HStack spacing={2}>
-              <Button
-                size="xl"
-                width="full"
-                isDisabled={!depositData || depositData.length === 0}
-                letterSpacing="wide"
-                colorScheme="seedclub"
-                onClick={() => {
-                  setClaimMode("unstakeWithdrawClaim")
-                  onDepositNftsModalOpen()
-                }}
-              >
-                Claim
-              </Button>
-              <CircleTooltip
-                label="Claiming rewards will unstake your NFT. We recommend only doing this when you're ready to claim a lump sum of rewards as the gas cost will likely be high."
-                placement="right"
-                boxSize={96}
-                minW={96}
-              >
-                <Icon as={Info} boxSize={5} />
-              </CircleTooltip>
-            </HStack>
-          </SimpleGrid>
+            <SimpleGrid
+              width="full"
+              gap={{ base: 1, sm: 4 }}
+              gridTemplateColumns={{ base: "70% 30%", sm: "65% 35%" }}
+            >
+              <Skeleton isLoaded={isIncentiveDataLoaded}>
+                <Text
+                  h={10}
+                  fontSize={{ base: "1.25rem", sm: "2.25rem" }}
+                  textAlign="right"
+                  fontFamily="heading"
+                  lineHeight={{ base: 2, sm: 1.5 }}
+                >{`${sumUnclaimedRewards} Pending Rewards`}</Text>
+              </Skeleton>
+              <HStack spacing={{ base: 0.5, sm: 2 }}>
+                <Button
+                  size={buttonSize}
+                  width="full"
+                  isDisabled={!depositData || depositData.length === 0}
+                  letterSpacing="wide"
+                  colorScheme="seedclub"
+                  onClick={() => {
+                    setClaimMode("unstakeWithdrawClaim")
+                    onDepositNftsModalOpen()
+                  }}
+                >
+                  Claim
+                </Button>
+                <CircleTooltip
+                  label="Claiming rewards will unstake your NFT. We recommend only doing this when you're ready to claim a lump sum of rewards as the gas cost will likely be high."
+                  placement="right"
+                  boxSize={96}
+                  minW={96}
+                >
+                  <Icon as={Info} boxSize={5} />
+                </CircleTooltip>
+              </HStack>
+            </SimpleGrid>
+          </VStack>
         </>
       )}
 

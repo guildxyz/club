@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react"
+import { Center, useBreakpointValue } from "@chakra-ui/react"
 import Jazzicon from "@metamask/jazzicon"
 import { useEffect, useRef } from "react"
 
@@ -9,6 +9,7 @@ type Props = {
 
 const Identicon = ({ address, size = 40 }: Props): JSX.Element => {
   const ref = useRef<HTMLDivElement>()
+  const maxSize = useBreakpointValue({ base: "2.5rem", sm: "3.25rem" })
 
   useEffect(() => {
     if (address && ref.current) {
@@ -19,9 +20,9 @@ const Identicon = ({ address, size = 40 }: Props): JSX.Element => {
 
   return (
     <Center
-      boxSize="3.25rem"
-      maxW="3.25rem"
-      maxH="3.25rem"
+      boxSize={maxSize}
+      maxW={maxSize}
+      maxH={maxSize}
       overflow="hidden"
       rounded="full"
       ref={ref}
