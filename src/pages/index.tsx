@@ -5,17 +5,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  Box,
   Button,
-  HStack,
-  Icon,
+  Img,
   Link,
   Text,
   VStack,
 } from "@chakra-ui/react"
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
-import CircleTooltip from "components/common/CircleTooltip"
 import LinkButton from "components/common/LinkButton"
 import PageContent from "components/common/PageContent"
 import useClaim from "components/index/hooks/useClaim"
@@ -25,11 +22,8 @@ import useWithdrawAmount from "components/index/hooks/useWithdrawAmount"
 import MerkleDistributor from "constants/MerkleDistributor"
 import useTokenDataWithImage from "hooks/useTokenDataWithImage"
 import useWindowSize from "hooks/useWindowSize"
-import lottie from "lottie-web"
-import { Info } from "phosphor-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import Confetti from "react-confetti"
-import coins from "static/lotties/coins.json"
 import { mutate } from "swr"
 
 const AirdropPage = (): JSX.Element => {
@@ -64,14 +58,6 @@ const AirdropPage = (): JSX.Element => {
   useEffect(() => {
     if (showClaimSuccess) {
       setRunConfetti(true)
-
-      setTimeout(() => {
-        lottie.loadAnimation({
-          container: document.querySelector("#coins-animation"),
-          animationData: coins,
-          loop: false,
-        })
-      }, 200)
 
       setTimeout(() => {
         setRunConfetti(false)
@@ -150,15 +136,15 @@ const AirdropPage = (): JSX.Element => {
                   <>
                     <Text mb={4}>Congrats!</Text>
                     <Text>
-                      {`You'll receive ${formatUnits(
+                      {`You're eligible for ${formatUnits(
                         userMerkleData?.amount
-                      )} $${tokenSymbol} for being an early participant in our community.`}
+                      )} $${tokenSymbol} for being a value-added member of the Seed Club community.`}
                     </Text>
                     <Text>
                       <Link href="" target="_blank" textDecoration="underline">
                         Read this post
                       </Link>{" "}
-                      to learn more about what's next.
+                      to learn more.
                     </Text>
                   </>
                 )}
@@ -199,27 +185,18 @@ const AirdropPage = (): JSX.Element => {
           {eligible &&
             !isClaimed &&
             owner?.toLowerCase() !== account?.toLowerCase() && (
-              <HStack spacing={4}>
-                <Button
-                  size="xl"
-                  px={8}
-                  letterSpacing="wide"
-                  colorScheme="seedclub"
-                  isDisabled={ended}
-                  isLoading={isClaimLoading}
-                  loadingText="Claiming"
-                  onClick={onClaimSubmit}
-                >
-                  Claim
-                </Button>
-                <CircleTooltip
-                  label="DeFi staking, in its most narrow definition, refers to the practice of locking crypto assets into a smart contract in exchange for an APY."
-                  boxSize={96}
-                  minW={96}
-                >
-                  <Icon as={Info} boxSize={5} />
-                </CircleTooltip>
-              </HStack>
+              <Button
+                size="xl"
+                px={8}
+                letterSpacing="wide"
+                colorScheme="seedclub"
+                isDisabled={ended}
+                isLoading={isClaimLoading}
+                loadingText="Claiming"
+                onClick={onClaimSubmit}
+              >
+                Claim
+              </Button>
             )}
 
           {isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (
@@ -228,7 +205,7 @@ const AirdropPage = (): JSX.Element => {
               href="https://discord.gg/42UjJskuEF"
               colorScheme="seedclub"
             >
-              Open SeedClub Discord
+              Join Seed Club Discord
             </LinkButton>
           )}
         </>
@@ -242,12 +219,22 @@ const AirdropPage = (): JSX.Element => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="4xl" fontWeight="bold">
-              Congrats!
+              Success!
             </AlertDialogHeader>
 
-            <AlertDialogBody>
-              <Text mb={4}>You've successfully claimed your tokens!</Text>
-              <Box id="coins-animation" mx="auto" boxSize={56} />
+            <AlertDialogBody textAlign="center">
+              <Text mb={4}>You've successfully claimed your CLUBDrop!</Text>
+              <Text mb={4}>
+                <Link
+                  target="_blank"
+                  href="https://discord.gg/42UjJskuEF"
+                  textDecoration="underline"
+                >
+                  Head over to Discord
+                </Link>{" "}
+                to learn what's next!
+              </Text>
+              <Img mx="auto" w={32} src="/img/coins.png" />
             </AlertDialogBody>
 
             <AlertDialogFooter>

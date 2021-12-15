@@ -80,7 +80,7 @@ const StakeModal = ({ isOpen, onClose }: Props): JSX.Element => {
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Deposit & Stake</ModalHeader>
+        <ModalHeader>Deposit &amp; Stake</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {isUserNftsLoading ? (

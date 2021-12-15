@@ -127,13 +127,14 @@ const LiquidityFarmingPage = (): JSX.Element => {
           </Skeleton> */}
 
           <Text>
-            {`Earn rewards for supplying liquidity for $${liquidityToken0Symbol} on Uniswap V3. Learn more
-            here.`}
+            {`Deposit your Uniswap V3 NFT into the Staking contract to start earning ${liquidityToken0Symbol} Rewards.`}
           </Text>
-
-          <Link href="#" textDecoration="underline">
-            Learn more here
-          </Link>
+          <Text>
+            <Link href="#" textDecoration="underline">
+              Read this post
+            </Link>{" "}
+            to learn more
+          </Text>
 
           <SimpleGrid
             width="full"
@@ -148,7 +149,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                 fontSize="2.25rem"
                 textAlign={{ base: "center", lg: "right" }}
                 fontFamily="heading"
-              >{`${depositData?.length} Staked NFTs`}</Text>
+              >{`${depositData?.length} Staked NFT(s)`}</Text>
             </Skeleton>
 
             <HStack spacing={2}>
@@ -183,7 +184,7 @@ const LiquidityFarmingPage = (): JSX.Element => {
                 fontSize="2.25rem"
                 textAlign={{ base: "center", lg: "right" }}
                 fontFamily="heading"
-              >{`${sumUnclaimedRewards} pending rewards`}</Text>
+              >{`${sumUnclaimedRewards} Pending Rewards`}</Text>
             </Skeleton>
             <HStack spacing={2}>
               <Button
