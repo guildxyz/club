@@ -203,7 +203,7 @@ const AirdropPage = (): JSX.Element => {
 
           {isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (
             <LinkButton
-              size="xl"
+              size={buttonSize}
               href="https://discord.gg/42UjJskuEF"
               colorScheme="seedclub"
             >

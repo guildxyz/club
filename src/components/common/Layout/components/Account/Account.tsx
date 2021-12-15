@@ -1,7 +1,7 @@
 import { HStack, Text, useDisclosure } from "@chakra-ui/react"
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
 import { Web3Connection } from "components/_app/Web3ConnectionManager"
-import { LinkBreak, SignIn } from "phosphor-react"
+import { LinkBreak } from "phosphor-react"
 import { useContext } from "react"
 import shortenHex from "utils/shortenHex"
 import AccountButton from "./components/AccountButton"
@@ -37,11 +37,7 @@ const Account = (): JSX.Element => {
   }
   if (!account) {
     return (
-      <AccountButton
-        leftIcon={<SignIn />}
-        isLoading={!triedEager}
-        onClick={openWalletSelectorModal}
-      >
+      <AccountButton isLoading={!triedEager} onClick={openWalletSelectorModal}>
         Connect
       </AccountButton>
     )
