@@ -1,6 +1,4 @@
-import { Data } from "./types"
-
-const data: Data[] = [
+const data = [
   {
     id: 1,
   },
