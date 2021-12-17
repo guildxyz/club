@@ -15,9 +15,9 @@ import {
 } from "@chakra-ui/react"
 import { useWeb3React } from "@web3-react/core"
 import NftButton from "components/common/NftButton"
+import { NFT } from "data/types"
 import { useEffect, useState } from "react"
 import { mutate } from "swr"
-import { NFT } from "temporaryData/types"
 import useUnstakeWithdrawClaim from "./hooks/useUnstakeWithdrawClaim"
 import useUserNfts from "./hooks/useUserNfts"
 

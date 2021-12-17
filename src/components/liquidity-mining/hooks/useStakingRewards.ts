@@ -4,12 +4,12 @@ import { Contract } from "@ethersproject/contracts"
 import { Logger } from "@ethersproject/logger"
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
+import staticIncentiveKey from "data/incentiveKey"
+import { NFT } from "data/types"
 import useContract from "hooks/useContract"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
 import useSWR from "swr"
-import staticIncentiveKey from "temporaryData/incentiveKey"
-import { NFT } from "temporaryData/types"
 import unique from "utils/uniqueFilter"
 
 const getStakingRewardsData =
@@ -119,7 +119,6 @@ const useStakingRewards = () => {
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      // errorRetryInterval: 100,
       shouldRetryOnError: false,
     }
   )

@@ -19,11 +19,10 @@ import useSumUnclaimedRewards from "components/liquidity-mining/hooks/useSumUncl
 import useUserNfts from "components/liquidity-mining/hooks/useUserNfts"
 import StakeModal from "components/liquidity-mining/StakeModal"
 import UnstakeModal from "components/liquidity-mining/UnstakeModal"
+import incentiveKey from "data/incentiveKey"
 import useTokenData from "hooks/useTokenData"
-import useTokenDataWithImage from "hooks/useTokenDataWithImage"
 import { Info } from "phosphor-react"
 import { useMemo, useState } from "react"
-import incentiveKey from "temporaryData/incentiveKey"
 import unique from "utils/uniqueFilter"
 
 const LiquidityFarmingPage = (): JSX.Element => {
@@ -44,12 +43,9 @@ const LiquidityFarmingPage = (): JSX.Element => {
   const {
     data: [, rewardTokenSymbol],
   } = useTokenData(process.env.NEXT_PUBLIC_REWARD_TOKEN_ADDRESS)
-  const { tokenSymbol: liquidityToken0Symbol } = useTokenDataWithImage(
-    process.env.NEXT_PUBLIC_TOKEN0_ADDRESS
-  )
-  const { tokenSymbol: liquidityToken1Symbol } = useTokenDataWithImage(
-    process.env.NEXT_PUBLIC_TOKEN1_ADDRESS
-  )
+  const {
+    data: [, liquidityToken0Symbol],
+  } = useTokenData(process.env.NEXT_PUBLIC_TOKEN0_ADDRESS)
 
   const { data: userNfts } = useUserNfts()
 
@@ -100,11 +96,6 @@ const LiquidityFarmingPage = (): JSX.Element => {
     "unstakeWithdrawClaim"
   )
 
-  const formatDate = (unixTimestamp: number) => {
-    const date = new Date(unixTimestamp * 1000)
-    return date.toLocaleDateString()
-  }
-
   const ended = useMemo(
     () =>
       incentiveKey?.endTime
@@ -128,10 +119,6 @@ const LiquidityFarmingPage = (): JSX.Element => {
     >
       {!ended && (
         <>
-          {/* <Skeleton isLoaded={isIncentiveDataLoaded}>
-            <Text>{formatDate(parseInt(incentiveKey.endTime))}</Text>
-          </Skeleton> */}
-
           <Text>
             {`Deposit your Uniswap V3 NFT into the Staking contract to start earning ${liquidityToken0Symbol} Rewards.`}
           </Text>

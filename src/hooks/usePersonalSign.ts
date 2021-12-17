@@ -5,7 +5,7 @@ const usePersonalSign = () => {
   const { library, account } = useWeb3React<Web3Provider>()
 
   return async (message: any): Promise<any> =>
-    library.send("personal_sign", [JSON.stringify(message), account.toLowerCase()])
+    library.send("personal_sign", [JSON.stringify(message), account])
 }
 
 export default usePersonalSign

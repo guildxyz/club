@@ -42,7 +42,7 @@ const useMerkleDistributor = () => {
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      errorRetryInterval: 100,
+      shouldRetryOnError: false,
     }
   )
 
@@ -61,10 +61,6 @@ const useMerkleDistributor = () => {
 
   return {
     ...swrResponse,
-    /**
-     * Doing this instead of using initialData to make sure it fetches when
-     * shouldFetch becomes true
-     */
     data: swrResponse.data ?? [undefined, undefined, undefined, undefined],
   }
 }

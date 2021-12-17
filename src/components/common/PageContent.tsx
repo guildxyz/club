@@ -7,7 +7,7 @@ import { Rest } from "types"
 type Props = {
   header?: JSX.Element
   layoutTitle: string
-  title: string | JSX.Element
+  title?: string | JSX.Element
   subTitle?: JSX.Element
 } & Rest
 
@@ -45,7 +45,7 @@ const PageContent = ({
               fontWeight="thin"
               fontSize={{ base: "2.5rem", sm: "4.5rem" }}
             >
-              {title}
+              {title || layoutTitle}
             </Heading>
             {subTitle}
           </VStack>

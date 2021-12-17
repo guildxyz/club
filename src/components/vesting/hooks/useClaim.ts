@@ -1,22 +1,22 @@
 import { useWeb3React } from "@web3-react/core"
-import MerkleDistributor from "constants/MerkleDistributor"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
-import { useMemo } from "react"
-import MERKLE_ABI from "static/abis/MerkleDistributorAbi.json"
+import MERKLE_VESTING_ABI from "static/abis/MerkleVestingAbi.json"
 import parseError from "utils/parseError"
+import useClaimData from "./useClaimData"
+import useMerkleVesting from "./useMerkleVesting"
 
 const useClaim = () => {
   const { active, account } = useWeb3React()
-  const merkleDistributorData = useMemo(
-    () => MerkleDistributor.claims[account],
-    [account]
-  )
+  const {
+    data: [lastEndingCohort],
+  } = useMerkleVesting()
+  const { data: claimData } = useClaimData(lastEndingCohort)
 
   const contract = useContract(
-    active ? process.env.NEXT_PUBLIC_MERKLE_DISTRIBUTOR_CONTRACT_ADDRESS : null,
-    MERKLE_ABI,
+    active ? process.env.NEXT_PUBLIC_MERKLE_VESTING_CONTRACT_ADDRESS : null,
+    MERKLE_VESTING_ABI,
     true
   )
 
@@ -24,16 +24,18 @@ const useClaim = () => {
 
   const claim = async () => {
     const claimRes = await contract?.claim(
-      merkleDistributorData?.index,
+      lastEndingCohort,
+      claimData?.index,
       account,
-      merkleDistributorData?.amount,
-      merkleDistributorData?.proof
+      claimData?.amount,
+      claimData?.proof
     )
     return claimRes?.wait()
   }
 
   return useSubmit<null, any>(claim, {
     onError: (e) => {
+      console.error(e)
       toast({
         title: "Error claiming tokens",
         description: parseError(e),

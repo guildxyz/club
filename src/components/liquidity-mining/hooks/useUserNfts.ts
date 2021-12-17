@@ -2,10 +2,10 @@ import { Contract } from "@ethersproject/contracts"
 import { Logger } from "@ethersproject/logger"
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
+import { NFT } from "data/types"
 import useContract from "hooks/useContract"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
 import useSWR from "swr"
-import { NFT } from "temporaryData/types"
 
 const getNftData =
   (contract: Contract, address: string) =>
@@ -57,7 +57,7 @@ const useUserNfts = () => {
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      errorRetryInterval: 100,
+      shouldRetryOnError: false,
     }
   )
 

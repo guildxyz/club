@@ -1,9 +1,9 @@
 import { formatUnits } from "@ethersproject/units"
 import { useWeb3React } from "@web3-react/core"
+import incentiveKey from "data/incentiveKey"
 import useContract from "hooks/useContract"
 import { useEffect, useState } from "react"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
-import incentiveKey from "temporaryData/incentiveKey"
 
 const useSumUnclaimedRewards = (tokenIdArray: Array<number>): string => {
   const [unclaimedRewards, setUnclaimedRewards] = useState("0.0000")

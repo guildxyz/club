@@ -1,6 +1,6 @@
 import { Button, ButtonProps, Link, Spinner, Text, VStack } from "@chakra-ui/react"
+import { NFT } from "data/types"
 import useTokenData from "hooks/useTokenData"
-import { NFT } from "temporaryData/types"
 
 type Props = {
   title?: string

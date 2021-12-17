@@ -21,7 +21,7 @@ import useMerkleDistributor from "components/index/hooks/useMerkleDistributor"
 import useWithdraw from "components/index/hooks/useWithdraw"
 import useWithdrawAmount from "components/index/hooks/useWithdrawAmount"
 import MerkleDistributor from "constants/MerkleDistributor"
-import useTokenDataWithImage from "hooks/useTokenDataWithImage"
+import useTokenData from "hooks/useTokenData"
 import useWindowSize from "hooks/useWindowSize"
 import { useEffect, useMemo, useRef, useState } from "react"
 import Confetti from "react-confetti"
@@ -40,7 +40,9 @@ const AirdropPage = (): JSX.Element => {
   const {
     data: [isClaimed, token, distributionEnd, owner],
   } = useMerkleDistributor()
-  const { tokenSymbol } = useTokenDataWithImage(token)
+  const {
+    data: [, tokenSymbol],
+  } = useTokenData(token)
 
   const userMerkleData = useMemo(() => MerkleDistributor.claims[account], [account])
 
@@ -104,16 +106,9 @@ const AirdropPage = (): JSX.Element => {
         account
           ? (tokenSymbol &&
               (isClaimed
-                ? `${formatUnits(userMerkleData?.amount)} $${tokenSymbol} Claimed!`
-                : `Claim Your $${tokenSymbol}`)) ||
-            "Loading..."
-          : "Seed Club"
-      }
-      title={
-        account
-          ? (tokenSymbol &&
-              (isClaimed
-                ? `$${tokenSymbol} Claimed!`
+                ? `${parseInt(
+                    formatUnits(userMerkleData?.amount)
+                  )} $${tokenSymbol} Claimed!`
                 : `Claim Your $${tokenSymbol}`)) ||
             "Loading..."
           : "Seed Club"

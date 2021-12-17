@@ -150,6 +150,17 @@
   {
     "inputs": [
       { "internalType": "bytes32", "name": "cohortId", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "uint256", "name": "fullAmount", "type": "uint256" }
+    ],
+    "name": "getClaimableAmount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "cohortId", "type": "bytes32" },
       { "internalType": "address", "name": "account", "type": "address" }
     ],
     "name": "getClaimed",
@@ -174,6 +185,13 @@
         "type": "tuple"
       }
     ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastEndingCohort",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
     "stateMutability": "view",
     "type": "function"
   },

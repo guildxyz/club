@@ -1,4 +1,4 @@
-import dataJSON from "temporaryData/data"
+import dataJSON from "data/data"
 const DEBUG = false
 
 const fetchData = () =>

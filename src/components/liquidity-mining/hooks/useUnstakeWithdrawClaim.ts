@@ -1,9 +1,9 @@
 import { useWeb3React } from "@web3-react/core"
+import incentiveKey from "data/incentiveKey"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
-import incentiveKey from "temporaryData/incentiveKey"
 import parseError from "utils/parseError"
 
 const useUnstakeWithdrawClaim = (
@@ -63,7 +63,6 @@ const useUnstakeWithdrawClaim = (
 
   return useSubmit<null, any>(unstakeWithdrawClaim, {
     onError: (e) => {
-      console.error(e)
       toast({
         title: `Error ${mode === "claim" ? "claiming" : "unstaking"} NFT`,
         description: parseError(e),

@@ -20,30 +20,29 @@ const useCreateCohort = () => {
     true
   )
 
-  const createCohort = async (data_: Data) =>
-    sign({ ...data_.input })
-      .then((signature) =>
-        fetch(`${process.env.NEXT_PUBLIC_API}/save-list`, {
-          method: "POST",
-          body: JSON.stringify({
-            ...data_,
-            signature,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }).then((res) => res.json())
-      )
-      .then((data) => {
-        // addCohort(merkleRoot, distributionDuration in seconds, vestingPeriod in seconds, cliffPeriod in seconds) - e.g: 172800 (2days), 43200 (12h)
-        const addCohort = vestingContract?.addCohort(
-          data?.merkleRoot,
-          172800,
-          43200,
-          43200
-        )
-        return addCohort?.wait()
-      })
+  const createCohort = async (data_: Data) => {
+    const signature = await sign({ ...data_.input })
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/save-list`, {
+      method: "POST",
+      body: JSON.stringify({
+        ...data_,
+        signature,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    const data = await res?.json()
+    // root, distributionDuration, vestingPeriod , cliffPeriod - in seconds
+    const addCohort = await vestingContract?.addCohort(
+      data?.merkleRoot,
+      60 * 60 * 3, // 3 hours distribution
+      60 * 60 * 2.5, // 2.5h vesting period
+      60 * 60 * 0.5 // 30mins cliff
+    )
+
+    return addCohort?.wait()
+  }
 
   return useSubmit<Data, any>(createCohort, {
     onError: (e) => {

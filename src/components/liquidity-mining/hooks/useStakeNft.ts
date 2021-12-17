@@ -1,10 +1,10 @@
 import { defaultAbiCoder } from "@ethersproject/abi"
 import { useWeb3React } from "@web3-react/core"
+import incentiveKey from "data/incentiveKey"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import NFPOSITIONMANAGER_ABI from "static/abis/NfPositionManagerAbi.json"
-import incentiveKey from "temporaryData/incentiveKey"
 import parseError from "utils/parseError"
 
 const useStakeNft = (tokenIds: Array<number>) => {

@@ -1,9 +1,9 @@
 import { useWeb3React } from "@web3-react/core"
+import incentiveKey from "data/incentiveKey"
 import useContract from "hooks/useContract"
 import useSubmit from "hooks/useSubmit"
 import useToast from "hooks/useToast"
 import STAKING_REWARDS_ABI from "static/abis/StakingRewardsAbi.json"
-import incentiveKey from "temporaryData/incentiveKey"
 
 const useEndIncentive = () => {
   const { active } = useWeb3React()
