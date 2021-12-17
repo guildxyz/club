@@ -83,6 +83,7 @@ const Layout = ({
         borderTopWidth={0}
         borderColor="seedclub.white"
       >
+        {account && <AppMenu />}
         <Container
           maxW={account ? "44.875rem" : "full"}
           pt={1.5}
@@ -91,7 +92,6 @@ const Layout = ({
         >
           {account ? (
             <>
-              <AppMenu />
               {children}
               <JoinCommunity />
             </>
