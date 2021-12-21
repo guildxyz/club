@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   Flex,
   HStack,
@@ -10,8 +11,9 @@ import {
 } from "@chakra-ui/react"
 import { useWeb3React } from "@web3-react/core"
 import Link from "components/common/Link"
+import { Web3Connection } from "components/_app/Web3ConnectionManager"
 import Head from "next/head"
-import { PropsWithChildren, ReactNode } from "react"
+import { PropsWithChildren, ReactNode, useContext } from "react"
 import JoinCommunity from "../JoinCommunity"
 import Account from "./components/Account"
 import AppMenu from "./components/AppMenu"
@@ -28,12 +30,14 @@ const Layout = ({
   description,
   children,
 }: PropsWithChildren<Props>): JSX.Element => {
-  const { account } = useWeb3React()
+  const { error, account } = useWeb3React()
 
   const logoSrc = useBreakpointValue({
     base: "/img/seedclub-logo-mobile.svg",
     sm: "/img/seedclub-logo.svg",
   })
+
+  const { openWalletSelectorModal, triedEager } = useContext(Web3Connection)
 
   return (
     <>
@@ -91,10 +95,7 @@ const Layout = ({
           px={{ base: 4, sm: 6, md: 8, lg: 10 }}
         >
           {account ? (
-            <>
-              {children}
-              <JoinCommunity />
-            </>
+            children
           ) : (
             <>
               <VStack spacing={0} my={8} color="seedclub.white" textAlign="center">
@@ -113,6 +114,7 @@ const Layout = ({
                   $CLUB
                 </Text>
                 <Text
+                  pb={8}
                   fontSize={{ base: "1rem", sm: "2rem" }}
                   lineHeight="1.2"
                   fontWeight="medium"
@@ -122,10 +124,21 @@ const Layout = ({
                   <br />
                   tokenized communities.
                 </Text>
+
+                {!error && (
+                  <Button
+                    colorScheme="white"
+                    size="xl"
+                    isLoading={!triedEager}
+                    onClick={openWalletSelectorModal}
+                  >
+                    Connect
+                  </Button>
+                )}
               </VStack>
-              <JoinCommunity fixed />
             </>
           )}
+          <JoinCommunity />
         </Container>
       </Box>
     </>
