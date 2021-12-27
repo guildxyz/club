@@ -1,28 +1,12 @@
 import { Box, HStack, Text } from "@chakra-ui/react"
 import Link from "components/common/Link"
+import useUsersLatestCohort from "components/vesting/hooks/useUsersLatestCohort"
 import { useRouter } from "next/router"
-
-const MENUITEMS: Array<{ label: string; url: string }> = [
-  {
-    label: "CLUBDrop",
-    url: "/",
-  },
-  {
-    label: "DAO 20 Awards",
-    url: "/dao-20-awards",
-  },
-  // {
-  //   label: "Liquidity Mining",
-  //   url: "/liquidity-mining",
-  // },
-  {
-    label: "Vesting",
-    url: "/vesting",
-  },
-]
 
 const AppMenu = (): JSX.Element => {
   const router = useRouter()
+  const { isValidating: isUsersLatestCohortLoading, data: usersLatestCohort } =
+    useUsersLatestCohort()
 
   return (
     <Box
@@ -40,18 +24,26 @@ const AppMenu = (): JSX.Element => {
         fontFamily="heading"
         width="max-content"
       >
-        {MENUITEMS.map((menuItem) => (
+        <Link
+          href="/"
+          _hover={{ textDecoration: "none" }}
+          textDecoration={router.asPath === "/" ? "underline" : "none"}
+        >
+          <Text as="span" width="max-content">
+            CLUBDrop
+          </Text>
+        </Link>
+        {!isUsersLatestCohortLoading && usersLatestCohort && (
           <Link
-            key={menuItem.url}
-            href={menuItem.url}
+            href="/vesting"
             _hover={{ textDecoration: "none" }}
-            textDecoration={router.asPath === menuItem.url ? "underline" : "none"}
+            textDecoration={router.asPath === "/vesting" ? "underline" : "none"}
           >
             <Text as="span" width="max-content">
-              {menuItem.label}
+              Vesting
             </Text>
           </Link>
-        ))}
+        )}
       </HStack>
     </Box>
   )

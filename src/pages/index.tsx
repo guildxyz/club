@@ -131,7 +131,7 @@ const AirdropPage = (): JSX.Element => {
                   talent into our DAO.
                 </Text>
                 <LinkButton
-                  href="/dao-20-awards"
+                  href="https://airtable.com/shrk8N2DBl7q87jn5"
                   colorScheme="seedclub"
                   size={buttonSize}
                 >
