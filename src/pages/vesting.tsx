@@ -22,6 +22,7 @@ import useClaimData from "components/vesting/hooks/useClaimData"
 import useCohort from "components/vesting/hooks/useCohort"
 import useCreateCohort from "components/vesting/hooks/useCreateCohort"
 import useMerkleVesting from "components/vesting/hooks/useMerkleVesting"
+import useUsersLatestCohort from "components/vesting/hooks/useUsersLatestCohort"
 import useWithdraw from "components/vesting/hooks/useWithdraw"
 import useWithdrawAmount from "components/vesting/hooks/useWithdrawAmount"
 import useTokenData from "hooks/useTokenData"
@@ -39,14 +40,18 @@ const VestingPage = (): JSX.Element => {
 
   const {
     isValidating: isMerkleVestingLoading,
-    data: [lastEndingCohort, token, owner],
+    data: [, token, owner],
   } = useMerkleVesting()
+
+  const { isValidating: isUsersLatestCohortLoading, data: usersLatestCohort } =
+    useUsersLatestCohort()
+
   const { isValidating: isCohortDetailsLoading, data: cohortDetails } =
-    useCohort(lastEndingCohort)
+    useCohort(usersLatestCohort)
   const { isValidating: isClaimDataLoading, data: claimData } =
-    useClaimData(lastEndingCohort)
+    useClaimData(usersLatestCohort)
   const { isValidating: isClaimableAmountLoading, data: claimableAmount } =
-    useClaimableAmount(lastEndingCohort, claimData?.amount)
+    useClaimableAmount(usersLatestCohort, claimData?.amount)
 
   const claimableToday = useMemo(
     () => parseInt(formatUnits(claimableAmount || 0, 0)),
@@ -61,12 +66,14 @@ const VestingPage = (): JSX.Element => {
   const isLoading = useMemo(
     () =>
       isClaimDataLoading ||
+      isUsersLatestCohortLoading ||
       isClaimableAmountLoading ||
       isCohortDetailsLoading ||
       isMerkleVestingLoading ||
       isTokenSymbolLoading,
     [
       isClaimDataLoading,
+      isUsersLatestCohortLoading,
       isClaimableAmountLoading,
       isCohortDetailsLoading,
       isMerkleVestingLoading,
@@ -126,7 +133,7 @@ const VestingPage = (): JSX.Element => {
               "claimableAmount",
               chainId,
               account,
-              lastEndingCohort,
+              usersLatestCohort,
               claimData?.amount,
             ]
           : null
@@ -185,10 +192,9 @@ const VestingPage = (): JSX.Element => {
                 <Text as="span" width="full" textAlign="right">
                   Claimable today:
                 </Text>
-                <Text
-                  as="span"
-                  textAlign="left"
-                >{`${claimableToday} $${tokenSymbol}`}</Text>
+                <Text as="span" textAlign="left">
+                  {ended ? `0 $${tokenSymbol}` : `${claimableToday} $${tokenSymbol}`}
+                </Text>
               </SimpleGrid>
             </VStack>
 

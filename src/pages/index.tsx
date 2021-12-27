@@ -120,12 +120,23 @@ const AirdropPage = (): JSX.Element => {
             {isClaimed ? (
               <>
                 <Text>
+                  Welcome to Seed Club!{" "}
                   <Link href="" target="_blank" textDecoration="underline">
                     Read this post
                   </Link>{" "}
                   to learn more about what's next.
                 </Text>
-                <Text>It's time to build.</Text>
+                <Text pb={12}>
+                  You can also now vote in our DAO 20 Awards to help us admit top
+                  talent into our DAO.
+                </Text>
+                <LinkButton
+                  href="/dao-20-awards"
+                  colorScheme="seedclub"
+                  size={buttonSize}
+                >
+                  Vote on DAO 20 Awards
+                </LinkButton>
               </>
             ) : (
               <>
@@ -196,7 +207,7 @@ const AirdropPage = (): JSX.Element => {
               </Button>
             )}
 
-          {isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (
+          {false && isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (
             <LinkButton
               size={buttonSize}
               href="https://discord.gg/42UjJskuEF"

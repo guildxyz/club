@@ -8,13 +8,13 @@ const MENUITEMS: Array<{ label: string; url: string }> = [
     url: "/",
   },
   {
-    label: "DAO 50 Awards",
-    url: "/dao-50-awards",
+    label: "DAO 20 Awards",
+    url: "/dao-20-awards",
   },
-  {
-    label: "Liquidity Mining",
-    url: "/liquidity-mining",
-  },
+  // {
+  //   label: "Liquidity Mining",
+  //   url: "/liquidity-mining",
+  // },
   {
     label: "Vesting",
     url: "/vesting",

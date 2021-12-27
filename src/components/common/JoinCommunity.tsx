@@ -31,9 +31,9 @@ const JoinCommunity = ({ fixed }: Props): JSX.Element => (
         />
       </Link>
 
-      <Link href="#" target="_blank" rel="noreferrer">
+      {/* <Link href="#" target="_blank" rel="noreferrer">
         <Img position="relative" top={-1} src="/img/uniswap.png" height={12} />
-      </Link>
+      </Link> */}
     </HStack>
   </VStack>
 )
