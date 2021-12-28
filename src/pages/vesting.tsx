@@ -83,10 +83,9 @@ const VestingPage = (): JSX.Element => {
 
   const ended = useMemo(
     () =>
-      cohortDetails
-        ? Math.round(new Date().getTime() / 1000) >=
-          parseInt(cohortDetails.distributionEnd)
-        : true,
+      cohortDetails &&
+      Math.round(new Date().getTime() / 1000) >=
+        parseInt(cohortDetails.distributionEnd),
     [cohortDetails]
   )
 
