@@ -114,6 +114,7 @@ const styles = {
       fontFamily: "heading",
       fontSize: "2rem",
       h: "3.25rem",
+      lineHeight: "3.25rem",
       px: 8,
     },
   },

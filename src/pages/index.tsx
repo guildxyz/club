@@ -120,7 +120,11 @@ const AirdropPage = (): JSX.Element => {
               <>
                 <Text>
                   Welcome to Seed Club!{" "}
-                  <Link href="" target="_blank" textDecoration="underline">
+                  <Link
+                    href="https://club.mirror.xyz/6oGZxfK787Yj3qNkyyrVrYzhM7TluZDfZ_e5bteyk2A"
+                    target="_blank"
+                    textDecoration="underline"
+                  >
                     Read this post
                   </Link>{" "}
                   to learn more about what's next.
@@ -143,12 +147,16 @@ const AirdropPage = (): JSX.Element => {
                   <>
                     <Text mb={{ base: 0, sm: 4 }}>Congrats!</Text>
                     <Text>
-                      {`You're eligible for ${formatUnits(
-                        userMerkleData?.amount
+                      {`You're eligible for ${Math.round(
+                        +formatUnits(userMerkleData?.amount || 0)
                       )} $${tokenSymbol} for being a value-added member of the Seed Club community.`}
                     </Text>
                     <Text>
-                      <Link href="" target="_blank" textDecoration="underline">
+                      <Link
+                        href="https://club.mirror.xyz/6oGZxfK787Yj3qNkyyrVrYzhM7TluZDfZ_e5bteyk2A"
+                        target="_blank"
+                        textDecoration="underline"
+                      >
                         Read this post
                       </Link>{" "}
                       to learn more.
@@ -161,7 +169,11 @@ const AirdropPage = (): JSX.Element => {
                     <Text>Shoot, this address isn't eligible for the airdrop.</Text>
 
                     <Text>
-                      <Link href="" target="_blank" textDecoration="underline">
+                      <Link
+                        href="https://club.mirror.xyz/6oGZxfK787Yj3qNkyyrVrYzhM7TluZDfZ_e5bteyk2A"
+                        target="_blank"
+                        textDecoration="underline"
+                      >
                         Read this post
                       </Link>{" "}
                       to learn why and how to get involved moving forward.

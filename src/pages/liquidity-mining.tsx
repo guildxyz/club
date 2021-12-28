@@ -123,7 +123,10 @@ const LiquidityFarmingPage = (): JSX.Element => {
             {`Deposit your Uniswap V3 NFT into the Staking contract to start earning ${liquidityToken0Symbol} Rewards.`}
           </Text>
           <Text>
-            <Link href="#" textDecoration="underline">
+            <Link
+              href="https://club.mirror.xyz/6oGZxfK787Yj3qNkyyrVrYzhM7TluZDfZ_e5bteyk2A"
+              textDecoration="underline"
+            >
               Read this post
             </Link>{" "}
             to learn more
