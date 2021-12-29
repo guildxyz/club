@@ -130,7 +130,7 @@ const AirdropPage = (): JSX.Element => {
                   to learn more about what's next.
                 </Text>
                 <Text>
-                  You can also now vote in our{" "}
+                  You'll also be able to vote in our{" "}
                   <Link
                     href="https://club.mirror.xyz/x-JRyo05vi82JJEvrp1fARjj5Sg6v6yJkauMfIKbqLg"
                     target="_blank"
