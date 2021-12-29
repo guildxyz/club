@@ -129,16 +129,23 @@ const AirdropPage = (): JSX.Element => {
                   </Link>{" "}
                   to learn more about what's next.
                 </Text>
-                <Text pb={12}>
-                  You can also now vote in our DAO 20 Awards to help us admit top
-                  talent into our DAO.
+                <Text>
+                  You can also now vote in our{" "}
+                  <Link
+                    href="https://club.mirror.xyz/x-JRyo05vi82JJEvrp1fARjj5Sg6v6yJkauMfIKbqLg"
+                    target="_blank"
+                  >
+                    DAO 20 Awards
+                  </Link>{" "}
+                  to help us admit top talent into our DAO.
                 </Text>
+                <Text pb={12}>See you in Discord.</Text>
                 <LinkButton
-                  href="https://airtable.com/shrk8N2DBl7q87jn5"
+                  href="https://discord.gg/42UjJskuEF"
                   colorScheme="seedclub"
                   size={buttonSize}
                 >
-                  Vote on DAO 20 Awards
+                  Open Discord
                 </LinkButton>
               </>
             ) : (
