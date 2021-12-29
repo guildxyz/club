@@ -152,14 +152,14 @@ const VestingPage = (): JSX.Element => {
       py={12}
       layoutTitle={
         account
-          ? (tokenSymbol && `$${tokenSymbol} in Vesting`) || "Loading..."
+          ? (tokenSymbol && `${tokenSymbol} in Vesting`) || "Loading..."
           : "Seed Club"
       }
     >
       {!isLoading && claimData && cohortDetails && tokenSymbol && (
         <>
           <VStack spacing={6} px={2.5} py={8}>
-            <Text>{`You have $${tokenSymbol} tokens subject to vesting. $${tokenSymbol} has a 6 month cliff and 3 year vesting term from the date they were earned.`}</Text>
+            <Text>{`You have ${tokenSymbol} tokens subject to vesting. ${tokenSymbol} has a 6 month cliff and 3 year vesting term from the date they were earned.`}</Text>
 
             <VStack spacing={0} width="full">
               <SimpleGrid
@@ -177,7 +177,7 @@ const VestingPage = (): JSX.Element => {
                 </Text>
                 <Text as="span" textAlign="left">{`${parseInt(
                   formatUnits(claimData?.amount || 0)
-                )} $${tokenSymbol}`}</Text>
+                )} ${tokenSymbol}`}</Text>
               </SimpleGrid>
               <SimpleGrid
                 width="full"
@@ -192,7 +192,7 @@ const VestingPage = (): JSX.Element => {
                   Claimable today:
                 </Text>
                 <Text as="span" textAlign="left">
-                  {ended ? `0 $${tokenSymbol}` : `${claimableToday} $${tokenSymbol}`}
+                  {ended ? `0 ${tokenSymbol}` : `${claimableToday} ${tokenSymbol}`}
                 </Text>
               </SimpleGrid>
             </VStack>
@@ -260,7 +260,7 @@ const VestingPage = (): JSX.Element => {
             <AlertDialogBody textAlign="center">
               <Text
                 mb={4}
-              >{`You've successfully claimed your $${tokenSymbol} tokens!`}</Text>
+              >{`You've successfully claimed your ${tokenSymbol} tokens!`}</Text>
               <Text mb={4}>
                 <Link
                   target="_blank"

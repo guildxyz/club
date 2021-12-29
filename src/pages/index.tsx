@@ -107,8 +107,8 @@ const AirdropPage = (): JSX.Element => {
               (isClaimed
                 ? `${parseInt(
                     formatUnits(userMerkleData?.amount)
-                  )} $${tokenSymbol} Claimed!`
-                : `Claim Your $${tokenSymbol}`)) ||
+                  )} ${tokenSymbol} Claimed!`
+                : `Claim Your ${tokenSymbol}`)) ||
             "Loading..."
           : "Seed Club"
       }
@@ -149,7 +149,7 @@ const AirdropPage = (): JSX.Element => {
                     <Text>
                       {`You're eligible for ${Math.round(
                         +formatUnits(userMerkleData?.amount || 0)
-                      )} $${tokenSymbol} for being a value-added member of the Seed Club community.`}
+                      )} ${tokenSymbol} for being a value-added member of the Seed Club community.`}
                     </Text>
                     <Text>
                       <Link
