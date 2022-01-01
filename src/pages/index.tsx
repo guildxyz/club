@@ -211,18 +211,26 @@ const AirdropPage = (): JSX.Element => {
           {eligible &&
             !isClaimed &&
             owner?.toLowerCase() !== account?.toLowerCase() && (
-              <Button
-                size={buttonSize}
-                px={16}
-                letterSpacing="wide"
-                colorScheme="seedclub"
-                isDisabled={ended}
-                isLoading={isClaimLoading}
-                loadingText="Claiming"
-                onClick={onClaimSubmit}
-              >
-                Claim
-              </Button>
+              <>
+                {false ? (
+                  <Button
+                    size={buttonSize}
+                    px={16}
+                    letterSpacing="wide"
+                    colorScheme="seedclub"
+                    isDisabled={ended}
+                    isLoading={isClaimLoading}
+                    loadingText="Claiming"
+                    onClick={onClaimSubmit}
+                  >
+                    Claim
+                  </Button>
+                ) : (
+                  <Text>
+                    Claiming is currently paused. Please check back later today.
+                  </Text>
+                )}
+              </>
             )}
 
           {false && isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (
