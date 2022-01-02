@@ -216,7 +216,7 @@ const AirdropPage = (): JSX.Element => {
                 px={16}
                 letterSpacing="wide"
                 colorScheme="seedclub"
-                isDisabled={ended}
+                isDisabled={true || ended}
                 isLoading={isClaimLoading}
                 loadingText="Claiming"
                 onClick={onClaimSubmit}
