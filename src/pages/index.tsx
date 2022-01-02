@@ -107,8 +107,8 @@ const AirdropPage = (): JSX.Element => {
               (isClaimed
                 ? `${parseInt(
                     formatUnits(userMerkleData?.amount)
-                  )} ${tokenSymbol} Claimed!`
-                : `Claim Your ${tokenSymbol}`)) ||
+                  )} $${tokenSymbol} Claimed!`
+                : `Claim Your $${tokenSymbol}`)) ||
             "Loading..."
           : "Seed Club"
       }
@@ -156,7 +156,7 @@ const AirdropPage = (): JSX.Element => {
                     <Text>
                       {`You're eligible for ${Math.round(
                         +formatUnits(userMerkleData?.amount || 0)
-                      )} ${tokenSymbol} for being a value-added member of the Seed Club community.`}
+                      )} $${tokenSymbol} for being a value-added member of the Seed Club community.`}
                     </Text>
                     <Text>
                       <Link
@@ -211,37 +211,19 @@ const AirdropPage = (): JSX.Element => {
           {eligible &&
             !isClaimed &&
             owner?.toLowerCase() !== account?.toLowerCase() && (
-              <>
-                {false ? (
-                  <Button
-                    size={buttonSize}
-                    px={16}
-                    letterSpacing="wide"
-                    colorScheme="seedclub"
-                    isDisabled={ended}
-                    isLoading={isClaimLoading}
-                    loadingText="Claiming"
-                    onClick={onClaimSubmit}
-                  >
-                    Claim
-                  </Button>
-                ) : (
-                  <Text>
-                    Claiming is currently paused. Please check back later today.
-                  </Text>
-                )}
-              </>
+              <Button
+                size={buttonSize}
+                px={16}
+                letterSpacing="wide"
+                colorScheme="seedclub"
+                isDisabled={ended}
+                isLoading={isClaimLoading}
+                loadingText="Claiming"
+                onClick={onClaimSubmit}
+              >
+                Claim
+              </Button>
             )}
-
-          {false && isClaimed && owner?.toLowerCase() !== account?.toLowerCase() && (
-            <LinkButton
-              size={buttonSize}
-              href="https://discord.gg/42UjJskuEF"
-              colorScheme="seedclub"
-            >
-              Join Seed Club Discord
-            </LinkButton>
-          )}
         </>
       )}
 
