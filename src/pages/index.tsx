@@ -208,8 +208,7 @@ const AirdropPage = (): JSX.Element => {
             </Button>
           )}
 
-          {false &&
-            eligible &&
+          {eligible &&
             !isClaimed &&
             owner?.toLowerCase() !== account?.toLowerCase() && (
               <Button
@@ -225,8 +224,6 @@ const AirdropPage = (): JSX.Element => {
                 Claim
               </Button>
             )}
-
-          <Text>Claiming is currently paused. Please check back later today.</Text>
         </>
       )}
 
