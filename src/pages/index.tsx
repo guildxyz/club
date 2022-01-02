@@ -219,7 +219,7 @@ const AirdropPage = (): JSX.Element => {
                 isDisabled={true || ended}
                 isLoading={isClaimLoading}
                 loadingText="Claiming"
-                onClick={onClaimSubmit}
+                // onClick={onClaimSubmit}
               >
                 Claim
               </Button>
