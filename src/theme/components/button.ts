@@ -25,17 +25,20 @@ function variantSolid(props: Dict) {
   if (c === "seedclub") {
     return {
       bg: "seedclub.green.900",
+      borderColor: "seedclub.green.900",
+      borderWidth: 2,
       _disabled: {
         bg: "seedclub.green.900",
       },
       color: "white",
       _hover: {
-        bg: "seedclub.green.800",
+        bg: "seedclub.white",
+        color: "seedclub.green.900",
         _disabled: {
           bg: "seedclub.green.900",
         },
       },
-      _active: { bg: "seedclub.green.700" },
+      _active: { bg: "seedclub.white", color: "seedclub.green.900" },
     }
   }
 
