@@ -7,21 +7,36 @@ import MERKLE_VESTING_ABI from "static/abis/MerkleVestingAbi.json"
 import useSWR from "swr"
 
 const getClaimableAmount =
-  (contract: Contract, cohortId: string, account: string, fullAmount: string) =>
+  (
+    contract: Contract,
+    cohortId: string,
+    index: number,
+    account: string,
+    fullAmount: string
+  ) =>
   (): Promise<BigNumber> =>
-    contract.getClaimableAmount(cohortId, account, parseInt(formatUnits(fullAmount)))
+    contract.getClaimableAmount(
+      cohortId,
+      index,
+      account,
+      parseInt(formatUnits(fullAmount))
+    )
 
-const useClaimableAmount = (cohortId: string, fullAmount: string) => {
+const useClaimableAmount = (cohortId: string, index: number, fullAmount: string) => {
   const { active, account, chainId } = useWeb3React()
   const contract = useContract(
     active ? process.env.NEXT_PUBLIC_MERKLE_VESTING_CONTRACT_ADDRESS : null,
     MERKLE_VESTING_ABI
   )
+
   return useSWR<BigNumber>(
-    active && cohortId && fullAmount
-      ? ["claimableAmount", chainId, account, cohortId, fullAmount]
+    active &&
+      typeof cohortId !== "undefined" &&
+      typeof index !== "undefined" &&
+      fullAmount
+      ? ["claimableAmount", chainId, index, account, cohortId, fullAmount]
       : null,
-    getClaimableAmount(contract, cohortId, account, fullAmount),
+    getClaimableAmount(contract, cohortId, index, account, fullAmount),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

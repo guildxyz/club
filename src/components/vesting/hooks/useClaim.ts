@@ -5,14 +5,12 @@ import useToast from "hooks/useToast"
 import MERKLE_VESTING_ABI from "static/abis/MerkleVestingAbi.json"
 import parseError from "utils/parseError"
 import useClaimData from "./useClaimData"
-import useMerkleVesting from "./useMerkleVesting"
+import useUsersLatestCohort from "./useUsersLatestCohort"
 
 const useClaim = () => {
   const { active, account } = useWeb3React()
-  const {
-    data: [lastEndingCohort],
-  } = useMerkleVesting()
-  const { data: claimData } = useClaimData(lastEndingCohort)
+  const { data: usersLatestCohort } = useUsersLatestCohort()
+  const { data: claimData } = useClaimData(usersLatestCohort)
 
   const contract = useContract(
     active ? process.env.NEXT_PUBLIC_MERKLE_VESTING_CONTRACT_ADDRESS : null,
@@ -24,7 +22,7 @@ const useClaim = () => {
 
   const claim = async () => {
     const claimRes = await contract?.claim(
-      lastEndingCohort,
+      usersLatestCohort,
       claimData?.index,
       account,
       claimData?.amount,

@@ -35,6 +35,14 @@
   { "inputs": [], "name": "MerkleRootCollision", "type": "error" },
   {
     "inputs": [
+      { "internalType": "bytes32", "name": "cohortId", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "NotInVesting",
+    "type": "error"
+  },
+  {
+    "inputs": [
       { "internalType": "address", "name": "token", "type": "address" },
       { "internalType": "address", "name": "from", "type": "address" },
       { "internalType": "address", "name": "to", "type": "address" }
@@ -150,6 +158,7 @@
   {
     "inputs": [
       { "internalType": "bytes32", "name": "cohortId", "type": "bytes32" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" },
       { "internalType": "address", "name": "account", "type": "address" },
       { "internalType": "uint256", "name": "fullAmount", "type": "uint256" }
     ],
@@ -189,6 +198,16 @@
     "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "bytes32", "name": "cohortId", "type": "bytes32" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "isDisabled",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "lastEndingCohort",
     "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
@@ -212,6 +231,16 @@
   {
     "inputs": [],
     "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "cohortId", "type": "bytes32" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "setDisabled",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
